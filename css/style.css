@@ -236,7 +236,10 @@ section[id], #contatti { scroll-margin-top: 72px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Introduzione: schermata di app che si uniscono ---------- */
-.intro { position: relative; isolation: isolate; overflow: hidden; height: 100vh; height: 100vh; height: 100svh; min-height: 560px; color: #fff; background: #0B1424; }
+.intro { position: fixed; inset: 0; z-index: 100; isolation: isolate; overflow: hidden; height: 100vh; height: 100%; color: #fff; background: #0B1424;
+  transition: transform .75s cubic-bezier(.7,0,.2,1); will-change: transform; touch-action: none; cursor: pointer; }
+.intro.leave { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .intro { transition: none; } }
 .intro-wall { position: absolute; inset: -40px; z-index: -2; width: calc(100% + 80px); height: calc(100% + 80px); max-width: none;
   object-fit: cover; object-position: 30% 50%; filter: blur(22px) saturate(1.2); transform: scale(1.05); }
 .intro::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(7,16,34,.35), rgba(7,16,34,.55)); }
@@ -640,4 +643,3 @@ html.js .feat.in .viz-spot > p { opacity: 1; transform: none; }
 
 /* ---------- Tocco su telefono ---------- */
 a, button, .node, .tab, .dock-btn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-html.locked .intro { touch-action: none; cursor: pointer; }

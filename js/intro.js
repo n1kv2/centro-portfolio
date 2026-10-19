@@ -1,5 +1,6 @@
-// Introduzione: tante app sparse sullo schermo. La pagina resta ferma finché non si tocca:
-// allora le app collassano al centro, compare CEnTRO e solo dopo si può scorrere.
+// Introduzione: una schermata sovrapposta al sito con tante app sparse.
+// 1) tocco o swipe: le app collassano al centro e compare CEnTRO;
+// 2) swipe verso l'alto, rotella o tocco: la schermata scivola via e il sito resta in cima. Non ricompare.
 (function () {
   var html = document.documentElement;
   var intro = document.getElementById('intro');
@@ -14,15 +15,25 @@
   window.scrollTo(0, 0);
   window.addEventListener('load', function () { if (!merged) { window.scrollTo(0, 0); layout(); } });
   html.classList.add('locked');
-  // Finché le app non si uniscono la pagina resta ferma: un tocco, uno swipe o la rotella fanno partire l'unione
-  var startY = null;
+  var state = 'apps'; // apps → merging → ready → gone
+  var startY = null, wheelAt = 0;
   document.addEventListener('touchstart', function (e) { startY = e.touches[0].clientY; }, { passive: true });
   document.addEventListener('touchmove', function (e) {
-    if (!html.classList.contains('locked')) return;
+    if (state === 'gone') return;
     e.preventDefault();
-    if (startY !== null && Math.abs(e.touches[0].clientY - startY) > 24) merge();
+    if (startY === null) return;
+    var dy = startY - e.touches[0].clientY;
+    if (state === 'apps' && Math.abs(dy) > 24) merge();
+    else if (state === 'ready' && dy > 30) leave();
   }, { passive: false });
-  document.addEventListener('wheel', function (e) { if (html.classList.contains('locked')) { e.preventDefault(); merge(); } }, { passive: false });
+  document.addEventListener('wheel', function (e) {
+    if (state === 'gone') return;
+    e.preventDefault();
+    var now = Date.now();
+    if (now - wheelAt < 400) return;
+    wheelAt = now;
+    if (state === 'apps') merge(); else if (state === 'ready' && e.deltaY > 0) leave();
+  }, { passive: false });
 
   var apps = [
     ['Social', '#E1306C', '#F7A440'], ['Eventi', '#F06139', '#F59A5B'], ['Attività', '#2FB37A', '#7AD9A8'], ['Spotted', '#D43998', '#F27BC0'],
@@ -95,7 +106,8 @@
 
   var merged = false;
   function merge() {
-    if (merged) return;
+    if (state !== 'apps') return;
+    state = 'merging';
     merged = true;
     intro.classList.add('merged');
     var t = appIcon.getBoundingClientRect();
@@ -109,19 +121,28 @@
     });
     tap.hidden = true;
     setTimeout(function () { intro.classList.add('ready'); }, 700);
-    setTimeout(function () {
-      html.classList.remove('locked');
-      scrollCta.hidden = false;
-    }, 1200);
+    setTimeout(function () { state = 'ready'; scrollCta.hidden = false; }, 1100);
   }
+
+  function leave() {
+    if (state !== 'ready') return;
+    state = 'gone';
+    window.scrollTo(0, 0);
+    html.classList.remove('locked');
+    document.body.classList.add('entered');
+    intro.classList.add('leave');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(function () { intro.hidden = true; }, reduce ? 0 : 750);
+  }
+
+  function act() { if (state === 'apps') merge(); else if (state === 'ready') leave(); }
 
   layout();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
   window.addEventListener('resize', layout);
-  intro.addEventListener('click', merge);
-  intro.addEventListener('touchend', function () { merge(); }, { passive: true });
-  intro.addEventListener('pointerup', function () { merge(); });
-  // Sicurezza: la pagina non resta mai bloccata
-  setTimeout(function () { if (!merged) html.classList.remove('locked'); }, 12000);
-  document.addEventListener('keydown', function (e) { if (!merged && (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown')) { e.preventDefault(); merge(); } });
+  intro.addEventListener('click', act);
+  intro.addEventListener('touchend', function () { if (startY !== null) act(); }, { passive: true });
+  document.addEventListener('keydown', function (e) {
+    if (state !== 'gone' && (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown' || e.key === 'PageDown')) { e.preventDefault(); act(); }
+  });
 })();

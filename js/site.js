@@ -12,19 +12,6 @@
   // Barra in alto (trasparente sopra la foto) e dock (compare dopo l'introduzione)
   var bar = document.getElementById('topbar');
   var hero = document.getElementById('hero');
-  var intro = document.getElementById('intro');
-  var introGone = false, introTimer = null;
-  function removeIntro() {
-    if (introGone || !intro.classList.contains('ready') || window.scrollY < intro.offsetHeight) return;
-    // Misura un punto fisso prima e dopo: alcuni browser compensano da soli, altri no
-    var ref = document.getElementById('inizio');
-    var before = ref.getBoundingClientRect().top;
-    introGone = true;
-    intro.hidden = true;
-    var shift = ref.getBoundingClientRect().top - before;
-    if (Math.abs(shift) > 1) window.scrollTo({ top: window.scrollY + shift, behavior: 'instant' });
-    document.body.classList.add('entered');
-  }
 
   // Card dell'idea
   var deck = document.getElementById('deck');
@@ -79,16 +66,9 @@
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () {
-      // Superata l'introduzione, la si toglie (risalendo non ricompare).
-      // Si aspetta che lo scorrimento si fermi, così su telefono il gesto non viene interrotto.
-      if (!introGone && intro.offsetHeight && window.scrollY >= intro.offsetHeight) {
-        clearTimeout(introTimer);
-        introTimer = setTimeout(removeIntro, 180);
-      }
       var hb = hero.getBoundingClientRect().bottom;
       bar.classList.toggle('over', hb > bar.offsetHeight + 10);
       bar.classList.toggle('is-scrolled', hb <= bar.offsetHeight + 10);
-      document.body.classList.toggle('entered', introGone || window.scrollY > intro.offsetHeight * 0.6);
       renderDeck();
       renderJourney();
       ticking = false;
