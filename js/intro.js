@@ -11,8 +11,15 @@
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
   html.classList.add('locked');
-  var stopTouch = function (e) { if (html.classList.contains('locked')) e.preventDefault(); };
-  document.addEventListener('touchmove', stopTouch, { passive: false });
+  // Finché le app non si uniscono la pagina resta ferma: un tocco, uno swipe o la rotella fanno partire l'unione
+  var startY = null;
+  document.addEventListener('touchstart', function (e) { startY = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchmove', function (e) {
+    if (!html.classList.contains('locked')) return;
+    e.preventDefault();
+    if (startY !== null && Math.abs(e.touches[0].clientY - startY) > 24) merge();
+  }, { passive: false });
+  document.addEventListener('wheel', function (e) { if (html.classList.contains('locked')) { e.preventDefault(); merge(); } }, { passive: false });
 
   var apps = [
     ['Social', '#E1306C', '#F7A440'], ['Eventi', '#F06139', '#F59A5B'], ['Attività', '#2FB37A', '#7AD9A8'], ['Spotted', '#D43998', '#F27BC0'],
@@ -81,5 +88,9 @@
   layout();
   window.addEventListener('resize', layout);
   intro.addEventListener('click', merge);
+  intro.addEventListener('touchend', function () { merge(); }, { passive: true });
+  intro.addEventListener('pointerup', function () { merge(); });
+  // Sicurezza: la pagina non resta mai bloccata
+  setTimeout(function () { if (!merged) html.classList.remove('locked'); }, 12000);
   document.addEventListener('keydown', function (e) { if (!merged && (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown')) { e.preventDefault(); merge(); } });
 })();

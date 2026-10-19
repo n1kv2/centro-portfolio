@@ -114,7 +114,7 @@ p { margin: 0; text-wrap: pretty; }
 .hero {
   position: relative; isolation: isolate; overflow: hidden;
   margin-top: calc(-1 * var(--bar));
-  min-height: 100svh; max-height: 1000px;
+  min-height: 100vh; min-height: 100svh; max-height: 1000px;
   display: flex; align-items: flex-end; color: var(--on-photo);
 }
 .hero-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 30% 55%;
@@ -160,10 +160,10 @@ body.entered .dock { transform: translate(-50%, 0); }
 .section-head { display: grid; gap: 14px; margin-bottom: 30px; }
 
 /* ---------- L'idea: card impilate che si scartano scorrendo ---------- */
-.deck { position: relative; height: calc(var(--cards) * 80svh + 40svh); overflow-x: clip; }
+.deck { position: relative; height: calc(var(--cards) * 80vh + 40vh); height: calc(var(--cards) * 80svh + 40svh); overflow-x: clip; }
 .deck-stage {
   position: sticky; top: calc(var(--bar) + env(safe-area-inset-top, 0px));
-  height: calc(100svh - var(--bar)); max-height: 860px;
+  height: calc(100vh - var(--bar)); height: calc(100svh - var(--bar)); max-height: 860px;
   display: flex; flex-direction: column; justify-content: center; gap: 18px;
   padding-block: 12px 20px;
 }
@@ -195,10 +195,10 @@ body.entered .dock { transform: translate(-50%, 0); }
 .purpose em { font-style: italic; }
 
 /* ---------- Il percorso: tappe che si completano scorrendo ---------- */
-.journey { position: relative; height: calc(var(--steps) * 70svh + 50svh); }
+.journey { position: relative; height: calc(var(--steps) * 70vh + 50vh); height: calc(var(--steps) * 70svh + 50svh); }
 .journey-stage {
   position: sticky; top: calc(var(--bar) + env(safe-area-inset-top, 0px));
-  height: calc(100svh - var(--bar)); max-height: 880px;
+  height: calc(100vh - var(--bar)); height: calc(100svh - var(--bar)); max-height: 880px;
   display: flex; flex-direction: column; gap: 14px;
   padding-block: 8px 20px;
 }
@@ -236,7 +236,7 @@ section[id], #contatti { scroll-margin-top: 72px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 /* ---------- Introduzione: schermata di app che si uniscono ---------- */
-.intro { position: relative; isolation: isolate; overflow: hidden; height: 100svh; min-height: 560px; color: #fff; background: #0B1424; }
+.intro { position: relative; isolation: isolate; overflow: hidden; height: 100vh; height: 100vh; height: 100svh; min-height: 560px; color: #fff; background: #0B1424; }
 .intro-wall { position: absolute; inset: -40px; z-index: -2; width: calc(100% + 80px); height: calc(100% + 80px); max-width: none;
   object-fit: cover; object-position: 30% 50%; filter: blur(22px) saturate(1.2); transform: scale(1.05); }
 .intro::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(7,16,34,.35), rgba(7,16,34,.55)); }
@@ -637,3 +637,7 @@ html.js .feat.in .viz-spot > p { opacity: 1; transform: none; }
 
 .biz-fig { position: relative; margin: 0; }
 .profile h2 { font-size: 2rem; line-height: 1.05; }
+
+/* ---------- Tocco su telefono ---------- */
+a, button, .node, .tab, .dock-btn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+html.locked .intro { touch-action: none; cursor: pointer; }
