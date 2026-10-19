@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add('js');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CEnTRO</title>
+<meta name="description" content="CEnTRO trasforma la conoscenza di sé in esperienze, persone e opportunità nella propria città.">
+<meta name="theme-color" content="#F3F5F9">
+<script src="js/theme.js?v=16"></script>
+<link rel="icon" href="img/logo.png">
+<link rel="preload" as="image" href="img/sfondo.jpg">
+<link rel="stylesheet" href="css/fonts.css?v=16">
+<link rel="stylesheet" href="css/style.css?v=16">
+</head>
+<body>
+
+<!-- Introduzione: tante app che si uniscono in CEnTRO -->
+<section class="intro" id="intro" aria-label="Introduzione">
+  <img class="intro-wall" src="img/sfondo.jpg" alt="" aria-hidden="true" width="1280" height="1600">
+  <div class="intro-screen">
+    <p class="intro-time" aria-hidden="true">Oggi, nella tua città</p>
+    <div class="apps" id="apps" aria-hidden="true"></div>
+    <div class="intro-app" id="introApp">
+      <span class="app-icon"><span class="brand-mark" aria-hidden="true"></span></span>
+      <span class="app-name">CEnTRO</span>
+      <p>Eventi, persone, casa e opportunità in un'unica app.</p>
+    </div>
+    <button class="intro-cta" id="introTap" type="button">Tocca per unire tutto</button>
+    <p class="intro-cta intro-scroll" id="introScroll" hidden>Scorri per entrare <span aria-hidden="true">&darr;</span></p>
+  </div>
+</section>
+
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="#inizio" aria-label="CEnTRO, torna all'inizio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">CEnTRO</span>
+    </a>
+    <button class="menu-btn" type="button" id="menuOpen" aria-haspopup="dialog" aria-controls="menu">Menu<span aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+
+<main id="inizio">
+
+  <!-- Apertura: solo foto e titolo -->
+  <section class="hero" id="hero">
+    <img class="hero-img" src="img/sfondo.jpg" alt="Un ragazzo con il telefono in mano guarda la città dall'alto al tramonto." width="1122" height="1402">
+    <div class="wrap hero-inner">
+      <span class="ai-tag">Immagine generata con l'AI</span>
+      <h1>Conoscersi per <em>vivere di più</em> la propria città.</h1>
+    </div>
+  </section>
+
+  <!-- Indice: cosa trovi nel portfolio -->
+  <section class="index wrap" id="indice" aria-label="Cosa trovi qui">
+    <p class="eyebrow">Cosa trovi qui</p>
+    <ol class="toc">
+      <li><a href="#idea"><span class="toc-n">01</span><span class="toc-t">L'idea</span><span class="toc-d">Perché CEnTRO e cosa cambia</span></a></li>
+      <li><a href="#percorso"><span class="toc-n">02</span><span class="toc-t">Come funziona</span><span class="toc-d">Dal questionario alla piazza</span></a></li>
+      <li><a href="#app"><span class="toc-n">03</span><span class="toc-t">Dentro l'app</span><span class="toc-d">Le funzioni e il loro valore</span></a></li>
+      <li><a href="#aziende"><span class="toc-n">04</span><span class="toc-t">Per le aziende</span><span class="toc-d">Organizzatori, agenzie, negozi</span></a></li>
+      <li><a href="#investitori"><span class="toc-n">05</span><span class="toc-t">Per chi investirà</span><span class="toc-d">Dove nasce il valore e cosa dimostreremo</span></a></li>
+    </ol>
+  </section>
+
+  <!-- L'idea: tre card che si scartano scorrendo -->
+  <section class="section" id="idea">
+    <div class="wrap section-head">
+      <p class="eyebrow">L'idea</p>
+      <h2>Il lato buono dei social, <em>vissuto dal vivo.</em></h2>
+      <p class="lead">CEnTRO prende ciò che funziona dei social e lo usa per un altro scopo: portare le persone fuori dallo schermo.</p>
+    </div>
+
+    <div class="deck" id="deck" style="--cards:3">
+      <div class="wrap deck-stage">
+        <div class="deck-cards">
+          <article class="dcard">
+            <img src="img/trekking-sosta.jpg" alt="Un gruppo fa una pausa lungo un sentiero di montagna." width="1120" height="1400">
+            <span class="ai-tag">Immagine generata con l'AI</span>
+            <div class="dcard-body">
+              <div class="dcard-label"><span class="eyebrow">Scoperta</span><span class="dcard-count">1 / 3</span></div>
+              <h3>Passioni che non avresti cercato</h3>
+              <p>Eventi, attività e occasioni scelti sul tuo profilo, comprese quelle conosciute finora solo attraverso i social.</p>
+            </div>
+          </article>
+          <article class="dcard">
+            <img src="img/lingue.jpg" alt="Cinque ragazzi conversano attorno a un tavolino sotto un portico." width="1120" height="1400">
+            <span class="ai-tag">Immagine generata con l'AI</span>
+            <div class="dcard-body">
+              <div class="dcard-label"><span class="eyebrow">Connessione</span><span class="dcard-count">2 / 3</span></div>
+              <h3>Persone affini con cui andare</h3>
+              <p>Uscire è più facile quando non si parte da soli. CEnTRO ti fa trovare compagnia per ciò che ti interessa.</p>
+            </div>
+          </article>
+          <article class="dcard">
+            <img src="img/calcetto.jpg" alt="Una partita di calcetto tra amici in un campo di quartiere." width="1120" height="1400">
+            <span class="ai-tag">Immagine generata con l'AI</span>
+            <div class="dcard-body">
+              <div class="dcard-label"><span class="eyebrow">Partecipazione</span><span class="dcard-count">3 / 3</span></div>
+              <h3>Il tempo che conta è fuori</h3>
+              <p>Il risultato non si misura nel tempo passato in app, ma in quello vissuto fuori dallo schermo: a fare ciò che ci piace, anche insieme ad altre persone.</p>
+            </div>
+          </article>
+        </div>
+        <div class="deck-foot">
+          <div class="bar-dots" id="deckDots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span class="hint">Scorri verso il basso</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <p class="purpose">Le finalità del progetto sono <em>benessere, inclusione e crescita personale.</em></p>
+    </div>
+  </section>
+
+  <!-- Il percorso: tappe che si completano scorrendo -->
+  <section class="section" id="percorso">
+    <div class="wrap section-head">
+      <p class="eyebrow">Come funziona</p>
+      <h2>Dal questionario <em>alla piazza</em>, in cinque tappe.</h2>
+    </div>
+
+    <div class="journey" id="journey" style="--steps:5">
+      <div class="wrap journey-stage">
+        <svg class="route" viewBox="0 0 360 98" role="img" aria-label="Percorso in cinque tappe: conoscersi, scoprire, incontrare, vivere, esplorare">
+          <path class="route-base" d="M34 64 C70.5 64 70.5 30 107 30 S143.5 64 180 64 S216.5 30 253 30 S289.5 64 326 64"/>
+          <path class="route-fill" id="routeFill" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="M34 64 C70.5 64 70.5 30 107 30 S143.5 64 180 64 S216.5 30 253 30 S289.5 64 326 64"/>
+          <g class="route-node" transform="translate(34 64)"><circle r="7"/><path class="tick" d="M-3 0 l2 2.2 l4 -4.4"/><text y="25">Conoscersi</text></g>
+          <g class="route-node" transform="translate(107 30)"><circle r="7"/><path class="tick" d="M-3 0 l2 2.2 l4 -4.4"/><text y="-16">Scoprire</text></g>
+          <g class="route-node" transform="translate(180 64)"><circle r="7"/><path class="tick" d="M-3 0 l2 2.2 l4 -4.4"/><text y="25">Incontrare</text></g>
+          <g class="route-node" transform="translate(253 30)"><circle r="7"/><path class="tick" d="M-3 0 l2 2.2 l4 -4.4"/><text y="-16">Vivere</text></g>
+          <g class="route-node" transform="translate(326 64)"><circle r="7"/><path class="tick" d="M-3 0 l2 2.2 l4 -4.4"/><text y="25">Esplorare</text></g>
+        </svg>
+
+        <div class="journey-photos">
+          <span class="ai-tag">Immagine generata con l'AI</span>
+          <img class="on" src="img/divano.jpg" alt="Una ragazza sul divano guarda il telefono con curiosità." width="1120" height="1400">
+          <img src="img/soglia.jpg" alt="La stessa ragazza arriva all'ingresso di uno spazio culturale e viene accolta." width="1120" height="1400">
+          <img src="img/inaugurazione.jpg" alt="La ragazza chiacchiera con nuove conoscenze durante un'inaugurazione." width="1120" height="1400">
+          <img src="img/ceramica.jpg" alt="Una ragazza modella l'argilla al tornio in un laboratorio di ceramica." width="1120" height="1400">
+          <img src="img/piazza.jpg" alt="Quattro amici sui gradini di una piazza scelgono insieme la prossima attività." width="1120" height="1400">
+        </div>
+
+        <div class="journey-texts">
+          <div class="jtext on">
+            <p class="step-num">TAPPA 1 / 5</p>
+            <h3>Conoscersi</h3>
+            <p>Un questionario fa emergere gusti, interessi, preferenze e predisposizioni. Da qui parte tutto ciò che l'app propone.</p>
+          </div>
+          <div class="jtext">
+            <p class="step-num">TAPPA 2 / 5</p>
+            <h3>Scoprire possibilità</h3>
+            <p>Il feed mette per prime le proposte più affini: eventi, attività della community, bandi e occasioni del territorio.</p>
+          </div>
+          <div class="jtext">
+            <p class="step-num">TAPPA 3 / 5</p>
+            <h3>Incontrare persone</h3>
+            <p>Trovi persone affini con cui partecipare. Una serata che da soli non si sceglierebbe diventa un'occasione per conoscersi.</p>
+          </div>
+          <div class="jtext">
+            <p class="step-num">TAPPA 4 / 5</p>
+            <h3>Vivere esperienze</h3>
+            <p>L'esperienza succede fuori dall'app. Dopo, una valutazione rapida rende più precisi i suggerimenti successivi.</p>
+          </div>
+          <div class="jtext">
+            <p class="step-num">TAPPA 5 / 5</p>
+            <h3>Continuare a esplorare</h3>
+            <p>Il gruppo nato da un'attività ne sceglie insieme un'altra. L'app resta utile anche dopo i primi incontri.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dentro l'app: funzioni spiegate con grafiche -->
+  <section class="section" id="app">
+    <div class="wrap section-head">
+      <p class="eyebrow">Dentro l'app</p>
+      <h2>Cinque funzioni, <em>un'unica città.</em></h2>
+    </div>
+
+    <div class="wrap features">
+      <article class="feat" data-reveal>
+        <h3>Eventi</h3>
+        <p>Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.</p>
+        <div class="viz viz-feed" aria-hidden="true">
+          <div class="vf-row"><img src="img/inaugurazione.jpg" alt=""><span>Inaugurazione d'arte</span><i style="--w:96%"></i></div>
+          <div class="vf-row"><img src="img/lingue.jpg" alt=""><span>Conversazione in inglese</span><i style="--w:88%"></i></div>
+          <div class="vf-row"><img src="img/ceramica.jpg" alt=""><span>Laboratorio di ceramica</span><i style="--w:74%"></i></div>
+          <p class="vf-cap">Ordinati per affinità con il tuo profilo</p>
+        </div>
+        <dl class="gain"><div><dt>Per te</dt><dd>Scopri senza cercare.</dd></div><div><dt>Per chi organizza</dt><dd>Arriva a chi è davvero interessato.</dd></div></dl>
+      </article>
+
+      <article class="feat" data-reveal>
+        <h3>Community</h3>
+        <p>Chiunque propone un'attività, Nia aiuta a scriverla e arrivano persone affini con cui farla.</p>
+        <div class="viz viz-group" aria-hidden="true">
+          <span class="vg-core">Serata giochi</span>
+          <span class="vg-p p1"></span><span class="vg-p p2"></span><span class="vg-p p3"></span><span class="vg-p p4"></span><span class="vg-p p5"></span>
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path pathLength="1" d="M50 46 L20 26"/><path pathLength="1" d="M50 46 L80 24"/><path pathLength="1" d="M50 46 L16 66"/><path pathLength="1" d="M50 46 L84 68"/><path pathLength="1" d="M50 46 L50 78"/></svg>
+          <p class="vf-cap">Richieste ordinate per affinità con il gruppo</p>
+        </div>
+        <dl class="gain"><div><dt>Per te</dt><dd>Trovi compagnia per ciò che ti piace.</dd></div><div><dt>Per la piattaforma</dt><dd>Nascono gruppi che tornano a scegliere.</dd></div></dl>
+      </article>
+
+      <article class="feat" data-reveal>
+        <h3>Spotted</h3>
+        <p>Lo spazio per domande, richieste, consigli e risposte tra le persone della città.</p>
+        <div class="viz viz-spot" aria-hidden="true">
+          <p class="vs-q">Qualcuno ha perso un mazzo di chiavi a Coppito?</p>
+          <p class="vs-a">Sì, è mio! Dove lo trovo?</p>
+          <p class="vs-q small">L'ho lasciato in portineria.</p>
+          <p class="vf-cap">Risolto in pochi minuti dalla community</p>
+        </div>
+        <dl class="gain"><div><dt>Per te</dt><dd>Un aiuto vicino, ogni giorno.</dd></div><div><dt>Per la piattaforma</dt><dd>Un motivo per aprire l'app anche senza eventi.</dd></div></dl>
+      </article>
+
+      <article class="feat" data-reveal>
+        <h3>Esplora</h3>
+        <p>Bandi, concorsi ed esperienze offerte dalle aziende, scelti per interessi, requisiti e scadenze.</p>
+        <div class="viz viz-explore" aria-hidden="true">
+          <p class="ve-k">Bando</p>
+          <p class="ve-t">Giovani creativi per la città</p>
+          <ul><li>In linea con i tuoi interessi</li><li>Requisiti soddisfatti</li></ul>
+          <div class="ve-dead"><span>Scadenza</span><i></i><b>12 giorni</b></div>
+        </div>
+        <dl class="gain"><div><dt>Per te</dt><dd>Solo opportunità a cui puoi partecipare.</dd></div><div><dt>Per enti e aziende</dt><dd>Candidature più adatte.</dd></div></dl>
+      </article>
+
+      <article class="feat" data-reveal>
+        <h3>Casa</h3>
+        <p>Annunci collegati a esigenze pratiche e preferenze di convivenza, con un confronto tra futuri coinquilini.</p>
+        <div class="viz viz-home" aria-hidden="true">
+          <div class="vh-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="vh-run" cx="50" cy="50" r="42" pathLength="1"/></svg><b>Affini</b></div>
+          <ul>
+            <li><span>Pulizia</span><i class="ok"></i></li>
+            <li><span>Orari</span><i class="warn"></i></li>
+            <li><span>Ospiti</span><i class="ok"></i></li>
+            <li><span>Fumo</span><i class="ok"></i></li>
+          </ul>
+          <p class="vf-cap">Compatibilità tra coinquilini, tema per tema</p>
+        </div>
+        <dl class="gain"><div><dt>Per te</dt><dd>Una casa e persone giuste con cui viverla.</dd></div><div><dt>Per le agenzie</dt><dd>Meno contatti a vuoto.</dd></div></dl>
+      </article>
+    </div>
+  </section>
+
+  <!-- Per le aziende -->
+  <section class="section" id="aziende">
+    <div class="wrap section-head">
+      <p class="eyebrow">Per le aziende</p>
+      <h2>Le persone giuste, <em>per ogni proposta.</em></h2>
+    </div>
+
+    <div class="wrap" data-tabs>
+      <div class="seg" role="tablist" aria-label="Tipi di azienda">
+        <button class="tab" role="tab" aria-selected="true" aria-controls="az-org" id="ta-org">Organizzatori</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="az-imm" id="ta-imm">Agenzie</button>
+        <button class="tab" role="tab" aria-selected="false" aria-controls="az-neg" id="ta-neg">Negozi</button>
+      </div>
+
+      <div class="panel biz" role="tabpanel" id="az-org" aria-labelledby="ta-org">
+        <h3>Organizzatori di eventi e attività</h3>
+        <ul class="ticks">
+          <li>Fa scoprire l'evento anche a chi non lo stava cercando.</li>
+          <li>Aiuta le persone a trovare compagnia, così partecipano di più.</li>
+          <li>Persone e gruppi tornano per scegliere nuove attività.</li>
+        </ul>
+        <div class="cycle" id="cycle" aria-label="Il ciclo del valore per gli organizzatori">
+          <svg viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="104" class="cycle-ring"/><circle cx="150" cy="150" r="104" class="cycle-run" id="cycleRun" pathLength="1"/></svg>
+          <ol class="cycle-steps">
+            <li style="--a:-90deg">Conoscere il pubblico</li>
+            <li style="--a:-18deg">Progettare l'offerta</li>
+            <li style="--a:54deg">Raggiungere le persone</li>
+            <li style="--a:126deg">Osservare la partecipazione</li>
+            <li style="--a:198deg">Migliorare le proposte</li>
+          </ol>
+          <p class="cycle-core">Analisi<br>aggregate<br>del pubblico</p>
+        </div>
+        <div class="audience" data-reveal aria-label="Esempio di sintesi del pubblico">
+          <p class="au-k">Il tuo pubblico, in sintesi</p>
+          <div class="au-row"><span>Arte e creatività</span><i style="--w:86%"></i></div>
+          <div class="au-row"><span>Musica dal vivo</span><i style="--w:64%"></i></div>
+          <div class="au-row"><span>Lingue e culture</span><i style="--w:48%"></i></div>
+          <div class="au-row gap"><span>Laboratori manuali <em>poco servito</em></span><i style="--w:30%"></i></div>
+        </div>
+        <p class="biz-note">Interessi, gusti e tendenze emersi dal questionario aiutano ad adattare temi e format, confrontare il pubblico delle iniziative, trovare interessi poco serviti e progettare nuove collaborazioni.</p>
+      </div>
+
+      <div class="panel biz" role="tabpanel" id="az-imm" aria-labelledby="ta-imm" hidden>
+        <h3>Agenzie immobiliari</h3>
+        <figure class="biz-fig"><img class="biz-photo" src="img/agenzia.jpg" alt="Un agente immobiliare mostra un appartamento su tablet a un ragazzo in cerca di casa." width="1120" height="1400" loading="lazy"><span class="ai-tag">Immagine generata con l'AI</span></figure>
+        <ul class="ticks">
+          <li>Gli annunci arrivano a chi ha esigenze abitative coerenti.</li>
+          <li>Meno tempo perso con contatti incompatibili con l'offerta.</li>
+          <li>Le preferenze di convivenza aiutano a formare case condivise che funzionano.</li>
+          <li>Si affianca agli strumenti di gestione annunci che l'agenzia usa già.</li>
+        </ul>
+      </div>
+
+      <div class="panel biz" role="tabpanel" id="az-neg" aria-labelledby="ta-neg" hidden>
+        <h3>Negozi e aziende inserzioniste</h3>
+        <div class="sieve" data-reveal aria-label="Come si sceglie il pubblico di un annuncio">
+          <span>Gusti emersi dal questionario</span>
+          <i aria-hidden="true">+</i>
+          <span>Annunci che la persona sceglie di ricevere</span>
+          <i aria-hidden="true">+</i>
+          <span>Territorio e contesto</span>
+          <i class="down" aria-hidden="true"></i>
+          <b>Pubblico pertinente</b>
+        </div>
+        <ul class="ticks">
+          <li>Gli annunci uniscono i gusti emersi dal questionario alle preferenze che l'utente indica.</li>
+          <li>La comunicazione si concentra su chi è vicino, per luogo e per interessi.</li>
+        </ul>
+        <p class="sub-k">L'obiettivo</p>
+        <ol class="funnel">
+          <li>Contatti</li><li>Visite</li><li>Prenotazioni</li><li>Acquisti</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Per chi investirà -->
+  <section class="invest" id="investitori">
+    <div class="wrap">
+      <p class="eyebrow">Per chi investirà</p>
+      <h2>Utile alle persone, <em>conveniente per le aziende.</em></h2>
+      <p class="invest-lead">CEnTRO collega servizi utili alle persone a motivi concreti per cui le aziende scelgono di pagare.</p>
+
+      <div class="market" data-reveal aria-label="Come si incontrano persone e aziende">
+        <div class="mk-side"><b>Persone</b><span>Scoprono, si incontrano, partecipano</span></div>
+        <i class="flow" aria-hidden="true"></i>
+        <div class="mk-mid"><span class="brand-mark" aria-hidden="true"></span><b>CEnTRO</b></div>
+        <i class="flow up" aria-hidden="true"></i>
+        <div class="mk-side"><b>Aziende</b><span>Promuovono, gestiscono, capiscono il pubblico</span></div>
+      </div>
+
+      <p class="sub-k">Perché le aziende pagano</p>
+      <div class="levers">
+        <div class="lever" data-reveal><span class="lever-k">Promozione pertinente</span><span class="lever-arrow" aria-hidden="true"></span><span class="lever-v">Servizi pubblicitari</span></div>
+        <div class="lever" data-reveal><span class="lever-k">Strumenti operativi e conoscenza aggregata del pubblico</span><span class="lever-arrow" aria-hidden="true"></span><span class="lever-v">Abbonamenti</span></div>
+        <div class="lever" data-reveal><span class="lever-k">Partecipazione e biglietti</span><span class="lever-arrow" aria-hidden="true"></span><span class="lever-v">Commissioni</span></div>
+      </div>
+
+      <div class="prove" data-reveal>
+        <p class="prove-k">Il vantaggio da dimostrare</p>
+        <p class="prove-t">Far incontrare meglio persone e offerte del territorio, creando valore continuo per entrambe.</p>
+        <ul class="measures">
+          <li>Precisione dei suggerimenti</li>
+          <li>Conversioni</li>
+          <li>Fidelizzazione</li>
+          <li>Ritorno economico</li>
+        </ul>
+        <p class="prove-n">Sono risultati da verificare. Le analisi descriveranno tendenze aggregate e distingueranno le iscrizioni dalla partecipazione effettiva.</p>
+      </div>
+
+      <p class="sub-k">A che punto siamo</p>
+      <ol class="stage">
+        <li class="done" data-reveal><b>Questionario</b><span>Domande e punteggi pronti</span></li>
+        <li class="done" data-reveal><b>Prototipo</b><span>Tutti i flussi dell'app disegnati</span></li>
+        <li class="now" data-reveal><b>MVP</b><span>In costruzione: misura quanto il questionario prevede ciò che piace</span></li>
+        <li data-reveal><b>Test a L'Aquila</b><span>La prima città di partenza</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Chi sono -->
+  <section class="section me-sec" id="contatti">
+    <div class="wrap">
+      <p class="eyebrow">Chi sono</p>
+      <div class="profile" data-reveal>
+        <div class="avatar">
+          <img id="mePhoto" src="img/nicholas.jpg" alt="Nicholas Vigo, fondatore di CEnTRO" width="400" height="400">
+          <span class="avatar-fallback" aria-hidden="true">N</span>
+        </div>
+        <div>
+          <h2>Nicholas Vigo</h2>
+          <p class="role">Fondatore di CEnTRO</p>
+        </div>
+      </div>
+      <p class="lead me-lead">Unisco psicologia, dati e vendita: le tre cose che servono per far incontrare persone e offerte.</p>
+
+      <p class="sub-k">Esperienza</p>
+      <ol class="xp">
+        <li data-reveal><span class="xp-when">2 anni</span><b>CEO · IMEX WINE</b><span>Import-export di vini. Vendita di persona in stand propri e fiere.</span></li>
+        <li data-reveal><span class="xp-when">Progetti</span><b>Siti web per attività locali</b><span>Bar e saloni.</span></li>
+        <li data-reveal><span class="xp-when">In corso</span><b>App per AMA, trasporto urbano dell'Aquila</b><span>In costruzione.</span></li>
+        <li data-reveal><span class="xp-when">In arrivo</span><b>Laurea magistrale in Psicologia</b><span>Con statistica applicata in R.</span></li>
+      </ol>
+
+      <p class="sub-k">Cosa porto a CEnTRO</p>
+      <ul class="bridge">
+        <li data-reveal><span class="br-from">Psicologia</span><i aria-hidden="true"></i><span class="br-to">Questionario e profili</span></li>
+        <li data-reveal><span class="br-from">Statistica con R</span><i aria-hidden="true"></i><span class="br-to">Analisi del pubblico</span></li>
+        <li data-reveal><span class="br-from">Strumenti di AI</span><i aria-hidden="true"></i><span class="br-to">Nia e prototipi</span></li>
+        <li data-reveal><span class="br-from">Vendita e fiere</span><i aria-hidden="true"></i><span class="br-to">Rapporto con le aziende</span></li>
+        <li data-reveal><span class="br-from">Siti e app</span><i aria-hidden="true"></i><span class="br-to">Sviluppo del prodotto</span></li>
+      </ul>
+      <p class="langs"><span>Inglese B2</span><span>Cinese HSK 1</span><span>Relazione con il pubblico</span></p>
+
+      <div class="contact" data-reveal>
+        <p class="contact-k">Parliamone</p>
+        <p class="contact-t">Per una demo, una collaborazione o un incontro.</p>
+        <p class="mail" id="mail">hello.centro26@gmail.com</p>
+        <div class="contact-ctas">
+          <a class="btn btn-primary" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a>
+          <button class="btn btn-ghost" type="button" id="copyMail">Copia indirizzo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot wrap">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <p>CEnTRO · L'Aquila · 2026 · Le foto sono generate con l'AI</p>
+  </footer>
+  <div class="spacer-end"></div>
+</main>
+
+<!-- Menu a tutto schermo -->
+<div class="menu" id="menu" hidden>
+  <div class="menu-in wrap">
+    <div class="menu-head"><span class="eyebrow">Menu</span><button class="nia-close" type="button" id="menuClose" aria-label="Chiudi menu">&times;</button></div>
+    <ol class="toc">
+      <li><a href="#idea"><span class="toc-n">01</span><span class="toc-t">L'idea</span></a></li>
+      <li><a href="#percorso"><span class="toc-n">02</span><span class="toc-t">Come funziona</span></a></li>
+      <li><a href="#app"><span class="toc-n">03</span><span class="toc-t">Dentro l'app</span></a></li>
+      <li><a href="#aziende"><span class="toc-n">04</span><span class="toc-t">Per le aziende</span></a></li>
+      <li><a href="#investitori"><span class="toc-n">05</span><span class="toc-t">Per chi investirà</span></a></li>
+    </ol>
+    <div class="theme-pick">
+      <p class="eyebrow">Aspetto</p>
+      <div class="seg" role="radiogroup" aria-label="Aspetto del sito">
+        <button class="tab" type="button" role="radio" data-theme-opt="auto">Automatico</button>
+        <button class="tab" type="button" role="radio" data-theme-opt="light">Chiaro</button>
+        <button class="tab" type="button" role="radio" data-theme-opt="dark">Scuro</button>
+      </div>
+      <p class="theme-note" id="themeNote"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Dock in basso: Home · Nia · Chi sono -->
+<nav class="dock" id="dock" aria-label="Navigazione">
+  <a class="dock-btn" href="#inizio">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M10 20v-6h4v6"/></svg>
+    <span>Home</span>
+  </a>
+  <button class="dock-btn" id="niaOpen" type="button" aria-haspopup="dialog">
+    <img src="img/nia.png" alt="" width="240" height="230">
+    <span>Nia</span>
+  </button>
+  <a class="dock-btn" href="#contatti">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+    <span>Chi sono</span>
+  </a>
+</nav>
+
+<!-- Nia: la mappa per scoprire (dimostrazione) -->
+<div class="nia" id="nia" role="dialog" aria-modal="true" aria-labelledby="niaTitle" hidden>
+  <div class="nia-panel">
+    <div class="nia-head">
+      <img src="img/nia.png" alt="" width="240" height="230">
+      <div>
+        <p class="nia-title" id="niaTitle">Nia</p>
+        <p class="nia-sub">La tua mappa per scoprire la città</p>
+      </div>
+      <button class="nia-close" type="button" data-close aria-label="Chiudi">&times;</button>
+    </div>
+
+    <div class="nia-body">
+      <p class="nia-ask">Cosa cerchi oggi?</p>
+      <div class="nia-chips" id="niaChips" role="radiogroup" aria-label="Cosa cerchi"></div>
+
+      <div class="map" id="niaMap" aria-label="Mappa delle proposte: più sono vicine al centro, più sono affini a te">
+        <svg class="map-bg" viewBox="0 0 400 400" aria-hidden="true">
+          <path class="river" d="M-10 300 C 80 260 120 330 210 300 S 330 230 410 260"/>
+          <path class="street" d="M30 -10 C 60 120 40 240 90 410"/>
+          <path class="street" d="M-10 120 C 120 140 260 100 410 150"/>
+          <path class="street" d="M250 -10 C 230 100 300 220 270 410"/>
+          <path class="street" d="M-10 220 C 100 200 180 240 410 210"/>
+          <path class="street thin" d="M140 -10 C 160 80 120 180 170 260"/>
+          <path class="street thin" d="M330 40 C 300 120 360 200 330 330"/>
+          <circle class="ring" cx="200" cy="200" r="70"/>
+          <circle class="ring" cx="200" cy="200" r="125"/>
+          <circle class="ring" cx="200" cy="200" r="180"/>
+          <text class="ring-label" x="200" y="124">molto affine</text>
+          <text class="ring-label" x="200" y="69">affine</text>
+          <text class="ring-label" x="200" y="14">da esplorare</text>
+        </svg>
+        <div class="me" aria-hidden="true"><span>Tu</span></div>
+        <div class="nodes" id="niaNodes"></div>
+      </div>
+
+      <article class="pick" id="niaPick" aria-live="polite"></article>
+
+      <ul class="how">
+        <li><b>Parte da te.</b> Il questionario mette al centro gusti, interessi e predisposizioni.</li>
+        <li><b>Si muove con te.</b> Ogni valutazione avvicina ciò che ti piace e allontana il resto.</li>
+        <li><b>Ti dice il perché.</b> Ogni proposta mostra i motivi per cui è vicina a te.</li>
+      </ul>
+      <p class="nia-note">Esempio dimostrativo con contenuti simulati.</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/site.js?v=16"></script>
+<script src="js/intro.js?v=16"></script>
+<script src="js/nia.js?v=16"></script>
+<script src="js/sections.js?v=16"></script>
+</body>
+</html>
