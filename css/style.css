@@ -635,12 +635,5 @@ html.js .feat.in .viz-spot > p { opacity: 1; transform: none; }
 .seg .tab[aria-checked="true"] { background: var(--navy); color: var(--bg); }
 .theme-note { font-size: .88rem; color: var(--muted); }
 
-/* ---------- Etichetta sulle immagini generate con l'AI ---------- */
-.ai-tag { position: absolute; z-index: 3; padding: 4px 8px; border-radius: 99px; pointer-events: none;
-  background: rgba(7, 16, 34, .55); color: rgba(255,255,255,.9); font: 700 .62rem/1 var(--f-body); letter-spacing: .02em;
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
-.hero .ai-tag { top: calc(var(--bar) + 10px); right: max(20px, env(safe-area-inset-right, 0px)); }
-.hero-inner { position: static; }
-.dcard .ai-tag, .journey-photos .ai-tag, .biz-fig .ai-tag { top: 12px; right: 12px; }
 .biz-fig { position: relative; margin: 0; }
 .profile h2 { font-size: 2rem; line-height: 1.05; }
