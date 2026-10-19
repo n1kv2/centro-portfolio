@@ -15,7 +15,7 @@
   var intro = document.getElementById('intro');
   var introGone = false, introTimer = null;
   function removeIntro() {
-    if (introGone || window.scrollY < intro.offsetHeight) return;
+    if (introGone || !intro.classList.contains('ready') || window.scrollY < intro.offsetHeight) return;
     // Misura un punto fisso prima e dopo: alcuni browser compensano da soli, altri no
     var ref = document.getElementById('inizio');
     var before = ref.getBoundingClientRect().top;

@@ -246,12 +246,12 @@ section[id], #contatti { scroll-margin-top: 72px; }
   display: flex; flex-direction: column; align-items: center; gap: 26px;
 }
 .intro-time { font-size: .82rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(255,255,255,.75); }
-.apps { position: relative; width: 100%; flex: 1 1 auto; min-height: 0; }
+.apps { position: relative; width: 100%; flex: 1 1 auto; min-height: 300px; }
 .tile { position: absolute; width: 84px; display: grid; justify-items: center; gap: 6px; transition: transform .8s cubic-bezier(.65,0,.25,1), opacity .6s ease; will-change: transform; }
 .tile-in { display: grid; justify-items: center; gap: 6px; animation: float 6s ease-in-out infinite; animation-delay: var(--d); }
 @keyframes float { 50% { transform: translateY(-6px) rotate(var(--r)); } }
 .intro.merged .tile-in { animation: none; }
-.tile i { display: block; width: var(--s); aspect-ratio: 1; border-radius: 28%; background: var(--c);
+.tile i { display: block; width: var(--s); height: var(--s); aspect-ratio: 1; border-radius: 28%; background: var(--c);
   box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 6px 16px rgba(0,0,0,.18); }
 .tile span { font-size: .74rem; line-height: 1.1; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.35); white-space: nowrap; transition: opacity .25s; }
 .intro.merged .tile span { opacity: 0; }

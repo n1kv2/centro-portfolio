@@ -8,8 +8,11 @@
   var scrollCta = document.getElementById('introScroll');
   var appIcon = intro.querySelector('.app-icon');
 
+  // Si parte sempre dall'introduzione, anche se il link contiene un #sezione
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
   window.scrollTo(0, 0);
+  window.addEventListener('load', function () { if (!merged) { window.scrollTo(0, 0); layout(); } });
   html.classList.add('locked');
   // Finché le app non si uniscono la pagina resta ferma: un tocco, uno swipe o la rotella fanno partire l'unione
   var startY = null;
@@ -43,24 +46,51 @@
   }).join('');
   var tiles = Array.prototype.slice.call(field.children);
 
-  // Righe sfalsate da 4 e 3 app (4+3+4+3+4+3 = 21), con spostamenti e dimensioni casuali
+  // Righe sfalsate da 4 e 3 app (4+3+4+3+4+3 = 21) con spostamenti casuali,
+  // poi le app si allontanano finché nessuna tocca un'altra (etichetta compresa)
   function layout() {
     if (merged) return;
-    var W = field.clientWidth, H = field.clientHeight;
-    var ch = H / 6, k = 0;
+    var W = field.clientWidth;
+    var H = Math.max(field.clientHeight, 300);
+    var ch = H / 6, cw = W / 4, k = 0, box = [];
     for (var row = 0; row < 6; row++) {
-      var n = row % 2 === 0 ? 4 : 3;
-      var cw = W / 4, x0 = row % 2 === 0 ? cw / 2 : cw;
+      var n = row % 2 === 0 ? 4 : 3, x0 = row % 2 === 0 ? cw / 2 : cw;
       for (var col = 0; col < n; col++, k++) {
-        var tile = tiles[k], sh = shape[k];
-        var size = Math.min(sh.s, cw - 16, ch - 30);
-        tile.style.setProperty('--s', size + 'px');
-        var cx = x0 + col * cw + (sh.jx - 0.5) * Math.max(0, cw - size) * 0.9;
-        var y = row * ch + (ch - size - 22) / 2 + (sh.jy - 0.5) * Math.max(0, ch - size - 22) * 0.9;
-        tile.style.left = Math.round(Math.max(38, Math.min(W - 38, cx)) - 42) + 'px';
-        tile.style.top = Math.round(y) + 'px';
+        var sh = shape[k];
+        var size = Math.max(36, Math.min(sh.s, cw - 18, ch - 30));
+        var label = tiles[k].querySelector('span');
+        var w = Math.max(size, label.offsetWidth) + 8, h = size + 26;
+        box.push({
+          x: x0 + col * cw + (sh.jx - 0.5) * Math.max(0, cw - w) * 0.8,
+          y: row * ch + ch / 2 + (sh.jy - 0.5) * Math.max(0, ch - h) * 0.8,
+          w: w, h: h, size: size
+        });
       }
     }
+    // Separazione: fino a 80 passaggi, spingendo via le coppie che si sovrappongono
+    for (var it = 0; it < 80; it++) {
+      var moved = false;
+      for (var i = 0; i < box.length; i++) for (var j = i + 1; j < box.length; j++) {
+        var A = box[i], B = box[j];
+        var ox = (A.w + B.w) / 2 - Math.abs(A.x - B.x), oy = (A.h + B.h) / 2 - Math.abs(A.y - B.y);
+        if (ox > 0 && oy > 0) {
+          moved = true;
+          if (ox < oy) { var dx = (ox / 2 + 0.5) * (A.x < B.x ? -1 : 1); A.x += dx; B.x -= dx; }
+          else { var dy = (oy / 2 + 0.5) * (A.y < B.y ? -1 : 1); A.y += dy; B.y -= dy; }
+        }
+      }
+      box.forEach(function (b) {
+        b.x = Math.max(b.w / 2, Math.min(W - b.w / 2, b.x));
+        b.y = Math.max(b.h / 2, Math.min(H - b.h / 2, b.y));
+      });
+      if (!moved) break;
+    }
+    tiles.forEach(function (tile, i) {
+      var b = box[i];
+      tile.style.setProperty('--s', b.size + 'px');
+      tile.style.left = Math.round(b.x - 42) + 'px';
+      tile.style.top = Math.round(b.y - b.h / 2) + 'px';
+    });
   }
 
   var merged = false;
@@ -86,6 +116,7 @@
   }
 
   layout();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
   window.addEventListener('resize', layout);
   intro.addEventListener('click', merge);
   intro.addEventListener('touchend', function () { merge(); }, { passive: true });
