@@ -12,6 +12,7 @@
   // Se l'introduzione è già stata vista in questa visita (per esempio tornando da Chi sono), si salta
   var seen = false;
   try { seen = sessionStorage.getItem('centro-intro') === '1'; } catch (err) { /* nessuna memoria disponibile */ }
+  if (intro.hasAttribute('data-always')) seen = false;
   if (seen) { intro.hidden = true; document.body.classList.add('entered'); return; }
 
   // Alla prima visita si parte sempre dall'introduzione, anche se il link contiene un #sezione
@@ -110,23 +111,58 @@
   }
 
   var merged = false;
+  var iconWrap = document.getElementById('iconWrap');
+  var counter = document.getElementById('mergeCount');
+
+  // Unione: le app vengono attirate verso il centro, accelerando e ruotando.
+  // A ogni arrivo l'icona di CEnTRO cresce, l'anello si riempie e il contatore scende fino a 1.
   function merge() {
     if (state !== 'apps') return;
     state = 'merging';
     merged = true;
     intro.classList.add('merged');
+    tap.hidden = true;
+    var n = tiles.length, arrived = 0, done = false, maxDelay = 0;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var t = appIcon.getBoundingClientRect();
     var cx = t.left + t.width / 2, cy = t.top + t.height / 2;
-    tiles.forEach(function (tile) {
+    counter.textContent = n + ' app';
+
+    function update() {
+      var k = arrived / n;
+      iconWrap.style.setProperty('--g', (0.42 + 0.58 * k).toFixed(3));
+      iconWrap.style.setProperty('--p', (1 - k).toFixed(3));
+      counter.textContent = Math.max(1, n - arrived) + (n - arrived <= 1 ? ' app' : ' app');
+      iconWrap.classList.remove('pulse'); void iconWrap.offsetWidth; iconWrap.classList.add('pulse');
+    }
+    function finish() {
+      if (done) return;
+      done = true;
+      arrived = n; update();
+      counter.textContent = '1 app';
+      setTimeout(function () { intro.classList.add('ready'); }, 260);
+      setTimeout(function () { state = 'ready'; scrollCta.hidden = false; }, 900);
+    }
+
+    tiles.forEach(function (tile, k) {
       var r = tile.querySelector('i').getBoundingClientRect();
       var dx = cx - (r.left + r.width / 2), dy = cy - (r.top + r.height / 2);
-      tile.style.transitionDelay = Math.round(Math.sqrt(dx * dx + dy * dy) * 0.55) + 'ms';
-      tile.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.25)';
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var delay = reduce ? 0 : Math.round(150 + dist * 1.5 + shape[k].jx * 260);
+      maxDelay = Math.max(maxDelay, delay);
+      var spin = (shape[k].jy > 0.5 ? 1 : -1) * (120 + Math.round(shape[k].jx * 160));
+      tile.style.transitionDelay = delay + 'ms, ' + (delay + 600) + 'ms';
+      tile.style.transform = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + spin + 'deg) scale(.12)';
       tile.style.opacity = '0';
+      var counted = false;
+      tile.addEventListener('transitionend', function (e) {
+        if (counted || e.propertyName !== 'transform') return;
+        counted = true; arrived++; update();
+        if (arrived >= n) finish();
+      });
     });
-    tap.hidden = true;
-    setTimeout(function () { intro.classList.add('ready'); }, 700);
-    setTimeout(function () { state = 'ready'; scrollCta.hidden = false; }, 1100);
+    // Sicurezza: se qualche evento non arriva, l'unione si chiude comunque
+    setTimeout(finish, reduce ? 50 : maxDelay + 1400);
   }
 
   function leave() {
