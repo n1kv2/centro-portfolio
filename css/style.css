@@ -493,7 +493,7 @@ html.js [data-reveal].in { opacity: 1; transform: none; }
 .vg-p.p2 { --x: 80%; --y: 24%; --c: linear-gradient(135deg,#2FB37A,#7AD9A8); --d: .25s; }
 .vg-p.p3 { --x: 16%; --y: 66%; --c: linear-gradient(135deg,#6A3FD1,#A98CF2); --d: .4s; }
 .vg-p.p4 { --x: 84%; --y: 68%; --c: linear-gradient(135deg,#2E9BD6,#86CDF2); --d: .55s; }
-.vg-p.p5 { --x: 50%; --y: 78%; --c: linear-gradient(135deg,#D43998,#F27BC0); --d: .7s; }
+.vg-p.p5 { --x: 50%; --y: 70%; --c: linear-gradient(135deg,#D43998,#F27BC0); --d: .7s; }
 .viz-group .vf-cap { position: absolute; left: 18px; right: 18px; bottom: 12px; text-align: center; }
 
 .viz-spot { gap: 8px; }
@@ -643,3 +643,43 @@ html.js .feat.in .viz-spot > p { opacity: 1; transform: none; }
 
 /* ---------- Tocco su telefono ---------- */
 a, button, .node, .tab, .dock-btn { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+
+/* ---------- Pagina Chi sono ---------- */
+.me-page { padding-top: 36px; }
+
+/* ---------- Per le aziende: ogni pannello è una card chiusa ---------- */
+.biz { margin-top: 18px; padding: 24px 18px 26px; border-radius: 30px; background: var(--surface); box-shadow: var(--shadow); }
+.biz h3 { font-size: 1.6rem; }
+.biz .audience, .biz .sieve { background: var(--bg); box-shadow: none; }
+.biz .sieve span { background: var(--surface); }
+.biz .cycle-steps li { background: var(--bg); }
+.biz .gain div { background: var(--bg); }
+.seg { position: relative; z-index: 1; }
+#aziende { padding-bottom: 8px; }
+
+/* ---------- Dentro l'app: mazzo di card ---------- */
+.deck-feat .deck-cards { max-height: 640px; }
+.fcard { padding: 22px 20px 20px; display: grid; gap: 10px; align-content: center; }
+.fcard h3 { font-size: 1.7rem; }
+.fcard > p { color: var(--ink-2); font-size: .97rem; }
+.fcard .viz { background: var(--bg); box-shadow: none; margin-top: 2px; padding: 16px; }
+.fcard .viz-group { height: 200px; }
+.fcard .gain div { background: var(--blue-soft); }
+@media (max-height: 700px) {
+  .fcard { gap: 8px; padding: 18px 16px 16px; }
+  .fcard h3 { font-size: 1.45rem; }
+  .fcard > p { font-size: .9rem; }
+  .fcard .viz-group { height: 170px; }
+  .fcard .gain dd { font-size: .84rem; }
+}
+
+.deck-stage { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
+.deck-feat .deck-cards { max-height: 580px; }
+.fcard .viz-group { height: 220px; }
+.viz-group .vf-cap { bottom: 10px; }
+@media (max-height: 700px) { .fcard .viz-group { height: 190px; } }
+.biz .cycle-steps li.on { background: var(--navy); color: var(--bg); }
+.biz .cycle { container-type: inline-size; }
+.biz .cycle-steps li { width: 92px; margin: -21px 0 0 -46px; min-height: 42px; font-size: .72rem;
+  transform: rotate(var(--a)) translate(min(104px, 29vw)) rotate(calc(-1 * var(--a)));
+  transform: rotate(var(--a)) translate(33cqw) rotate(calc(-1 * var(--a))); }

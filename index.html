@@ -7,7 +7,7 @@
 <title>CEnTRO</title>
 <meta name="description" content="CEnTRO trasforma la conoscenza di sé in esperienze, persone e opportunità nella propria città.">
 <meta name="theme-color" content="#F3F5F9">
-<script src="js/theme.js?v=21"></script>
+<script src="js/theme.js?v=25"></script>
 <link rel="icon" href="img/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CEnTRO">
@@ -21,8 +21,8 @@
 <meta name="twitter:image" content="https://n1kv2.github.io/centro-portfolio/img/anteprima.png">
 <link rel="apple-touch-icon" href="img/logo.png">
 <link rel="preload" as="image" href="img/sfondo.jpg">
-<link rel="stylesheet" href="css/fonts.css?v=21">
-<link rel="stylesheet" href="css/style.css?v=21">
+<link rel="stylesheet" href="css/fonts.css?v=25">
+<link rel="stylesheet" href="css/style.css?v=25">
 </head>
 <body>
 
@@ -111,7 +111,7 @@
           </article>
         </div>
         <div class="deck-foot">
-          <div class="bar-dots" id="deckDots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="bar-dots" aria-hidden="true"><i></i><i></i><i></i></div>
           <span class="hint">Scorri verso il basso</span>
         </div>
       </div>
@@ -187,70 +187,74 @@
       <h2>Cinque funzioni, <em>un'unica città.</em></h2>
     </div>
 
-    <div class="wrap features">
-      <article class="feat" data-reveal>
-        <h3>Eventi</h3>
-        <p>Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.</p>
-        <div class="viz viz-feed" aria-hidden="true">
-          <div class="vf-row"><img src="img/inaugurazione.jpg" alt=""><span>Inaugurazione d'arte</span><i style="--w:96%"></i></div>
-          <div class="vf-row"><img src="img/lingue.jpg" alt=""><span>Conversazione in inglese</span><i style="--w:88%"></i></div>
-          <div class="vf-row"><img src="img/ceramica.jpg" alt=""><span>Laboratorio di ceramica</span><i style="--w:74%"></i></div>
-          <p class="vf-cap">Ordinati per affinità con il tuo profilo</p>
+    <div class="deck deck-feat" style="--cards:5">
+      <div class="wrap deck-stage">
+        <div class="deck-cards">
+            <article class="dcard fcard feat">
+              <h3>Eventi</h3>
+              <p>Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.</p>
+              <div class="viz viz-feed" aria-hidden="true">
+                <div class="vf-row"><img src="img/inaugurazione.jpg" alt=""><span>Inaugurazione d'arte</span><i style="--w:96%"></i></div>
+                <div class="vf-row"><img src="img/lingue.jpg" alt=""><span>Conversazione in inglese</span><i style="--w:88%"></i></div>
+                <div class="vf-row"><img src="img/ceramica.jpg" alt=""><span>Laboratorio di ceramica</span><i style="--w:74%"></i></div>
+                <p class="vf-cap">Ordinati per affinità con il tuo profilo</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Scopri senza cercare.</dd></div><div><dt>Per chi organizza</dt><dd>Arriva a chi è davvero interessato.</dd></div></dl>
+            </article>
+            <article class="dcard fcard feat">
+              <h3>Community</h3>
+              <p>Chiunque propone un'attività, Nia aiuta a scriverla e arrivano persone affini con cui farla.</p>
+              <div class="viz viz-group" aria-hidden="true">
+                <span class="vg-core">Serata giochi</span>
+                <span class="vg-p p1"></span><span class="vg-p p2"></span><span class="vg-p p3"></span><span class="vg-p p4"></span><span class="vg-p p5"></span>
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path pathLength="1" d="M50 46 L20 26"/><path pathLength="1" d="M50 46 L80 24"/><path pathLength="1" d="M50 46 L16 66"/><path pathLength="1" d="M50 46 L84 68"/><path pathLength="1" d="M50 46 L50 70"/></svg>
+                <p class="vf-cap">Richieste ordinate per affinità con il gruppo</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Trovi compagnia per ciò che ti piace.</dd></div><div><dt>Per la piattaforma</dt><dd>Nascono gruppi che tornano a scegliere.</dd></div></dl>
+            </article>
+            <article class="dcard fcard feat">
+              <h3>Spotted</h3>
+              <p>Lo spazio per domande, richieste, consigli e risposte tra le persone della città.</p>
+              <div class="viz viz-spot" aria-hidden="true">
+                <p class="vs-q">Qualcuno ha perso un mazzo di chiavi a Coppito?</p>
+                <p class="vs-a">Sì, è mio! Dove lo trovo?</p>
+                <p class="vs-q small">L'ho lasciato in portineria.</p>
+                <p class="vf-cap">Risolto in pochi minuti dalla community</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Un aiuto vicino, ogni giorno.</dd></div><div><dt>Per la piattaforma</dt><dd>Un motivo per aprire l'app anche senza eventi.</dd></div></dl>
+            </article>
+            <article class="dcard fcard feat">
+              <h3>Esplora</h3>
+              <p>Bandi, concorsi ed esperienze offerte dalle aziende, scelti per interessi, requisiti e scadenze.</p>
+              <div class="viz viz-explore" aria-hidden="true">
+                <p class="ve-k">Bando</p>
+                <p class="ve-t">Giovani creativi per la città</p>
+                <ul><li>In linea con i tuoi interessi</li><li>Requisiti soddisfatti</li></ul>
+                <div class="ve-dead"><span>Scadenza</span><i></i><b>12 giorni</b></div>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Solo opportunità a cui puoi partecipare.</dd></div><div><dt>Per enti e aziende</dt><dd>Candidature più adatte.</dd></div></dl>
+            </article>
+            <article class="dcard fcard feat">
+              <h3>Casa</h3>
+              <p>Annunci collegati a esigenze pratiche e preferenze di convivenza, con un confronto tra futuri coinquilini.</p>
+              <div class="viz viz-home" aria-hidden="true">
+                <div class="vh-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="vh-run" cx="50" cy="50" r="42" pathLength="1"/></svg><b>Affini</b></div>
+                <ul>
+                  <li><span>Pulizia</span><i class="ok"></i></li>
+                  <li><span>Orari</span><i class="warn"></i></li>
+                  <li><span>Ospiti</span><i class="ok"></i></li>
+                  <li><span>Fumo</span><i class="ok"></i></li>
+                </ul>
+                <p class="vf-cap">Compatibilità tra coinquilini, tema per tema</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Una casa e persone giuste con cui viverla.</dd></div><div><dt>Per le agenzie</dt><dd>Meno contatti a vuoto.</dd></div></dl>
+            </article>
         </div>
-        <dl class="gain"><div><dt>Per te</dt><dd>Scopri senza cercare.</dd></div><div><dt>Per chi organizza</dt><dd>Arriva a chi è davvero interessato.</dd></div></dl>
-      </article>
-
-      <article class="feat" data-reveal>
-        <h3>Community</h3>
-        <p>Chiunque propone un'attività, Nia aiuta a scriverla e arrivano persone affini con cui farla.</p>
-        <div class="viz viz-group" aria-hidden="true">
-          <span class="vg-core">Serata giochi</span>
-          <span class="vg-p p1"></span><span class="vg-p p2"></span><span class="vg-p p3"></span><span class="vg-p p4"></span><span class="vg-p p5"></span>
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path pathLength="1" d="M50 46 L20 26"/><path pathLength="1" d="M50 46 L80 24"/><path pathLength="1" d="M50 46 L16 66"/><path pathLength="1" d="M50 46 L84 68"/><path pathLength="1" d="M50 46 L50 78"/></svg>
-          <p class="vf-cap">Richieste ordinate per affinità con il gruppo</p>
+        <div class="deck-foot">
+          <div class="bar-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="hint">Scorri verso il basso</span>
         </div>
-        <dl class="gain"><div><dt>Per te</dt><dd>Trovi compagnia per ciò che ti piace.</dd></div><div><dt>Per la piattaforma</dt><dd>Nascono gruppi che tornano a scegliere.</dd></div></dl>
-      </article>
-
-      <article class="feat" data-reveal>
-        <h3>Spotted</h3>
-        <p>Lo spazio per domande, richieste, consigli e risposte tra le persone della città.</p>
-        <div class="viz viz-spot" aria-hidden="true">
-          <p class="vs-q">Qualcuno ha perso un mazzo di chiavi a Coppito?</p>
-          <p class="vs-a">Sì, è mio! Dove lo trovo?</p>
-          <p class="vs-q small">L'ho lasciato in portineria.</p>
-          <p class="vf-cap">Risolto in pochi minuti dalla community</p>
-        </div>
-        <dl class="gain"><div><dt>Per te</dt><dd>Un aiuto vicino, ogni giorno.</dd></div><div><dt>Per la piattaforma</dt><dd>Un motivo per aprire l'app anche senza eventi.</dd></div></dl>
-      </article>
-
-      <article class="feat" data-reveal>
-        <h3>Esplora</h3>
-        <p>Bandi, concorsi ed esperienze offerte dalle aziende, scelti per interessi, requisiti e scadenze.</p>
-        <div class="viz viz-explore" aria-hidden="true">
-          <p class="ve-k">Bando</p>
-          <p class="ve-t">Giovani creativi per la città</p>
-          <ul><li>In linea con i tuoi interessi</li><li>Requisiti soddisfatti</li></ul>
-          <div class="ve-dead"><span>Scadenza</span><i></i><b>12 giorni</b></div>
-        </div>
-        <dl class="gain"><div><dt>Per te</dt><dd>Solo opportunità a cui puoi partecipare.</dd></div><div><dt>Per enti e aziende</dt><dd>Candidature più adatte.</dd></div></dl>
-      </article>
-
-      <article class="feat" data-reveal>
-        <h3>Casa</h3>
-        <p>Annunci collegati a esigenze pratiche e preferenze di convivenza, con un confronto tra futuri coinquilini.</p>
-        <div class="viz viz-home" aria-hidden="true">
-          <div class="vh-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="vh-run" cx="50" cy="50" r="42" pathLength="1"/></svg><b>Affini</b></div>
-          <ul>
-            <li><span>Pulizia</span><i class="ok"></i></li>
-            <li><span>Orari</span><i class="warn"></i></li>
-            <li><span>Ospiti</span><i class="ok"></i></li>
-            <li><span>Fumo</span><i class="ok"></i></li>
-          </ul>
-          <p class="vf-cap">Compatibilità tra coinquilini, tema per tema</p>
-        </div>
-        <dl class="gain"><div><dt>Per te</dt><dd>Una casa e persone giuste con cui viverla.</dd></div><div><dt>Per le agenzie</dt><dd>Meno contatti a vuoto.</dd></div></dl>
-      </article>
+      </div>
     </div>
   </section>
 
@@ -374,52 +378,6 @@
     </div>
   </section>
 
-  <!-- Chi sono -->
-  <section class="section me-sec" id="contatti">
-    <div class="wrap">
-      <p class="eyebrow">Chi sono</p>
-      <div class="profile" data-reveal>
-        <div class="avatar">
-          <img id="mePhoto" src="img/nicholas.jpg" alt="Nicholas Vigo, fondatore di CEnTRO" width="400" height="400">
-          <span class="avatar-fallback" aria-hidden="true">N</span>
-        </div>
-        <div>
-          <h2>Nicholas Vigo</h2>
-          <p class="role">Fondatore di CEnTRO</p>
-        </div>
-      </div>
-      <p class="lead me-lead">Unisco psicologia, dati e vendita: le tre cose che servono per far incontrare persone e offerte.</p>
-
-      <p class="sub-k">Esperienza</p>
-      <ol class="xp">
-        <li data-reveal><span class="xp-when">2 anni</span><b>CEO · IMEX WINE</b><span>Import-export di vini. Vendita di persona in stand propri e fiere.</span></li>
-        <li data-reveal><span class="xp-when">Progetti</span><b>Siti web per attività locali</b><span>Bar e saloni.</span></li>
-        <li data-reveal><span class="xp-when">In corso</span><b>App per AMA, trasporto urbano dell'Aquila</b><span>In costruzione.</span></li>
-        <li data-reveal><span class="xp-when">In arrivo</span><b>Laurea magistrale in Psicologia</b><span>Con statistica applicata in R.</span></li>
-      </ol>
-
-      <p class="sub-k">Cosa porto a CEnTRO</p>
-      <ul class="bridge">
-        <li data-reveal><span class="br-from">Psicologia</span><i aria-hidden="true"></i><span class="br-to">Questionario e profili</span></li>
-        <li data-reveal><span class="br-from">Statistica con R</span><i aria-hidden="true"></i><span class="br-to">Analisi del pubblico</span></li>
-        <li data-reveal><span class="br-from">Strumenti di AI</span><i aria-hidden="true"></i><span class="br-to">Nia e prototipi</span></li>
-        <li data-reveal><span class="br-from">Vendita e fiere</span><i aria-hidden="true"></i><span class="br-to">Rapporto con le aziende</span></li>
-        <li data-reveal><span class="br-from">Siti e app</span><i aria-hidden="true"></i><span class="br-to">Sviluppo del prodotto</span></li>
-      </ul>
-      <p class="langs"><span>Inglese B2</span><span>Cinese HSK 1</span><span>Relazione con il pubblico</span></p>
-
-      <div class="contact" data-reveal>
-        <p class="contact-k">Parliamone</p>
-        <p class="contact-t">Per una demo, una collaborazione o un incontro.</p>
-        <p class="mail" id="mail">hello.centro26@gmail.com</p>
-        <div class="contact-ctas">
-          <a class="btn btn-primary" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a>
-          <button class="btn btn-ghost" type="button" id="copyMail">Copia indirizzo</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <footer class="foot wrap">
     <span class="brand-mark" aria-hidden="true"></span>
     <p>CEnTRO · L'Aquila · 2026 · Le foto sono generate con l'AI</p>
@@ -460,7 +418,7 @@
     <img src="img/nia.png" alt="" width="240" height="230">
     <span>Nia</span>
   </button>
-  <a class="dock-btn" href="#contatti">
+  <a class="dock-btn" href="chi-sono.html">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
     <span>Chi sono</span>
   </a>
@@ -514,9 +472,9 @@
   </div>
 </div>
 
-<script src="js/site.js?v=21"></script>
-<script src="js/intro.js?v=21"></script>
-<script src="js/nia.js?v=21"></script>
-<script src="js/sections.js?v=21"></script>
+<script src="js/site.js?v=25"></script>
+<script src="js/intro.js?v=25"></script>
+<script src="js/nia.js?v=25"></script>
+<script src="js/sections.js?v=25"></script>
 </body>
 </html>

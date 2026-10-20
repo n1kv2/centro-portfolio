@@ -9,7 +9,12 @@
   var scrollCta = document.getElementById('introScroll');
   var appIcon = intro.querySelector('.app-icon');
 
-  // Si parte sempre dall'introduzione, anche se il link contiene un #sezione
+  // Se l'introduzione è già stata vista in questa visita (per esempio tornando da Chi sono), si salta
+  var seen = false;
+  try { seen = sessionStorage.getItem('centro-intro') === '1'; } catch (err) { /* nessuna memoria disponibile */ }
+  if (seen) { intro.hidden = true; document.body.classList.add('entered'); return; }
+
+  // Alla prima visita si parte sempre dall'introduzione, anche se il link contiene un #sezione
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   if (location.hash) history.replaceState(null, '', location.pathname + location.search);
   window.scrollTo(0, 0);
@@ -127,6 +132,7 @@
   function leave() {
     if (state !== 'ready') return;
     state = 'gone';
+    try { sessionStorage.setItem('centro-intro', '1'); } catch (err) { /* nessuna memoria disponibile */ }
     window.scrollTo(0, 0);
     html.classList.remove('locked');
     document.body.classList.add('entered');

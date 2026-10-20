@@ -13,17 +13,21 @@
   var bar = document.getElementById('topbar');
   var hero = document.getElementById('hero');
 
-  // Card dell'idea
-  var deck = document.getElementById('deck');
-  var deckStage = deck.querySelector('.deck-stage');
-  var cards = Array.prototype.slice.call(deck.querySelectorAll('.dcard'));
-  var deckDots = Array.prototype.slice.call(document.querySelectorAll('#deckDots i'));
-  var nC = cards.length;
+  // Mazzi di card (l'idea, dentro l'app): scorrendo, la card in cima viene scartata e passa alla successiva
+  var decks = Array.prototype.slice.call(document.querySelectorAll('.deck')).map(function (deck) {
+    return {
+      el: deck,
+      stage: deck.querySelector('.deck-stage'),
+      cards: Array.prototype.slice.call(deck.querySelectorAll('.dcard')),
+      dots: Array.prototype.slice.call(deck.querySelectorAll('.bar-dots i'))
+    };
+  });
 
-  function renderDeck() {
-    var s = progress(deck, deckStage) * (nC - 1);
+  function renderDeck(d) {
+    var nC = d.cards.length;
+    var s = progress(d.el, d.stage) * (nC - 1);
     var gone = 0;
-    cards.forEach(function (c, i) {
+    d.cards.forEach(function (c, i) {
       c.style.zIndex = nC - i;
       var dir = i % 2 === 0 ? 1 : -1;
       var t = i < nC - 1 ? ease(clamp((s - i - 0.2) / 0.6, 0, 1)) : 0;
@@ -37,7 +41,10 @@
         c.style.opacity = '1';
       }
     });
-    deckDots.forEach(function (d, i) { d.classList.toggle('on', i === Math.min(gone, nC - 1)); });
+    var top = Math.min(gone, nC - 1);
+    // La card in cima avvia le sue animazioni
+    if (d.stage.getBoundingClientRect().top < window.innerHeight * 0.6) d.cards[top].classList.add('in');
+    d.dots.forEach(function (dot, i) { dot.classList.toggle('on', i === top); });
   }
 
   // Percorso a tappe
@@ -69,7 +76,7 @@
       var hb = hero.getBoundingClientRect().bottom;
       bar.classList.toggle('over', hb > bar.offsetHeight + 10);
       bar.classList.toggle('is-scrolled', hb <= bar.offsetHeight + 10);
-      renderDeck();
+      decks.forEach(renderDeck);
       renderJourney();
       ticking = false;
     });

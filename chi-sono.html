@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<script>document.documentElement.classList.add('js');</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chi sono · CEnTRO</title>
+<meta name="description" content="CEnTRO trasforma la conoscenza di sé in esperienze, persone e opportunità nella propria città.">
+<meta name="theme-color" content="#F3F5F9">
+<script src="js/theme.js?v=25"></script>
+<link rel="icon" href="img/logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CEnTRO">
+<meta property="og:title" content="CEnTRO">
+<meta property="og:description" content="Conoscersi per vivere di più la città. Esperienze, persone e opportunità sul territorio.">
+<meta property="og:url" content="https://n1kv2.github.io/centro-portfolio/">
+<meta property="og:image" content="https://n1kv2.github.io/centro-portfolio/img/anteprima.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://n1kv2.github.io/centro-portfolio/img/anteprima.png">
+<link rel="apple-touch-icon" href="img/logo.png">
+<link rel="preload" as="image" href="img/sfondo.jpg">
+<link rel="stylesheet" href="css/fonts.css?v=25">
+<link rel="stylesheet" href="css/style.css?v=25">
+</head>
+<body class="entered">
+
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="CEnTRO, torna all'inizio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">CEnTRO</span>
+    </a>
+    <button class="menu-btn" type="button" id="menuOpen" aria-haspopup="dialog" aria-controls="menu">Menu<span aria-hidden="true"><i></i><i></i></span></button>
+  </div>
+</header>
+
+<main id="inizio">
+  <!-- Chi sono -->
+  <section class="section me-sec me-page" id="contatti">
+    <div class="wrap">
+      <p class="eyebrow">Chi sono</p>
+      <div class="profile" data-reveal>
+        <div class="avatar">
+          <img id="mePhoto" src="img/nicholas.jpg" alt="Nicholas Vigo, fondatore di CEnTRO" width="400" height="400">
+          <span class="avatar-fallback" aria-hidden="true">N</span>
+        </div>
+        <div>
+          <h2>Nicholas Vigo</h2>
+          <p class="role">Fondatore di CEnTRO</p>
+        </div>
+      </div>
+      <p class="lead me-lead">Unisco psicologia, dati e vendita: le tre cose che servono per far incontrare persone e offerte.</p>
+
+      <p class="sub-k">Esperienza</p>
+      <ol class="xp">
+        <li data-reveal><span class="xp-when">2 anni</span><b>CEO · IMEX WINE</b><span>Import-export di vini. Vendita di persona in stand propri e fiere.</span></li>
+        <li data-reveal><span class="xp-when">Progetti</span><b>Siti web per attività locali</b><span>Bar e saloni.</span></li>
+        <li data-reveal><span class="xp-when">In corso</span><b>App per AMA, trasporto urbano dell'Aquila</b><span>In costruzione.</span></li>
+        <li data-reveal><span class="xp-when">In arrivo</span><b>Laurea magistrale in Psicologia</b><span>Con statistica applicata in R.</span></li>
+      </ol>
+
+      <div class="contact" data-reveal>
+        <p class="contact-k">Parliamone</p>
+        <p class="contact-t">Per una demo, una collaborazione o un incontro.</p>
+        <p class="mail" id="mail">hello.centro26@gmail.com</p>
+        <div class="contact-ctas">
+          <a class="btn btn-primary" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a>
+          <button class="btn btn-ghost" type="button" id="copyMail">Copia indirizzo</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot wrap">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <p>CEnTRO · L'Aquila · 2026 · Le foto sono generate con l'AI</p>
+  </footer>
+  <div class="spacer-end"></div>
+</main>
+
+<!-- Menu a tutto schermo -->
+<div class="menu" id="menu" hidden>
+  <div class="menu-in wrap">
+    <div class="menu-head"><span class="eyebrow">Menu</span><button class="nia-close" type="button" id="menuClose" aria-label="Chiudi menu">&times;</button></div>
+    <ol class="toc">
+      <li><a href="index.html#idea"><span class="toc-n">01</span><span class="toc-t">L'idea</span></a></li>
+      <li><a href="index.html#percorso"><span class="toc-n">02</span><span class="toc-t">Come funziona</span></a></li>
+      <li><a href="index.html#app"><span class="toc-n">03</span><span class="toc-t">Dentro l'app</span></a></li>
+      <li><a href="index.html#aziende"><span class="toc-n">04</span><span class="toc-t">Per le aziende</span></a></li>
+      <li><a href="index.html#investitori"><span class="toc-n">05</span><span class="toc-t">Per chi investirà</span></a></li>
+    </ol>
+    <div class="theme-pick">
+      <p class="eyebrow">Aspetto</p>
+      <div class="seg" role="radiogroup" aria-label="Aspetto del sito">
+        <button class="tab" type="button" role="radio" data-theme-opt="auto">Automatico</button>
+        <button class="tab" type="button" role="radio" data-theme-opt="light">Chiaro</button>
+        <button class="tab" type="button" role="radio" data-theme-opt="dark">Scuro</button>
+      </div>
+      <p class="theme-note" id="themeNote"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Dock in basso: Home · Nia · Chi sono -->
+<nav class="dock" id="dock" aria-label="Navigazione">
+  <a class="dock-btn" href="index.html">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3.5l8.5 7"/><path d="M5.5 9v11h13V9"/><path d="M10 20v-6h4v6"/></svg>
+    <span>Home</span>
+  </a>
+  <button class="dock-btn" id="niaOpen" type="button" aria-haspopup="dialog">
+    <img src="img/nia.png" alt="" width="240" height="230">
+    <span>Nia</span>
+  </button>
+  <a class="dock-btn" href="chi-sono.html" aria-current="page">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+    <span>Chi sono</span>
+  </a>
+</nav>
+
+<!-- Nia: la mappa per scoprire (dimostrazione) -->
+<div class="nia" id="nia" role="dialog" aria-modal="true" aria-labelledby="niaTitle" hidden>
+  <div class="nia-panel">
+    <div class="nia-head">
+      <img src="img/nia.png" alt="" width="240" height="230">
+      <div>
+        <p class="nia-title" id="niaTitle">Nia</p>
+        <p class="nia-sub">La tua mappa per scoprire la città</p>
+      </div>
+      <button class="nia-close" type="button" data-close aria-label="Chiudi">&times;</button>
+    </div>
+
+    <div class="nia-body">
+      <p class="nia-ask">Cosa cerchi oggi?</p>
+      <div class="nia-chips" id="niaChips" role="radiogroup" aria-label="Cosa cerchi"></div>
+
+      <div class="map" id="niaMap" aria-label="Mappa delle proposte: più sono vicine al centro, più sono affini a te">
+        <svg class="map-bg" viewBox="0 0 400 400" aria-hidden="true">
+          <path class="river" d="M-10 300 C 80 260 120 330 210 300 S 330 230 410 260"/>
+          <path class="street" d="M30 -10 C 60 120 40 240 90 410"/>
+          <path class="street" d="M-10 120 C 120 140 260 100 410 150"/>
+          <path class="street" d="M250 -10 C 230 100 300 220 270 410"/>
+          <path class="street" d="M-10 220 C 100 200 180 240 410 210"/>
+          <path class="street thin" d="M140 -10 C 160 80 120 180 170 260"/>
+          <path class="street thin" d="M330 40 C 300 120 360 200 330 330"/>
+          <circle class="ring" cx="200" cy="200" r="70"/>
+          <circle class="ring" cx="200" cy="200" r="125"/>
+          <circle class="ring" cx="200" cy="200" r="180"/>
+          <text class="ring-label" x="200" y="124">molto affine</text>
+          <text class="ring-label" x="200" y="69">affine</text>
+          <text class="ring-label" x="200" y="14">da esplorare</text>
+        </svg>
+        <div class="me" aria-hidden="true"><span>Tu</span></div>
+        <div class="nodes" id="niaNodes"></div>
+      </div>
+
+      <article class="pick" id="niaPick" aria-live="polite"></article>
+
+      <ul class="how">
+        <li><b>Parte da te.</b> Il questionario mette al centro gusti, interessi e predisposizioni.</li>
+        <li><b>Si muove con te.</b> Ogni valutazione avvicina ciò che ti piace e allontana il resto.</li>
+        <li><b>Ti dice il perché.</b> Ogni proposta mostra i motivi per cui è vicina a te.</li>
+      </ul>
+      <p class="nia-note">Esempio dimostrativo con contenuti simulati.</p>
+    </div>
+  </div>
+</div>
+
+<script src="js/nia.js?v=25"></script>
+<script src="js/sections.js?v=25"></script>
+</body>
+</html>
