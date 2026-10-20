@@ -823,3 +823,10 @@ html:not(.js) .viz-rank i::before, html:not(.js) .aud-bars i::before, html:not(.
 .why-grow b { color: #fff; }
 .invest .prove { margin-top: 30px; }
 @media (prefers-reduced-motion: reduce) { .loop .loop-run { animation: none; } }
+
+/* ---------- Compatibilità immagini (Safari meno recenti) ---------- */
+.dcard > img { flex: none; height: 56%; min-height: 0; }
+.hero-img, .journey-photos img { top: 0; left: 0; right: 0; bottom: 0; }
+.dcard { top: 0; left: 0; right: 0; bottom: 0; }
+.intro-wall { top: -40px; left: -40px; }
+.journey-photos { -webkit-mask-image: -webkit-radial-gradient(white, black); }
