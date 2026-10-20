@@ -7,7 +7,7 @@
 <title>CEnTRO</title>
 <meta name="description" content="CEnTRO trasforma la conoscenza di sé in esperienze, persone e opportunità nella propria città.">
 <meta name="theme-color" content="#F3F5F9">
-<script src="js/theme.js?v=27"></script>
+<script src="js/theme.js?v=28"></script>
 <link rel="icon" href="img/logo.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="CEnTRO">
@@ -21,8 +21,8 @@
 <meta name="twitter:image" content="https://n1kv2.github.io/centro-portfolio/img/anteprima.png">
 <link rel="apple-touch-icon" href="img/logo.png">
 <link rel="preload" as="image" href="img/sfondo.jpg">
-<link rel="stylesheet" href="css/fonts.css?v=27">
-<link rel="stylesheet" href="css/style.css?v=27">
+<link rel="stylesheet" href="css/fonts.css?v=28">
+<link rel="stylesheet" href="css/style.css?v=28">
 </head>
 <body>
 
@@ -62,16 +62,16 @@
     </div>
   </section>
 
-  <!-- Indice: cosa trovi nel portfolio -->
-  <section class="index wrap" id="indice" aria-label="Cosa trovi qui">
-    <p class="eyebrow">Cosa trovi qui</p>
-    <ol class="toc">
-      <li><a href="#idea"><span class="toc-n">01</span><span class="toc-t">L'idea</span><span class="toc-d">Perché CEnTRO e cosa cambia</span></a></li>
-      <li><a href="#percorso"><span class="toc-n">02</span><span class="toc-t">Come funziona</span><span class="toc-d">Dal questionario alla piazza</span></a></li>
-      <li><a href="#app"><span class="toc-n">03</span><span class="toc-t">Dentro l'app</span><span class="toc-d">Le funzioni e il loro valore</span></a></li>
-      <li><a href="#aziende"><span class="toc-n">04</span><span class="toc-t">Per le aziende</span><span class="toc-d">Organizzatori, agenzie, negozi</span></a></li>
-      <li><a href="#investitori"><span class="toc-n">05</span><span class="toc-t">Per chi investirà</span><span class="toc-d">Dove nasce il valore e cosa dimostreremo</span></a></li>
-    </ol>
+  <!-- Che cos'è CEnTRO, in due parole -->
+  <section class="whatis wrap" id="cosa-e">
+    <p class="eyebrow">CEnTRO in due parole</p>
+    <p class="whatis-t">Rispondi a un questionario su di te. <em>CEnTRO ti dice cosa fare in città, e con chi.</em></p>
+    <ul class="whatis-ex">
+      <li data-reveal><span class="wx-q">Ti piace il jazz e sei nuovo in città</span><span class="wx-a">Un concerto stasera, con tre persone affini che ci vanno</span></li>
+      <li data-reveal><span class="wx-q">Vuoi provare la ceramica</span><span class="wx-a">Un laboratorio per principianti sabato, a un chilometro</span></li>
+      <li data-reveal><span class="wx-q">Cerchi una stanza</span><span class="wx-a">Case con coinquilini compatibili con te</span></li>
+    </ul>
+    <p class="whatis-b"><b>E per le aziende del territorio?</b> CEnTRO porta le loro proposte davanti alle persone giuste e mostra che cosa chiede la città.</p>
   </section>
 
   <!-- L'idea: tre card che si scartano scorrendo -->
@@ -265,107 +265,24 @@
       <h2>Le persone giuste, <em>per ogni proposta.</em></h2>
     </div>
 
-    <!-- Insights: analisi di mercato per le aziende -->
+    <!-- CEnTRO Insights: analisi di mercato per le aziende -->
     <div class="wrap insights-head">
       <p class="sub-k">CEnTRO Insights</p>
       <h3 class="ins-title">Conosci il tuo pubblico. <em>Comprendi la tua città.</em></h3>
-      <p class="lead">Quali eventi vorrebbero le persone della tua città? Che cosa cercano più spesso? Che cosa manca nel territorio?</p>
-      <div class="sources" data-reveal aria-label="Da dove vengono i dati">
-        <div class="src-k">Ciò che le persone dichiarano</div>
-        <ul><li>Questionario</li><li>Sondaggi volontari</li></ul>
-        <div class="src-k">Ciò che le persone fanno</div>
-        <ul><li>Ricerche nell'app</li><li>Domande a Nia</li><li>Richieste su Spotted</li><li>Prenotazioni e presenze</li></ul>
-        <i class="src-down" aria-hidden="true"></i>
-        <b>Analisi statistiche e aggregate</b>
+      <div class="flow2" data-reveal aria-label="Come nascono gli Insights">
+        <div><b>Cosa dicono</b><span>questionario e sondaggi</span></div>
+        <i aria-hidden="true">+</i>
+        <div><b>Cosa fanno</b><span>ricerche, richieste, presenze</span></div>
+        <i aria-hidden="true">=</i>
+        <div class="res"><b>Insights</b><span>in forma aggregata</span></div>
       </div>
+      <button class="btn btn-primary ins-open" type="button" data-open="insights">Scopri i 6 strumenti Insights</button>
+      <p class="ins-note">Dati statistici e aggregati: nessuna informazione sul singolo utente.</p>
     </div>
 
-    <div class="deck deck-feat deck-ins" style="--cards:6">
-      <div class="wrap deck-stage">
-        <div class="deck-cards">
-          <article class="dcard fcard feat">
-            <p class="ins-k">City Insights</p>
-            <h3>Che cosa interessa alla città</h3>
-            <p>Interessi, bisogni e preferenze più ricorrenti tra gli utenti locali.</p>
-            <div class="viz viz-cloud" aria-hidden="true">
-              <span style="--z:1.25">Musica</span><span style="--z:.9">Natura</span><span style="--z:1.1">Sport</span><span style="--z:.8">Lingue</span><span style="--z:1">Cibo</span><span style="--z:.85">Arte</span><span style="--z:.75">Volontariato</span>
-            </div>
-            <p class="ins-for"><b>A chi serve</b> Imprese e associazioni</p>
-          </article>
-          <article class="dcard fcard feat">
-            <p class="ins-k">Demand Explorer</p>
-            <h3>Che cosa cercano le persone</h3>
-            <p>Prodotti, servizi, attività ed esperienze più cercati o richiesti.</p>
-            <div class="viz viz-rank" aria-hidden="true">
-              <div><span>Corsi di lingua</span><i style="--w:92%"></i></div>
-              <div><span>Concerti dal vivo</span><i style="--w:80%"></i></div>
-              <div><span>Stanze in centro</span><i style="--w:66%"></i></div>
-              <div><span>Esperienze gastronomiche</span><i style="--w:52%"></i></div>
-              <p class="vf-cap">Le ricerche più frequenti nel territorio</p>
-            </div>
-            <p class="ins-for"><b>A chi serve</b> Imprenditori e commercianti</p>
-          </article>
-          <article class="dcard fcard feat">
-            <p class="ins-k">Opportunity Gap</p>
-            <h3>Che cosa manca</h3>
-            <p>Bisogni frequenti che sembrano trovare poche risposte nell'offerta presente su CEnTRO.</p>
-            <div class="viz viz-gap" aria-hidden="true">
-              <div class="gap-leg"><span class="q">Richieste</span><span class="o">Proposte</span></div>
-              <div class="gap-row"><span>Concerti</span><i class="q" style="--w:78%"></i><i class="o" style="--w:70%"></i></div>
-              <div class="gap-row hot"><span>Laboratori di ceramica <em>opportunità</em></span><i class="q" style="--w:74%"></i><i class="o" style="--w:14%"></i></div>
-              <div class="gap-row"><span>Corsi sportivi</span><i class="q" style="--w:60%"></i><i class="o" style="--w:55%"></i></div>
-            </div>
-            <p class="ins-for"><b>A chi serve</b> Nuove imprese e attività esistenti</p>
-          </article>
-          <article class="dcard fcard feat">
-            <p class="ins-k">Audience Insights</p>
-            <h3>Chi partecipa davvero</h3>
-            <p>Interessi e preferenze aggregate dei partecipanti a un evento o dei clienti di un'attività.</p>
-            <div class="viz viz-aud" aria-hidden="true">
-              <p class="aud-k">Pubblico di un concerto</p>
-              <div class="aud-chips"><span>Rock</span><span>Indie</span><span>Jazz</span><span>Teatro</span><span>Gruppi di amici</span></div>
-              <div class="aud-bars"><div><span>Prenotazioni</span><i style="--w:90%"></i></div><div><span>Presenze effettive</span><i class="pres" style="--w:72%"></i></div></div>
-            </div>
-            <p class="ins-for"><b>A chi serve</b> Organizzatori e aziende</p>
-          </article>
-          <article class="dcard fcard feat">
-            <p class="ins-k">Trend Monitor</p>
-            <h3>Come cambiano le richieste</h3>
-            <p>L'evoluzione nel tempo delle preferenze e delle richieste locali.</p>
-            <div class="viz viz-trend" aria-hidden="true">
-              <svg viewBox="0 0 300 120" preserveAspectRatio="none"><path class="t-grid" d="M0 30H300M0 60H300M0 90H300"/><path class="t-up" pathLength="1" d="M0 100 C40 96 70 88 100 80 S160 60 190 50 S250 26 300 14"/><path class="t-down" pathLength="1" d="M0 40 C40 44 80 52 120 58 S200 74 240 84 S280 92 300 96"/></svg>
-              <div class="trend-leg"><span class="up">Esperienze all'aperto</span><span class="down">Serate al chiuso</span></div>
-              <p class="vf-cap">Per categoria, fascia oraria e zona, quando disponibili</p>
-            </div>
-            <p class="ins-for"><b>A chi serve</b> Imprese del territorio</p>
-          </article>
-          <article class="dcard fcard feat">
-            <p class="ins-k">Market Comparison</p>
-            <h3>Città a confronto</h3>
-            <p>Differenze tra le preferenze degli utenti di più città o territori.</p>
-            <div class="viz viz-cmp" aria-hidden="true">
-              <div class="cmp-leg"><span class="a">Città A</span><span class="b">Città B</span></div>
-              <div class="cmp-row"><span>Musica</span><i class="a" style="--w:80%"></i><i class="b" style="--w:56%"></i></div>
-              <div class="cmp-row"><span>Sport</span><i class="a" style="--w:48%"></i><i class="b" style="--w:74%"></i></div>
-              <div class="cmp-row"><span>Cultura</span><i class="a" style="--w:66%"></i><i class="b" style="--w:62%"></i></div>
-            </div>
-            <p class="ins-for"><b>A chi serve</b> Catene commerciali e organizzatori</p>
-          </article>
-        </div>
-        <div class="deck-foot">
-          <div class="bar-dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <span class="hint">Scorri verso il basso</span>
-        </div>
-      </div>
+    <div class="wrap biz-types">
+      <h3 class="types-title">Per ogni tipo di azienda</h3>
     </div>
-
-    <div class="wrap ins-close">
-      <p class="ins-motto">Dalle preferenze alle opportunità.</p>
-      <p>Progettare iniziative, prodotti e servizi su esigenze osservabili, non solo su intuizioni.</p>
-      <p class="ins-note">I dati sono elaborati in forma statistica e aggregata: nessuna informazione sul singolo utente. I sondaggi sono su base volontaria. Le grafiche sono esempi illustrativi.</p>
-      <p class="sub-k">Per ogni tipo di azienda</p>
-    </div>
-
     <div class="wrap" data-tabs>
       <div class="seg" role="tablist" aria-label="Tipi di azienda">
         <button class="tab" role="tab" aria-selected="true" aria-controls="az-org" id="ta-org">Organizzatori</button>
@@ -432,44 +349,46 @@
   <section class="invest" id="investitori">
     <div class="wrap">
       <p class="eyebrow">Per chi investirà</p>
-      <h2>Utile alle persone, <em>conveniente per le aziende.</em></h2>
-      <p class="invest-lead">CEnTRO collega servizi utili alle persone a motivi concreti per cui le aziende scelgono di pagare.</p>
+      <h2>Le persone la usano per uscire. <em>Le aziende pagano per raggiungerle e capirle.</em></h2>
 
-      <div class="market" data-reveal aria-label="Come si incontrano persone e aziende">
-        <div class="mk-side"><b>Persone</b><span>Scoprono, si incontrano, partecipano</span></div>
-        <i class="flow" aria-hidden="true"></i>
-        <div class="mk-mid"><span class="brand-mark" aria-hidden="true"></span><b>CEnTRO</b></div>
-        <i class="flow up" aria-hidden="true"></i>
-        <div class="mk-side"><b>Aziende</b><span>Promuovono, gestiscono, capiscono il pubblico</span></div>
+      <p class="sub-k">Tre fonti di ricavo</p>
+      <div class="rev">
+        <article data-reveal><span class="rev-n">1</span><b>Pubblicità mirata</b><p>Negozi e inserzionisti pagano per arrivare a chi ha i gusti giusti, nel posto giusto.</p></article>
+        <article data-reveal><span class="rev-n">2</span><b>Abbonamenti business</b><p>Organizzatori e agenzie pagano gli strumenti di gestione e CEnTRO Insights.</p></article>
+        <article data-reveal><span class="rev-n">3</span><b>Commissioni</b><p>Una quota sui biglietti e sulle prenotazioni che passano dall'app.</p></article>
       </div>
 
-      <p class="sub-k">Perché le aziende pagano</p>
-      <div class="levers">
-        <div class="lever" data-reveal><span class="lever-k">Promozione pertinente</span><span class="lever-arrow" aria-hidden="true"></span><span class="lever-v">Servizi pubblicitari</span></div>
-        <div class="lever" data-reveal><span class="lever-k">Strumenti operativi e CEnTRO Insights (analisi di mercato e sondaggi)</span><span class="lever-arrow" aria-hidden="true"></span><span class="lever-v">Abbonamenti</span></div>
-        <div class="lever" data-reveal><span class="lever-k">Partecipazione e biglietti</span><span class="lever-arrow" aria-hidden="true"></span><span class="lever-v">Commissioni</span></div>
+      <p class="sub-k">Perché può crescere</p>
+      <div class="loop" data-reveal aria-label="Il circolo che fa crescere CEnTRO">
+        <svg viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="102"/><circle class="loop-run" cx="150" cy="150" r="102" pathLength="1"/></svg>
+        <span class="lp l1">Più persone</span>
+        <span class="lp l2">Più proposte dalle aziende</span>
+        <span class="lp l3">Suggerimenti migliori</span>
+        <b class="lp-core">Ogni giro rafforza il successivo</b>
       </div>
-
-      <p class="edge" data-reveal><b>Il dato che altri non hanno:</b> preferenze dichiarate e comportamenti osservati, nello stesso posto.</p>
+      <ul class="why-grow">
+        <li data-reveal><b>Un dato che gli altri non hanno.</b> Preferenze dichiarate e comportamenti reali, nello stesso posto.</li>
+        <li data-reveal><b>Un motivo per tornare ogni giorno.</b> Eventi, gruppi, Spotted e casa: non un'app da usare una volta.</li>
+        <li data-reveal><b>Si replica città per città.</b> Si parte dall'Aquila, poi lo stesso modello si porta altrove.</li>
+      </ul>
 
       <div class="prove" data-reveal>
-        <p class="prove-k">Il vantaggio da dimostrare</p>
-        <p class="prove-t">Far incontrare meglio persone e offerte del territorio, creando valore continuo per entrambe.</p>
+        <p class="prove-k">Cosa dimostreremo con l'MVP</p>
         <ul class="measures">
-          <li>Precisione dei suggerimenti</li>
-          <li>Conversioni</li>
-          <li>Fidelizzazione</li>
-          <li>Ritorno economico</li>
+          <li>Il questionario prevede ciò che piace</li>
+          <li>Le persone partecipano davvero</li>
+          <li>Gli utenti tornano</li>
+          <li>Le aziende ottengono risultati</li>
         </ul>
-        <p class="prove-n">Sono risultati da verificare. Le analisi descriveranno tendenze aggregate e distingueranno le iscrizioni dalla partecipazione effettiva.</p>
+        <p class="prove-n">Distingueremo sempre le iscrizioni dalla partecipazione effettiva.</p>
       </div>
 
       <p class="sub-k">A che punto siamo</p>
       <ol class="stage">
         <li class="done" data-reveal><b>Questionario</b><span>Domande e punteggi pronti</span></li>
         <li class="done" data-reveal><b>Prototipo</b><span>Tutti i flussi dell'app disegnati</span></li>
-        <li class="now" data-reveal><b>MVP</b><span>In costruzione: misura quanto il questionario prevede ciò che piace</span></li>
-        <li data-reveal><b>Test a L'Aquila</b><span>La prima città di partenza</span></li>
+        <li class="now" data-reveal><b>MVP</b><span>In costruzione</span></li>
+        <li data-reveal><b>Test a L'Aquila</b><span>La prima città</span></li>
       </ol>
     </div>
   </section>
@@ -500,6 +419,87 @@
         <button class="tab" type="button" role="radio" data-theme-opt="dark">Scuro</button>
       </div>
       <p class="theme-note" id="themeNote"></p>
+    </div>
+  </div>
+</div>
+
+<!-- Strumenti Insights (si aprono dal pulsante) -->
+<div class="sheet" id="insights" role="dialog" aria-modal="true" aria-labelledby="insTitle" hidden>
+  <div class="sheet-in">
+    <div class="sheet-head wrap">
+      <div><p class="eyebrow">CEnTRO Insights</p><p class="sheet-title" id="insTitle">Sei strumenti, una città</p></div>
+      <button class="nia-close" type="button" data-close aria-label="Chiudi">&times;</button>
+    </div>
+    <div class="wrap icards">
+          <article class="icard feat">
+            <p class="ins-k">City Insights</p>
+            <h3>Che cosa interessa alla città</h3>
+            <p>Interessi, bisogni e preferenze più ricorrenti tra gli utenti locali.</p>
+            <div class="viz viz-cloud" aria-hidden="true">
+              <span style="--z:1.25">Musica</span><span style="--z:.9">Natura</span><span style="--z:1.1">Sport</span><span style="--z:.8">Lingue</span><span style="--z:1">Cibo</span><span style="--z:.85">Arte</span><span style="--z:.75">Volontariato</span>
+            </div>
+            <p class="ins-for"><b>A chi serve</b> Imprese e associazioni</p>
+          </article>
+          <article class="icard feat">
+            <p class="ins-k">Demand Explorer</p>
+            <h3>Che cosa cercano le persone</h3>
+            <p>Prodotti, servizi, attività ed esperienze più cercati o richiesti.</p>
+            <div class="viz viz-rank" aria-hidden="true">
+              <div><span>Corsi di lingua</span><i style="--w:92%"></i></div>
+              <div><span>Concerti dal vivo</span><i style="--w:80%"></i></div>
+              <div><span>Stanze in centro</span><i style="--w:66%"></i></div>
+              <div><span>Esperienze gastronomiche</span><i style="--w:52%"></i></div>
+              <p class="vf-cap">Le ricerche più frequenti nel territorio</p>
+            </div>
+            <p class="ins-for"><b>A chi serve</b> Imprenditori e commercianti</p>
+          </article>
+          <article class="icard feat">
+            <p class="ins-k">Opportunity Gap</p>
+            <h3>Che cosa manca</h3>
+            <p>Bisogni frequenti che sembrano trovare poche risposte nell'offerta presente su CEnTRO.</p>
+            <div class="viz viz-gap" aria-hidden="true">
+              <div class="gap-leg"><span class="q">Richieste</span><span class="o">Proposte</span></div>
+              <div class="gap-row"><span>Concerti</span><i class="q" style="--w:78%"></i><i class="o" style="--w:70%"></i></div>
+              <div class="gap-row hot"><span>Laboratori di ceramica <em>opportunità</em></span><i class="q" style="--w:74%"></i><i class="o" style="--w:14%"></i></div>
+              <div class="gap-row"><span>Corsi sportivi</span><i class="q" style="--w:60%"></i><i class="o" style="--w:55%"></i></div>
+            </div>
+            <p class="ins-for"><b>A chi serve</b> Nuove imprese e attività esistenti</p>
+          </article>
+          <article class="icard feat">
+            <p class="ins-k">Audience Insights</p>
+            <h3>Chi partecipa davvero</h3>
+            <p>Interessi e preferenze aggregate dei partecipanti a un evento o dei clienti di un'attività.</p>
+            <div class="viz viz-aud" aria-hidden="true">
+              <p class="aud-k">Pubblico di un concerto</p>
+              <div class="aud-chips"><span>Rock</span><span>Indie</span><span>Jazz</span><span>Teatro</span><span>Gruppi di amici</span></div>
+              <div class="aud-bars"><div><span>Prenotazioni</span><i style="--w:90%"></i></div><div><span>Presenze effettive</span><i class="pres" style="--w:72%"></i></div></div>
+            </div>
+            <p class="ins-for"><b>A chi serve</b> Organizzatori e aziende</p>
+          </article>
+          <article class="icard feat">
+            <p class="ins-k">Trend Monitor</p>
+            <h3>Come cambiano le richieste</h3>
+            <p>L'evoluzione nel tempo delle preferenze e delle richieste locali.</p>
+            <div class="viz viz-trend" aria-hidden="true">
+              <svg viewBox="0 0 300 120" preserveAspectRatio="none"><path class="t-grid" d="M0 30H300M0 60H300M0 90H300"/><path class="t-up" pathLength="1" d="M0 100 C40 96 70 88 100 80 S160 60 190 50 S250 26 300 14"/><path class="t-down" pathLength="1" d="M0 40 C40 44 80 52 120 58 S200 74 240 84 S280 92 300 96"/></svg>
+              <div class="trend-leg"><span class="up">Esperienze all'aperto</span><span class="down">Serate al chiuso</span></div>
+              <p class="vf-cap">Per categoria, fascia oraria e zona, quando disponibili</p>
+            </div>
+            <p class="ins-for"><b>A chi serve</b> Imprese del territorio</p>
+          </article>
+          <article class="icard feat">
+            <p class="ins-k">Market Comparison</p>
+            <h3>Città a confronto</h3>
+            <p>Differenze tra le preferenze degli utenti di più città o territori.</p>
+            <div class="viz viz-cmp" aria-hidden="true">
+              <div class="cmp-leg"><span class="a">Città A</span><span class="b">Città B</span></div>
+              <div class="cmp-row"><span>Musica</span><i class="a" style="--w:80%"></i><i class="b" style="--w:56%"></i></div>
+              <div class="cmp-row"><span>Sport</span><i class="a" style="--w:48%"></i><i class="b" style="--w:74%"></i></div>
+              <div class="cmp-row"><span>Cultura</span><i class="a" style="--w:66%"></i><i class="b" style="--w:62%"></i></div>
+            </div>
+            <p class="ins-for"><b>A chi serve</b> Catene commerciali e organizzatori</p>
+          </article>
+      <p class="ins-note">Le grafiche sono esempi illustrativi. I sondaggi sono su base volontaria.</p>
     </div>
   </div>
 </div>
@@ -568,9 +568,9 @@
   </div>
 </div>
 
-<script src="js/site.js?v=27"></script>
-<script src="js/intro.js?v=27"></script>
-<script src="js/nia.js?v=27"></script>
-<script src="js/sections.js?v=27"></script>
+<script src="js/site.js?v=28"></script>
+<script src="js/intro.js?v=28"></script>
+<script src="js/nia.js?v=28"></script>
+<script src="js/sections.js?v=28"></script>
 </body>
 </html>

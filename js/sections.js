@@ -40,6 +40,23 @@
   opts.forEach(function (b) { b.addEventListener('click', function () { window.centroTheme.set(b.getAttribute('data-theme-opt')); showTheme(); }); });
   showTheme();
 
+  // Fogli a tutto schermo (strumenti Insights): si aprono da un pulsante [data-open]
+  Array.prototype.forEach.call(document.querySelectorAll('[data-open]'), function (btn) {
+    var sheet = document.getElementById(btn.getAttribute('data-open'));
+    if (!sheet) return;
+    var close = function () { sheet.hidden = true; document.body.classList.remove('lock'); btn.focus({ preventScroll: true }); };
+    btn.addEventListener('click', function () {
+      sheet.hidden = false; sheet.scrollTop = 0;
+      document.body.classList.add('lock');
+      var cards = sheet.querySelectorAll('.feat');
+      cards.forEach(function (c) { c.classList.remove('in'); });
+      setTimeout(function () { cards.forEach(function (c) { c.classList.add('in'); }); }, 150);
+      sheet.querySelector('[data-close]').focus({ preventScroll: true });
+    });
+    sheet.addEventListener('click', function (e) { if (e.target.closest('[data-close]')) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !sheet.hidden) close(); });
+  });
+
   // Foto profilo: se img/nicholas.jpg non c'è, resta l'iniziale
   var photo = document.getElementById('mePhoto');
   if (photo) {
