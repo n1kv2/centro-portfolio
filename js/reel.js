@@ -5,7 +5,8 @@
 // - Dopo l'introduzione si sceglie un profilo: si vedono solo i suoi reel, poi un reel di direzione.
 //   Senza scelta si vede tutto in ordine.
 (function () {
-  var scroller = document.getElementById('reels');
+  // Scorre la pagina vera: così Safari e Chrome riducono la loro barra mentre si scorre
+  var scroller = document.scrollingElement || document.documentElement;
   var all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
   var seg = document.getElementById('rseg');
   var count = document.getElementById('rcount');
@@ -47,7 +48,7 @@
   }
 
   function firstOf(track) { return all.filter(function (r) { return r.getAttribute('data-track') === track; })[0]; }
-  function go(reel, smooth) { scroller.scrollTo({ top: reel.offsetTop, behavior: smooth === false || reduce ? 'auto' : 'smooth' }); }
+  function go(reel, smooth) { window.scrollTo({ top: reel.offsetTop, behavior: smooth === false || reduce ? 'auto' : 'smooth' }); }
 
   function choose(track) { mode = track; applyMode(); go(firstOf(track)); }
   function showAll(target) { mode = 'all'; applyMode(); if (target) go(target); }
@@ -108,18 +109,18 @@
     chap.textContent = r.getAttribute('data-chapter');
     bar.classList.toggle('on-light', isLight(r));
     if (r.classList.contains('r-feed')) sortFeed(r);
-    if (r.classList.contains('r-merge')) playMerge();
+    if (r.classList.contains('r-merge')) { sizeField(); playMerge(); }
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
     renderIndex();
   }
   function check() {
-    var mid = scroller.clientHeight / 2, top = scroller.scrollTop, best = 0;
+    var mid = window.innerHeight / 2, top = window.scrollY, best = 0;
     visible.forEach(function (r, k) { if (r.offsetTop <= top + mid && r.offsetTop + r.offsetHeight > top + mid) best = k; });
     activate(best);
   }
   var ticking = false;
-  scroller.addEventListener('scroll', function () {
+  window.addEventListener('scroll', function () {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () { check(); ticking = false; });
@@ -162,7 +163,13 @@
     return '<span class="mt" style="--a:' + ang + 'deg;--r:calc(var(--fs) * ' + (inner ? 0.27 : 0.45) + ');--d:' + delay.toFixed(2) + 's">' +
       '<span><i style="--c:linear-gradient(145deg,' + a[1] + ',' + a[2] + ')"></i><em>' + a[0] + '</em></span></span>';
   }).join('');
-  function sizeField() { field.style.setProperty('--fs', field.offsetWidth + 'px'); }
+  // Le app si adattano allo spazio realmente disponibile (schermi bassi, barre del browser)
+  function sizeField() {
+    var box = merge.getBoundingClientRect();
+    var size = Math.max(200, Math.min(box.width * 0.9, box.height - 40, 340));
+    field.style.width = size + 'px';
+    field.style.setProperty('--fs', size + 'px');
+  }
   sizeField();
   window.addEventListener('resize', sizeField);
   var mergeTimers = [];
@@ -442,7 +449,7 @@
     mode = saved.mode;
     applyMode(true);
     var target = visible[Math.min(saved.i, visible.length - 1)] || visible[0];
-    scroller.scrollTop = target.offsetTop;
+    window.scrollTo(0, target.offsetTop);
     check();
   } else {
     applyMode();
