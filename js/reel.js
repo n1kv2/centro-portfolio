@@ -17,7 +17,7 @@
   var TRACKS = { utente: 'Per chi usa l\'app', azienda: 'Per le aziende', investitore: 'Per chi investe' };
   var NAMES = { utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' };
   var mode = 'all';
-  var visible = [], bits = [], current = -1;
+  var visible = [], bits = [], chapters = [], current = -1;
   var pad = function (k) { return (k < 10 ? '0' : '') + k; };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ss = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
@@ -38,7 +38,14 @@
     }
     all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
     visible = all.filter(function (r) { return !r.hidden; });
-    seg.innerHTML = visible.map(function () { return '<i></i>'; }).join('');
+    // Un segmento per sezione (capitolo), come le storie di Instagram
+    chapters = [];
+    visible.forEach(function (r) {
+      var c = r.getAttribute('data-chapter');
+      if (!chapters.length || chapters[chapters.length - 1].name !== c) chapters.push({ name: c, reels: [] });
+      chapters[chapters.length - 1].reels.push(r);
+    });
+    seg.innerHTML = chapters.map(function (c) { return '<i title="' + c.name.replace(/"/g, '&quot;') + '"></i>'; }).join('');
     bits = Array.prototype.slice.call(seg.children);
     document.querySelectorAll('[data-go]').forEach(function (b) { b.classList.toggle('picked', b.getAttribute('data-go') === mode); });
     all.forEach(function (r) { if (r.hidden && r.classList.contains('on')) leave(r); });
@@ -104,7 +111,14 @@
     var r = visible[i];
     void r.offsetWidth;
     r.classList.add('on');
-    bits.forEach(function (b, k) { b.classList.toggle('done', k < i); b.classList.toggle('now', k === i); });
+    // Ogni sezione si riempie man mano che scorri i suoi momenti
+    var ci = 0;
+    chapters.forEach(function (c, k) { if (c.reels.indexOf(r) >= 0) ci = k; });
+    bits.forEach(function (b, k) {
+      var p = k < ci ? 1 : k > ci ? 0 : (chapters[ci].reels.indexOf(r) + 1) / chapters[ci].reels.length;
+      b.style.setProperty('--p', p.toFixed(3));
+      b.classList.toggle('now', k === ci);
+    });
     count.textContent = pad(i + 1) + ' / ' + pad(visible.length);
     chap.textContent = r.getAttribute('data-chapter');
     bar.classList.toggle('on-light', isLight(r));
