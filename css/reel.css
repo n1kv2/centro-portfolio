@@ -725,3 +725,9 @@ html.reel-root { scroll-behavior: auto; scroll-snap-type: y mandatory; }
   transform-origin: left; transform: scaleX(var(--p, 0)); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
 .rseg i.done::after { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .rseg i::after { transition: none; } }
+
+/* ================= v14: linee bianche, box sempre scuro ================= */
+.rseg i { background: rgba(255,255,255,.28); }
+.rseg i::after { background: #fff; }
+.rbox, .rbar.on-light .rbox { color: #fff; background: rgba(10, 20, 38, .42); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), 0 8px 26px rgba(5,15,35,.18); }
+.rindex-btn, .rbar.on-light .rindex-btn { background: rgba(255,255,255,.92); color: #0B1B33; }
