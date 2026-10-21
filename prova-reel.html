@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=4">
+<link rel="stylesheet" href="css/reel.css?v=5">
 </head>
 <body class="reel-page">
 
@@ -35,7 +35,7 @@
 <header class="rbar" id="rbar">
   <div class="rbox">
     <div class="rbox-row">
-      <span class="rlogo"><span class="brand-mark" aria-hidden="true"></span><span class="rchap" id="rchap">Introduzione</span></span>
+      <button class="rlogo" type="button" id="rhome" aria-label="Torna all'inizio"><span class="brand-mark" aria-hidden="true"></span><span class="rchap" id="rchap">Introduzione</span></button>
       <span class="rcount" id="rcount">01 / 10</span>
       <button class="rindex-btn" type="button" id="rindexBtn" aria-haspopup="dialog" aria-controls="rindex">Indice</button>
     </div>
@@ -47,6 +47,12 @@
 <div class="rindex" id="rindex" role="dialog" aria-modal="true" aria-labelledby="rindexTitle" hidden>
   <div class="rindex-panel">
     <div class="rindex-head"><p id="rindexTitle">Indice</p><button class="rindex-close" type="button" data-close aria-label="Chiudi indice">&times;</button></div>
+    <div class="rx-actions">
+      <a class="rx-act" href="chi-sono.html">Chi sono</a>
+      <button class="rx-act" type="button" data-act="contact">Contattami</button>
+      <button class="rx-act" type="button" data-act="choose">Scegli il percorso</button>
+      <button class="rx-act" type="button" data-act="top">Ricomincia</button>
+    </div>
     <div class="rindex-list" id="rindexList"></div>
     <p class="rindex-mode" id="rindexMode"></p>
   </div>
@@ -122,14 +128,36 @@
       <div class="quiz-bar"><i></i></div>
       <p class="quiz-n">Domanda 12 di 40</p>
       <p class="quiz-q">Una serata ideale è fatta di persone nuove.</p>
-      <div class="quiz-scale"><span style="--c:#FF8C45"></span><span style="--c:#FFB067"></span><span style="--c:#C9CED8"></span><span style="--c:#8CC0FF"></span><span style="--c:#489DFE"></span></div>
-      <div class="quiz-ends"><span>Per niente</span><span>Del tutto</span></div>
+      <div class="quiz-scale">
+        <span style="--c:#FF8C45"><b>1</b><em>Per niente</em></span>
+        <span style="--c:#FFB067"><b>2</b><em>Poco</em></span>
+        <span style="--c:#A9B2C0"><b>3</b><em>Così così</em></span>
+        <span style="--c:#8CC0FF"><b>4</b><em>Abbastanza</em></span>
+        <span style="--c:#489DFE"><b>5</b><em>Del tutto</em></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="reel r-dark r-nia" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Nia" data-desc="L'algoritmo che collega i tuoi gusti alla città">
+    <div class="r-in r-top">
+      <p class="nd-label"><span>U2</span>Nia, l'algoritmo</p>
+      <h2 class="r-h2 on-dark">Nia unisce chi sei <em>a ciò che offre la città.</em></h2>
+    </div>
+    <div class="nflow" aria-hidden="true">
+      <div class="nf-in"><span style="--d:.5s">Ami la musica dal vivo</span><span style="--d:.65s">Preferisci piccoli gruppi</span><span style="--d:.8s">Animo creativo</span><span style="--d:.95s">Ti muovi a piedi</span></div>
+      <div class="nf-core"><img src="img/nia.png" alt=""><b>Nia</b></div>
+      <ul class="nf-out">
+        <li style="--d:2.1s"><span class="t">Evento</span><b>Concerto jazz in centro</b><em>94%</em></li>
+        <li style="--d:2.35s"><span class="t">Attività</span><b>Laboratorio di ceramica</b><em>89%</em></li>
+        <li style="--d:2.6s"><span class="t">Casa</span><b>Stanza con coinquilini affini</b><em>86%</em></li>
+        <li style="--d:2.85s"><span class="t">Opportunità</span><b>Bando per giovani creativi</b><em>82%</em></li>
+      </ul>
     </div>
   </section>
 
   <section class="reel r-light r-feed" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Proposte su misura" data-desc="Ogni giorno, in ordine di affinità">
     <div class="r-in r-top">
-      <p class="nd-label"><span>U2</span>Come funziona</p>
+      <p class="nd-label"><span>U3</span>Come funziona</p>
       <h2 class="r-h2">Ricevi proposte <em>su misura.</em></h2>
       <p class="r-body">Ogni giorno, le cose da fare in città, in ordine di affinità con te.</p>
     </div>
@@ -140,41 +168,96 @@
     </ol>
   </section>
 
-  <section class="reel r-dark r-people r-shot" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Con chi andarci" data-desc="Persone affini, poi un gruppo">
+  <section class="reel r-dark r-group r-shot" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="In gruppo o da solo" data-desc="Con il tuo gruppo o con persone nuove">
+    <img class="r-photo" src="img/piazza.jpg" alt="Quattro amici seduti sui gradini di una piazza scelgono insieme cosa fare." loading="lazy">
     <div class="r-in r-top">
-      <p class="nd-label"><span>U3</span>Come funziona</p>
-      <h2 class="r-h2 on-dark">Trovi con chi andarci.</h2>
-      <p class="r-body on-dark">Persone affini che vanno nello stesso posto. Da lì, spesso, nasce un gruppo.</p>
+      <p class="nd-label"><span>U4</span>Con chi andarci</p>
+      <h2 class="r-h2 on-dark">In gruppo <em>o da solo.</em></h2>
     </div>
-    <img class="r-photo" src="img/piazza.jpg" alt="Quattro amici seduti sui gradini di una piazza." loading="lazy">
-    <div class="people" aria-hidden="true">
-      <span class="pp-core">Concerto jazz · stasera</span>
-      <span class="pp p1">M</span><span class="pp p2">L</span><span class="pp p3">G</span><span class="pp p4">S</span><span class="pp p5">A</span>
-      <span class="pp-tag">5 persone affini</span>
+    <div class="modes">
+      <article style="--d:.9s">
+        <div class="av-group" aria-hidden="true"><i style="--c:#F06139"></i><i style="--c:#2FB37A"></i><i style="--c:#6A3FD1"></i><i style="--c:#2E9BD6"></i></div>
+        <p class="m-k">Con il tuo gruppo</p>
+        <b>Scegliete insieme cosa fare</b>
+        <p>Eventi, attività e attività create dalla community: il gruppo nato su CEnTRO continua a uscire.</p>
+      </article>
+      <article style="--d:1.4s">
+        <div class="av-solo" aria-hidden="true"><i style="--c:#D43998"></i><span>+</span></div>
+        <p class="m-k">Da solo</p>
+        <b>Ti unisci, o crei tu</b>
+        <p>Partecipi con persone affini oppure proponi un'attività: CEnTRO trova chi ha voglia della stessa cosa.</p>
+      </article>
     </div>
   </section>
 
-  <section class="reel r-light r-week" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Una settimana" data-desc="Quattro uscite, un gruppo nuovo">
+  <section class="reel r-light r-areas" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Le aree dell'app" data-desc="Eventi, Community, Spotted, Esplora, Casa">
     <div class="r-in r-top">
-      <p class="nd-label"><span>U4</span>Una settimana con CEnTRO</p>
-      <ol class="nd-week rweek">
-        <li class="on"><time>Martedì · 19:30</time><div><b>Aperitivo in inglese</b><span>Con cinque persone affini</span></div><img src="img/lingue.jpg" alt=""></li>
-        <li class="on"><time>Giovedì · 19:00</time><div><b>Inaugurazione d'arte</b><span>Ci vanno tre persone come te</span></div><img src="img/inaugurazione.jpg" alt=""></li>
-        <li class="on"><time>Sabato · 10:00</time><div><b>Laboratorio di ceramica</b><span>Che non avresti cercato</span></div><img src="img/ceramica.jpg" alt=""></li>
-        <li class="on"><time>Domenica · 6:00</time><div><b>Escursione all'alba</b><span>Con il gruppo nato martedì</span></div><img src="img/trekking.jpg" alt=""></li>
-      </ol>
-      <p class="r-say">Nessuna ricerca. <em>Solo uscite.</em></p>
+      <p class="nd-label"><span>U5</span>Le aree dell'app</p>
+      <h2 class="r-h2 small-h">Cinque aree, <em>un'unica città.</em></h2>
     </div>
-  </section>
-
-  <section class="reel r-dark r-more" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Non solo eventi" data-desc="Spotted, Esplora e Casa">
-    <div class="r-in r-center">
-      <p class="nd-label"><span>U5</span>Non solo eventi</p>
-      <ul class="more">
-        <li><b>Spotted</b><span>Domande, consigli e aiuti tra le persone della città.</span></li>
-        <li><b>Esplora</b><span>Bandi, concorsi ed esperienze in azienda a cui puoi partecipare davvero.</span></li>
-        <li><b>Casa</b><span>Stanze e coinquilini compatibili con il tuo modo di vivere.</span></li>
-      </ul>
+    <div class="acar">
+      <div class="acar-track" id="acarTrack">
+<article class="acard feat">
+              <h3>Eventi</h3>
+              <p>Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.</p>
+              <div class="viz viz-feed" aria-hidden="true">
+                <div class="vf-row"><img src="img/inaugurazione.jpg" alt=""><span>Inaugurazione d'arte</span><i style="--w:96%"></i></div>
+                <div class="vf-row"><img src="img/lingue.jpg" alt=""><span>Conversazione in inglese</span><i style="--w:88%"></i></div>
+                <div class="vf-row"><img src="img/ceramica.jpg" alt=""><span>Laboratorio di ceramica</span><i style="--w:74%"></i></div>
+                <p class="vf-cap">Ordinati per affinità con il tuo profilo</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Scopri senza cercare.</dd></div><div><dt>Per chi organizza</dt><dd>Arriva a chi è davvero interessato.</dd></div></dl>
+            </article>
+<article class="acard feat">
+              <h3>Community</h3>
+              <p>Chiunque propone un'attività, Nia aiuta a scriverla e arrivano persone affini con cui farla.</p>
+              <div class="viz viz-group" aria-hidden="true">
+                <span class="vg-core">Serata giochi</span>
+                <span class="vg-p p1"></span><span class="vg-p p2"></span><span class="vg-p p3"></span><span class="vg-p p4"></span><span class="vg-p p5"></span>
+                <svg viewBox="0 0 100 100" preserveAspectRatio="none"><path pathLength="1" d="M50 46 L20 26"/><path pathLength="1" d="M50 46 L80 24"/><path pathLength="1" d="M50 46 L16 66"/><path pathLength="1" d="M50 46 L84 68"/><path pathLength="1" d="M50 46 L50 70"/></svg>
+                <p class="vf-cap">Richieste ordinate per affinità con il gruppo</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Trovi compagnia per ciò che ti piace.</dd></div><div><dt>Per la piattaforma</dt><dd>Nascono gruppi che tornano a scegliere.</dd></div></dl>
+            </article>
+<article class="acard feat">
+              <h3>Spotted</h3>
+              <p>Lo spazio per domande, richieste, consigli e risposte tra le persone della città.</p>
+              <div class="viz viz-spot" aria-hidden="true">
+                <p class="vs-q">Qualcuno ha perso un mazzo di chiavi a Coppito?</p>
+                <p class="vs-a">Sì, è mio! Dove lo trovo?</p>
+                <p class="vs-q small">L'ho lasciato in portineria.</p>
+                <p class="vf-cap">Risolto in pochi minuti dalla community</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Un aiuto vicino, ogni giorno.</dd></div><div><dt>Per la piattaforma</dt><dd>Un motivo per aprire l'app anche senza eventi.</dd></div></dl>
+            </article>
+<article class="acard feat">
+              <h3>Esplora</h3>
+              <p>Bandi, concorsi ed esperienze offerte dalle aziende, scelti per interessi, requisiti e scadenze.</p>
+              <div class="viz viz-explore" aria-hidden="true">
+                <p class="ve-k">Bando</p>
+                <p class="ve-t">Giovani creativi per la città</p>
+                <ul><li>In linea con i tuoi interessi</li><li>Requisiti soddisfatti</li></ul>
+                <div class="ve-dead"><span>Scadenza</span><i></i><b>12 giorni</b></div>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Solo opportunità a cui puoi partecipare.</dd></div><div><dt>Per enti e aziende</dt><dd>Candidature più adatte.</dd></div></dl>
+            </article>
+<article class="acard feat">
+              <h3>Casa</h3>
+              <p>Annunci collegati a esigenze pratiche e preferenze di convivenza, con un confronto tra futuri coinquilini.</p>
+              <div class="viz viz-home" aria-hidden="true">
+                <div class="vh-ring"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="42"/><circle class="vh-run" cx="50" cy="50" r="42" pathLength="1"/></svg><b>Affini</b></div>
+                <ul>
+                  <li><span>Pulizia</span><i class="ok"></i></li>
+                  <li><span>Orari</span><i class="warn"></i></li>
+                  <li><span>Ospiti</span><i class="ok"></i></li>
+                  <li><span>Fumo</span><i class="ok"></i></li>
+                </ul>
+                <p class="vf-cap">Compatibilità tra coinquilini, tema per tema</p>
+              </div>
+              <dl class="gain"><div><dt>Per te</dt><dd>Una casa e persone giuste con cui viverla.</dd></div><div><dt>Per le agenzie</dt><dd>Meno contatti a vuoto.</dd></div></dl>
+            </article>
+      </div>
+      <div class="acar-foot"><div class="acar-dots" id="acarDots"></div><span>Scorri di lato</span></div>
     </div>
   </section>
 
@@ -380,6 +463,6 @@
   </div>
 </div>
 
-<script src="js/reel.js?v=4"></script>
+<script src="js/reel.js?v=5"></script>
 </body>
 </html>

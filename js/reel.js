@@ -219,6 +219,38 @@
     document.querySelectorAll('.sheet').forEach(function (s) { if (!s.hidden) { s.hidden = true; document.body.classList.remove('lock'); } });
   });
 
+  // ---------- Logo: torna all'inizio ----------
+  document.getElementById('rhome').addEventListener('click', function () { go(visible[0]); });
+
+  // ---------- Azioni sopra l'indice ----------
+  idx.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-act]');
+    if (!a) return;
+    var act = a.getAttribute('data-act');
+    closeIndex();
+    if (act === 'contact') go(document.querySelector('.r-contact'));
+    else if (act === 'choose') go(document.getElementById('choose'));
+    else if (act === 'top') go(visible[0]);
+  });
+
+  // ---------- Aree dell'app: carosello orizzontale ----------
+  var acar = document.getElementById('acarTrack');
+  if (acar) {
+    var acards = Array.prototype.slice.call(acar.children);
+    var adots = document.getElementById('acarDots');
+    adots.innerHTML = acards.map(function () { return '<i></i>'; }).join('');
+    var dots = Array.prototype.slice.call(adots.children);
+    var showCard = function () {
+      var x = acar.scrollLeft, best = 0, bd = Infinity;
+      acards.forEach(function (c, k) { var d = Math.abs(c.offsetLeft - acar.offsetLeft - 24 - x); if (d < bd) { bd = d; best = k; } });
+      dots.forEach(function (d, k) { d.classList.toggle('on', k === best); });
+      if (acar.closest('.reel').classList.contains('on')) acards[best].classList.add('in');
+    };
+    acar.addEventListener('scroll', function () { requestAnimationFrame(showCard); }, { passive: true });
+    new MutationObserver(showCard).observe(acar.closest('.reel'), { attributes: true, attributeFilter: ['class'] });
+    showCard();
+  }
+
   // ---------- Titoli parola per parola ----------
   function splitWords(el) {
     var i = 0;
