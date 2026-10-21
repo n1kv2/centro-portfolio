@@ -59,14 +59,22 @@
   // Spostamento animato (rotella, frecce, indice, logo): lo scatto si sospende un istante, poi torna
   var goTimer = null;
   function go(reel, smooth) {
-    var instant = smooth === false || reduce;
+    var target = reel.offsetTop, h = scroller.clientHeight || 1;
+    // Un momento più in là: scorrimento morbido. Salti lunghi (menu, scelte): spostamento diretto, niente attese
+    var instant = smooth === false || reduce || Math.abs(target - scroller.scrollTop) > h * 1.5;
     clearTimeout(goTimer);
+    cancelAnimationFrame(goRaf);
     scroller.style.scrollSnapType = 'none';
-    scroller.scrollTo({ top: reel.offsetTop, behavior: instant ? 'auto' : 'smooth' });
-    var done = function () { scroller.style.scrollSnapType = ''; scroller.removeEventListener('scrollend', done); };
-    if ('onscrollend' in scroller) scroller.addEventListener('scrollend', done);
-    goTimer = setTimeout(done, instant ? 30 : 900);
+    scroller.scrollTo({ top: target, behavior: instant ? 'auto' : 'smooth' });
+    var t0 = Date.now();
+    var done = function () { cancelAnimationFrame(goRaf); scroller.style.scrollSnapType = ''; };
+    var watch = function () {
+      if (Math.abs(scroller.scrollTop - target) < 1 || Date.now() - t0 > 1200) { done(); return; }
+      goRaf = requestAnimationFrame(watch);
+    };
+    goRaf = requestAnimationFrame(watch);
   }
+  var goRaf = 0;
 
   function choose(track) { mode = track; applyMode(); go(firstOf(track)); }
   function showAll(target) { mode = 'all'; applyMode(); if (target) go(target); }
@@ -77,7 +85,6 @@
       if (t === mode) return;
       html += '<button type="button" class="path" data-route="' + t + '"><b>' + TRACKS[t] + '</b><span>Passa al percorso ' + NAMES[t].toLowerCase() + '.</span></button>';
     });
-    html += '<button type="button" class="path" data-route="all"><b>Vedi tutto</b><span>Prosegui con gli altri momenti.</span></button>';
     html += '<button type="button" class="path" data-route="contact"><b>Parliamone</b><span>Vai ai contatti.</span></button>';
     routerPaths.innerHTML = html;
   }
@@ -357,6 +364,31 @@
     h.setAttribute('aria-expanded', open);
   });
 
+  // ---------- Spotted: richieste diverse nello stesso riquadro (in blu quelle dell'utente) ----------
+  var vizSpot = document.getElementById('vizSpot');
+  var SPOT = [
+    [['q', 'Qualcuno ha perso un mazzo di chiavi a Coppito?'], ['a', 'Sì, è mio! Dove lo trovo?'], ['q', "L'ho lasciato in portineria."], 'Risolto in pochi minuti dalla community'],
+    [['a', 'Cerco un passaggio per Pescara sabato mattina.'], ['q', "C'è già un gruppo per chi va a Pescara: chiedi lì!"], ['q', 'Partiamo in tre, c’è posto.'], 'La richiesta trova il gruppo giusto'],
+    [['a', 'Una pasticceria con torte perfette per una laurea?'], ['q', 'Quella sotto i portici: la mia l’hanno fatta lì.'], ['q', 'Confermo, chiedi della millefoglie!'], 'Tre consigli in un’ora']
+  ];
+  var spotK = 0, spotTimer = null;
+  function renderSpot(k) {
+    var c = SPOT[k];
+    vizSpot.innerHTML = c.slice(0, 3).map(function (m) { return '<p class="vs-' + m[0] + '">' + m[1] + '</p>'; }).join('') + '<p class="vf-cap">' + c[3] + '</p>';
+  }
+  function stopSpot() { clearInterval(spotTimer); spotTimer = null; }
+  function playSpot() {
+    stopSpot();
+    spotK = 0; renderSpot(0);
+    vizSpot.classList.add('cyc'); vizSpot.classList.remove('go'); void vizSpot.offsetWidth;
+    setTimeout(function () { vizSpot.classList.add('go'); }, 300);
+    spotTimer = setInterval(function () {
+      vizSpot.classList.remove('go');
+      setTimeout(function () { spotK = (spotK + 1) % SPOT.length; renderSpot(spotK); void vizSpot.offsetWidth; vizSpot.classList.add('go'); }, 380);
+    }, 5200);
+  }
+  if (vizSpot) renderSpot(0);
+
   // ---------- Aree: pannello "Approfondisci" ----------
   function openArea(reel) {
     var p = reel.querySelector('.area-panel');
@@ -365,11 +397,13 @@
     bar.classList.toggle('on-light', isLight(p));
     var f = p.querySelector('.feat'); f.classList.remove('in'); void f.offsetWidth;
     setTimeout(function () { f.classList.add('in'); }, 250);
+    if (p.contains(vizSpot)) playSpot();
   }
   function closeArea(reel) {
     var p = reel.querySelector('.area-panel');
     p.classList.remove('open'); p.setAttribute('aria-hidden', 'true');
     reel.classList.remove('panel-open');
+    if (p.contains(vizSpot)) stopSpot();
     if (visible[current] === reel) bar.classList.toggle('on-light', isLight(reel));
   }
   document.querySelectorAll('[data-area-open]').forEach(function (b) { b.addEventListener('click', function () { openArea(b.closest('.reel')); }); });
@@ -432,10 +466,15 @@
       var off = ch.reels.every(function (r) { return r.hidden; });
       return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
     }).join('') + '<a class="rnav-item rnav-link" href="prova-chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn();
-    navMode.innerHTML = mode === 'all' ? '' : 'Percorso ' + NAMES[mode].toLowerCase() + ' · <button type="button" data-showall>Vedi tutto</button>';
-    navMode.hidden = mode === 'all';
+    navMode.innerHTML = '';
+    navMode.hidden = true;
   }
   // Con il menu aperto si evidenzia la linea della sezione (quella attuale, o quella che stai per scegliere)
+  // Torna allo stato iniziale: nessun percorso, nessuna scelta, primo momento (come ricaricare)
+  function restart() {
+    ss.del('reel-pos');
+    try { location.replace(location.pathname + location.search); } catch (e) { location.reload(); }
+  }
   function chapOf(r) { return r === router ? TRACKS[mode] : r.getAttribute('data-chapter'); }
   function pickLine(name) {
     bits.forEach(function (b, k) { b.classList.toggle('seg-pick', !!chapters[k] && chapters[k].name === name); });
@@ -466,6 +505,7 @@
     var it = e.target.closest('[data-c]');
     if (!it) return;
     var ch = navChaps[parseInt(it.getAttribute('data-c'), 10)];
+    if (ch.name === 'Introduzione') { restart(); return; }
     var r = ch.reels.filter(function (x) { return !x.hidden; })[0];
     setNav(false);
     if (r) go(r); else showAll(ch.reels[0]);
@@ -545,10 +585,10 @@
     touchFrom = -1;
     if (from >= 0 && Math.abs(k - from) > 1) { go(visible[from + (k > from ? 1 : -1)]); return; }
     // Se lo scorrimento si ferma a metà tra due momenti (succede su Safari dopo un cambio di percorso), si allinea
-    if (Math.abs(scroller.scrollTop - visible[k].offsetTop) > 2 && scroller.style.scrollSnapType !== 'none') go(visible[k]);
+    if (Math.abs(scroller.scrollTop - visible[k].offsetTop) > 2 && scroller.style.scrollSnapType !== 'none') go(visible[k], false);
   }
   if ('onscrollend' in scroller) scroller.addEventListener('scrollend', settle);
-  else scroller.addEventListener('scroll', function () { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140); }, { passive: true });
+  else scroller.addEventListener('scroll', function () { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 90); }, { passive: true });
 
   // ---------- Ogni momento entra nello schermo ----------
   // Su schermi bassi o con caratteri di sistema grandi il contenuto può non starci:
@@ -585,6 +625,23 @@
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); step(1); }
     else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
+
+  // ---------- CEnTRO con la n minuscola anche nelle scritte in maiuscolo ----------
+  function keepBrand(root) {
+    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT), list = [];
+    while (w.nextNode()) if (w.currentNode.nodeValue.indexOf('CEnTRO') >= 0) list.push(w.currentNode);
+    list.forEach(function (t) {
+      var el = t.parentNode;
+      if (!el || el.classList.contains('cn') || getComputedStyle(el).textTransform !== 'uppercase') return;
+      var parts = t.nodeValue.split('CEnTRO'), frag = document.createDocumentFragment();
+      parts.forEach(function (part, i) {
+        if (part) frag.appendChild(document.createTextNode(part));
+        if (i < parts.length - 1) { var sp = document.createElement('span'); sp.className = 'cn'; sp.textContent = 'CEnTRO'; frag.appendChild(sp); }
+      });
+      el.replaceChild(frag, t);
+    });
+  }
+  keepBrand(document.body);
 
   // ---------- Avvio ----------
   var saved = null;

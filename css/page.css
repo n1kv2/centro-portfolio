@@ -151,3 +151,8 @@ html.js [data-pg].in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .tastes span { transition: none; opacity: 1; transform: none; } }
 .tastes span:nth-child(-n+2) { background: #1F6FD6; color: #fff; }
 .tastes span:nth-child(n+3) { background: color-mix(in srgb, var(--app-blue) calc(var(--v) * .9%), var(--nd-bg)); }
+/* Chi sono: etichette senza linea accanto */
+.nd-label.bare::after { display: none; }
+/* I riquadri scuri restano scuri anche nel tema scuro */
+.acc-card.dark, .pg-contact { background: #0B1B33; color: #F2F5FA; }
+:root[data-theme="dark"] .acc-card.dark, :root[data-theme="dark"] .pg-contact { background: #16243D; box-shadow: inset 0 0 0 1px rgba(127,140,162,.25); }
