@@ -645,3 +645,24 @@ html.reel-root, html.reel-root body { height: 100%; overflow: hidden; }
 @keyframes capIn { to { opacity: 1; transform: none; } }
 .nm-cap span { font: 500 .66rem/1 var(--nd-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--app-blue); }
 @media (prefers-reduced-motion: reduce) { .mt > span { animation: none; } .nm-cap.show { animation: none; opacity: 1; transform: none; } }
+
+/* ================= v9: squircle iOS (smussamento 60%) e movimento leggero ================= */
+.reel-page { --squircle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cpath%20d%3D%27M%2060%200%20c%2014.001%200%2021.002%200%2026.35%202.725%20a%2025%2025%200%200%201%2010.925%2010.925%20c%202.725%205.348%202.725%2012.348%202.725%2026.35%20L%20100%2060%20c%200%2014.001%200%2021.002%20-2.725%2026.35%20a%2025%2025%200%200%201%20-10.925%2010.925%20c%20-5.348%202.725%20-12.348%202.725%20-26.35%202.725%20L%2040%20100%20c%20-14.001%200%20-21.002%200%20-26.35%20-2.725%20a%2025%2025%200%200%201%20-10.925%20-10.925%20c%20-2.725%20-5.348%20-2.725%20-12.348%20-2.725%20-26.35%20L%200%2040%20c%200%20-14.001%200%20-21.002%202.725%20-26.35%20a%2025%2025%200%200%201%2010.925%20-10.925%20c%205.348%20-2.725%2012.348%20-2.725%2026.35%20-2.725%20Z%27/%3E%3C/svg%3E"); }
+.merge-icon, .mt i { border-radius: 0; -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
+.mt i { box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+/* Le app ondeggiano appena, ognuna con il suo ritmo */
+.mt > span { transform: translate(-50%, -21px); animation: drift var(--t, 5s) ease-in-out infinite alternate; animation-delay: calc(var(--d) * -5); }
+.mt:nth-child(3n) > span { --t: 6.2s; animation-name: drift2; }
+.mt:nth-child(3n+1) > span { --t: 5.4s; }
+.mt:nth-child(3n+2) > span { --t: 4.6s; animation-name: drift3; }
+@keyframes drift  { from { transform: translate(-50%, -21px) rotate(-2deg); } to { transform: translate(calc(-50% + 4px), -27px) rotate(2deg); } }
+@keyframes drift2 { from { transform: translate(calc(-50% + 3px), -24px) rotate(2deg); } to { transform: translate(calc(-50% - 4px), -19px) rotate(-1.5deg); } }
+@keyframes drift3 { from { transform: translate(calc(-50% - 3px), -20px) rotate(1deg); } to { transform: translate(calc(-50% + 3px), -26px) rotate(-2deg); } }
+.merge.merged .mt > span { animation: none; }
+@media (prefers-reduced-motion: reduce) { .mt > span { animation: none; } }
+
+.r-merge .mt > span, .r-merge.on .mt > span { animation-duration: var(--t, 5s); }
+/* Fluttuano, senza ruotare */
+@keyframes drift  { from { transform: translate(-50%, -19px); } to { transform: translate(calc(-50% + 2px), -26px); } }
+@keyframes drift2 { from { transform: translate(calc(-50% + 2px), -24px); } to { transform: translate(calc(-50% - 2px), -17px); } }
+@keyframes drift3 { from { transform: translate(calc(-50% - 2px), -18px); } to { transform: translate(calc(-50% + 1px), -25px); } }
