@@ -709,3 +709,9 @@ html.reel-root { overflow-anchor: none; }
 /* ================= v11: altezza reale dello schermo (iOS 26) ================= */
 /* --reel-h e --bar-gap li calcola lo script; senza script resta la misura standard */
 .reel { height: var(--reel-h, 100lvh); padding-bottom: var(--bar-gap, 0px); }
+
+/* ================= v12: scorrimento come TikTok ================= */
+/* Niente scorrimento animato di default (non deve combattere con il dito) */
+html.reel-root { scroll-behavior: auto; scroll-snap-type: y mandatory; }
+/* Ogni momento è alto esattamente quanto lo schermo visibile: così si scatta sempre di un momento */
+.reel { height: var(--reel-h, 100svh); scroll-snap-align: start; scroll-snap-stop: always; padding-bottom: var(--bar-gap, 0px); }
