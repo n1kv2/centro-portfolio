@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=8">
+<link rel="stylesheet" href="css/reel.css?v=9">
 </head>
 <body class="reel-page">
 
@@ -50,7 +50,7 @@
     <div class="rindex-list" id="rindexList"></div>
     <p class="rindex-mode" id="rindexMode"></p>
     <nav class="rx-links" aria-label="Azioni">
-      <a href="chi-sono.html">Chi sono</a><button type="button" data-act="contact">Contatti</button><button type="button" data-act="top">Ricomincia</button>
+      <button type="button" data-act="about">Chi sono</button><button type="button" data-act="contact">Contatti</button><button type="button" data-act="top">Ricomincia</button>
     </nav>
   </div>
 </div>
@@ -363,15 +363,33 @@
     </div>
   </section>
 
+  <!-- ============ CHI SONO ============ -->
+  <section class="reel r-light r-about" data-reel data-chapter="Chi sono e contatti" data-title="Chi sono" data-desc="Nicholas Vigo, fondatore" id="about">
+    <div class="r-in r-top">
+      <p class="nd-label"><span>✦</span>Chi sono</p>
+      <div class="me-row">
+        <div class="me-av"><img id="mePhoto" src="img/nicholas.jpg" alt="Nicholas Vigo" width="400" height="400"><span aria-hidden="true">N</span></div>
+        <div><h2 class="r-h2 me-name">Nicholas Vigo</h2><p class="me-role">Fondatore di CEnTRO</p></div>
+      </div>
+      <p class="r-body">Unisco psicologia, dati e vendita: ciò che serve per far incontrare persone e offerte.</p>
+      <ol class="me-xp">
+        <li><time>2 anni</time><b>CEO · IMEX WINE</b><span>Import-export di vini, vendita in stand e fiere.</span></li>
+        <li><time>Progetti</time><b>Siti web per attività locali</b><span>Bar e saloni.</span></li>
+        <li><time>In corso</time><b>App per AMA, L'Aquila</b><span>Trasporto urbano, in costruzione.</span></li>
+        <li><time>In arrivo</time><b>Laurea magistrale in Psicologia</b><span>Con statistica applicata in R.</span></li>
+      </ol>
+    </div>
+  </section>
+
   <!-- ============ CONTATTI ============ -->
-  <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Contatti" data-title="Parliamone" data-desc="Nicholas Vigo, fondatore">
+  <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Chi sono e contatti" data-title="Parliamone" data-desc="Nicholas Vigo, fondatore">
     <img class="r-photo" src="img/trekking-sosta.jpg" alt="Un gruppo in cammino su un sentiero di montagna." loading="lazy">
     <div class="r-in r-center">
       <p class="nd-label"><span>✉</span>Parliamone</p>
       <p class="r-big small">Per una demo, una collaborazione o un incontro.</p>
       <p class="r-mail">hello.centro26@gmail.com</p>
-      <div class="r-ctas"><a class="r-btn" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a><a class="r-btn ghost" href="chi-sono.html">Chi sono</a></div>
-      <p class="r-sign">Nicholas Vigo · Fondatore di CEnTRO</p>
+      <div class="r-ctas"><a class="r-btn" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a><button class="r-btn ghost" type="button" data-goto="about">Chi sono</button></div>
+      
     </div>
   </section>
 
@@ -460,6 +478,6 @@
   </div>
 </div>
 
-<script src="js/reel.js?v=6"></script>
+<script src="js/reel.js?v=7"></script>
 </body>
 </html>

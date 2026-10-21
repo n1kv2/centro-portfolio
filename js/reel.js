@@ -180,7 +180,7 @@
     'Per le aziende': 'Raggiungere e capire il pubblico',
     'Per chi investe': 'Ricavi, crescita e prove',
     'Prossimo passo': 'Scegli cosa vedere ora',
-    'Contatti': 'Parliamone'
+    'Chi sono e contatti': 'Il fondatore e come contattarlo'
   };
   var openChaps = {};
   function renderIndex() {
@@ -271,6 +271,7 @@
     closeIndex();
     if (act === 'contact') go(document.querySelector('.r-contact'));
     else if (act === 'top') go(visible[0]);
+    else if (act === 'about') go(document.getElementById('about'));
   });
 
   // ---------- Aree dell'app: carosello orizzontale ----------
@@ -289,6 +290,21 @@
     acar.addEventListener('scroll', function () { requestAnimationFrame(showCard); }, { passive: true });
     new MutationObserver(showCard).observe(acar.closest('.reel'), { attributes: true, attributeFilter: ['class'] });
     showCard();
+  }
+
+  // ---------- Pulsanti che portano a un reel ----------
+  document.querySelectorAll('[data-goto]').forEach(function (b) {
+    b.addEventListener('click', function () { go(document.getElementById(b.getAttribute('data-goto'))); });
+  });
+
+  // ---------- Foto profilo: se manca resta l'iniziale ----------
+  var photo = document.getElementById('mePhoto');
+  if (photo) {
+    var okP = function () { photo.parentNode.classList.add('has-photo'); };
+    var koP = function () { photo.hidden = true; };
+    if (photo.complete) { photo.naturalWidth ? okP() : koP(); }
+    photo.addEventListener('load', okP);
+    photo.addEventListener('error', koP);
   }
 
   // ---------- Titoli parola per parola ----------
