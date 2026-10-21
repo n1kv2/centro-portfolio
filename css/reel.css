@@ -935,3 +935,8 @@ html.reel-root body { background: #0B1424; }
 .nm-slot.found .nm-wait { opacity: 0; }
 .nm-slot.found .nm-pick { opacity: 1; transform: none; }
 .nm-slot:not(.found) .nm-pick { opacity: 0; transform: translateY(10px); }
+/* Scheda della proposta: foto sempre centrata in verticale, titolo su una riga */
+.nm-slot .nm-pick { align-items: center; align-content: center; }
+.nm-pick .pick-img { align-self: center; }
+.nm-pick .pick-main { min-width: 0; align-content: center; gap: 2px; }
+.nm-pick .pick-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
