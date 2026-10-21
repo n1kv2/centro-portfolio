@@ -730,3 +730,23 @@ html.reel-root { scroll-behavior: auto; scroll-snap-type: y mandatory; }
 .rseg i { background: color-mix(in srgb, currentColor 25%, transparent); }
 .rseg i::after { background: currentColor; }
 .rbar.on-light .rbox { color: #0B1B33; }
+
+/* ================= v15: scorrimento fluido ================= */
+/* La pagina non scorre: scorrono solo i momenti, dentro un contenitore alto quanto l'area visibile
+   (sopra la barra di Safari). L'altezza non cambia mai, quindi niente scatti risalendo. */
+html.reel-root, html.reel-root body { height: 100%; overflow: hidden; overscroll-behavior: none; scroll-snap-type: none; }
+html.reel-root body { background: #0B1424; }
+.reels { position: fixed; left: 0; right: 0; top: 0; height: 100vh; height: 100svh; overflow-x: hidden; overflow-y: auto;
+  scroll-snap-type: y mandatory; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.reels::-webkit-scrollbar { display: none; }
+.reel { height: 100%; padding-bottom: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+.reel-page { --bar-gap: 0px; }
+
+/* Le animazioni girano solo nel momento che stai guardando */
+.reel:not(.on) *, .reel:not(.on)::before, .reel:not(.on)::after { animation-play-state: paused !important; }
+
+/* Parole che entrano: senza sfocatura (su iPhone pesa) */
+.reel .w { filter: none !important; transition: opacity .5s ease, transform .6s cubic-bezier(.2,.9,.25,1); transition-delay: calc(var(--i) * 45ms + 150ms); }
+/* Zoom delle foto più leggero */
+.reel .r-photo { will-change: auto; }
+.reel.on .r-photo { will-change: transform; }
