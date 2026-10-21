@@ -831,3 +831,8 @@ html.reel-root body { background: #0B1424; }
 .road li.done span, .road li.now span { color: var(--nd-ink); }
 .road em { position: absolute; top: -30px; padding: 4px 8px; border-radius: 99px; background: var(--app-blue); color: #fff; font: 700 .64rem/1 var(--f-body); font-style: normal; white-space: nowrap; }
 @media (prefers-reduced-motion: reduce) { .pv-c { opacity: 1; transform: none; } .r-proof.on .pv-c, .r-proof.on .road::after, .r-proof.on .road li.now i { animation: none; } .road::after { width: 50%; } }
+
+/* ================= v31: il contenitore riempie l'area visibile reale (Android, browser interni delle app);
+   su iPhone resta alto quanto l'area sicura sopra la barra di Safari ================= */
+.reels { top: 0; bottom: 0; height: auto; }
+@supports (-webkit-touch-callout: none) { .reels { bottom: auto; height: 100vh; height: 100svh; } }
