@@ -10,7 +10,6 @@
   var scroller = document.getElementById('reels');
   var all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
   var seg = document.getElementById('rseg');
-  var count = document.getElementById('rcount');
   var chap = document.getElementById('rchap');
   var bar = document.getElementById('rbar');
   var router = document.getElementById('router');
@@ -130,14 +129,13 @@
       b.style.setProperty('--p', p.toFixed(3));
       b.classList.toggle('now', k === ci);
     });
-    count.textContent = pad(i + 1) + ' / ' + pad(visible.length);
     chap.textContent = r.getAttribute('data-chapter');
     bar.classList.toggle('on-light', isLight(r));
     if (r.classList.contains('r-feed')) sortFeed(r);
     if (r.classList.contains('r-merge')) { sizeField(); playMerge(); }
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
-    if (!idx.hidden) renderIndex();
+    if (navOpen) renderIndex();
   }
   function check() {
     var mid = scroller.clientHeight / 2, top = scroller.scrollTop, best = 0;
@@ -207,8 +205,9 @@
     merge.classList.remove('reset');
     if (reduce) { merge.classList.add('merged', 'done'); return; }
     mergeTimers = [
-      setTimeout(function () { merge.classList.add('merged'); }, 3200),
-      setTimeout(function () { merge.classList.add('done'); }, 4700)
+      // Si uniscono quasi subito, così si vede prima di scorrere oltre
+      setTimeout(function () { merge.classList.add('merged'); }, 900),
+      setTimeout(function () { merge.classList.add('done'); }, 2000)
     ];
   }
   document.getElementById('mergeReplay').addEventListener('click', playMerge);
@@ -351,93 +350,78 @@
     typeTimers.push(setTimeout(function () { insReel.classList.add('found'); }, 900 + QUERY.length * 55));
   }
 
-  // ---------- Indice a capitoli ----------
-  var idx = document.getElementById('rindex');
-  var list = document.getElementById('rindexList');
-  var modeEl = document.getElementById('rindexMode');
-  var idxBtn = document.getElementById('rindexBtn');
-  var CHAPTER_DESC = {
-    'Introduzione': 'Il problema e che cos\'è CEnTRO',
-    'Per chi usa l\'app': 'Come funziona e Nia',
-    'Le aree dell\'app': 'Eventi, Community, Spotted, Esplora, Casa',
-    'Per le aziende': 'Discover, strumenti e Insights',
-    'Per chi investe': 'Ricavi, crescita e prove',
-    'Prossimo passo': 'Scegli cosa vedere ora',
-    'Contatti': 'Parliamone'
+  // ---------- Sezioni: la barra in alto si allarga al tocco ----------
+  var navList = document.getElementById('rnavList');
+  var navMode = document.getElementById('rnavMode');
+  var toggle = document.getElementById('rtoggle');
+  var navOpen = false, openTop = 0;
+  var navChaps = [];
+  // Icone delle sezioni (tratto sottile, del colore del testo)
+  var ICON_PATHS = {
+    'Introduzione': '<circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/>',
+    'Per chi usa l\'app': '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/>',
+    'Le aree dell\'app': '<rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/>',
+    'Per le aziende': '<path d="M4 10l1.5-5h13L20 10"/><path d="M4 10c0 1.7 1.3 2.5 2.7 2.5S9.3 11.7 9.3 10c0 1.7 1.3 2.5 2.7 2.5s2.7-.8 2.7-2.5c0 1.7 1.3 2.5 2.7 2.5S20 11.7 20 10"/><path d="M5.5 12.5V20h13v-7.5"/>',
+    'Per chi investe': '<path d="M4 19h16"/><path d="M5 15l4.5-4.5 3.5 3L19 7.5"/><path d="M14.5 7.5H19V12"/>',
+    'Prossimo passo': '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
+    'Contatti': '<rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4.5 7.5l7.5 5.5 7.5-5.5"/>',
+    'Chi sono': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.3c1.2-2 3.2-3.1 5.5-3.1s4.3 1.1 5.5 3.1"/>'
   };
-  var openChaps = {};
+  function icon(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICON_PATHS[name] || '') + '</svg>'; }
   function renderIndex() {
-    var chaps = [], byName = {};
+    var byName = {};
+    navChaps = [];
     all.forEach(function (r) {
       if (r === router && router.hidden) return;
       var c = r.getAttribute('data-chapter');
-      if (!byName[c]) { byName[c] = { name: c, reels: [] }; chaps.push(byName[c]); }
+      if (!byName[c]) { byName[c] = { name: c, reels: [] }; navChaps.push(byName[c]); }
       byName[c].reels.push(r);
     });
     var curChap = current >= 0 ? visible[current].getAttribute('data-chapter') : '';
-    var html = '';
-    chaps.forEach(function (ch, ci) {
+    navList.innerHTML = navChaps.map(function (ch, k) {
       var off = ch.reels.every(function (r) { return r.hidden; });
-      var isOpen = !!openChaps[ch.name];
-      html += '<div class="rx-chap' + (isOpen ? ' open' : '') + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '">' +
-        '<button type="button" class="rx-head" data-chap="' + ch.name.replace(/"/g, '&quot;') + '" aria-expanded="' + isOpen + '">' +
-          '<span class="rx-n">' + pad(ci + 1) + '</span>' +
-          '<span class="rx-t"><b>' + ch.name + '</b><span>' + (CHAPTER_DESC[ch.name] || '') + (off ? ' · fuori dal percorso' : '') + '</span></span>' +
-          '<span class="rx-c">' + ch.reels.length + '</span><i class="rx-chev" aria-hidden="true"></i>' +
-        '</button><div class="rx-sub"><div class="rx-sub-in">';
-      ch.reels.forEach(function (r) {
-        var k = visible.indexOf(r);
-        html += '<button type="button" class="rx-item' + (k === current ? ' now' : '') + (r.hidden ? ' off' : '') + '" data-i="' + all.indexOf(r) + '">' +
-          '<b>' + r.getAttribute('data-title') + '</b><span>' + r.getAttribute('data-desc') + '</span></button>';
-      });
-      html += '</div></div></div>';
-    });
-    list.innerHTML = html;
-    modeEl.innerHTML = mode === 'all'
-      ? 'Stai vedendo tutto. Puoi scegliere un percorso dal momento «Chi sei?».'
-      : 'Percorso: ' + NAMES[mode] + '. <button type="button" data-showall>Vedi tutto</button>';
+      return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
+    }).join('') + '<a class="rnav-item rnav-link" href="chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>';
+    navMode.innerHTML = mode === 'all' ? '' : 'Percorso ' + NAMES[mode].toLowerCase() + ' · <button type="button" data-showall>Vedi tutto</button>';
+    navMode.hidden = mode === 'all';
   }
-  list.addEventListener('click', function (e) {
-    var h = e.target.closest('.rx-head');
-    if (!h) return;
-    e.stopPropagation();
-    var name = h.getAttribute('data-chap');
-    openChaps[name] = !openChaps[name];
-    h.parentNode.classList.toggle('open', openChaps[name]);
-    h.setAttribute('aria-expanded', openChaps[name]);
-  });
-  function openIndex() {
-    openChaps = {};
-    if (current >= 0) openChaps[visible[current].getAttribute('data-chapter')] = true;
-    renderIndex();
-    idx.hidden = false;
+  // Con il menu aperto si evidenzia la linea della sezione (quella attuale, o quella che stai per scegliere)
+  function pickLine(name) {
+    bits.forEach(function (b, k) { b.classList.toggle('seg-pick', !!chapters[k] && chapters[k].name === name); });
   }
-  function closeIndex() { idx.hidden = true; idxBtn.focus({ preventScroll: true }); }
-  idxBtn.addEventListener('click', openIndex);
-  idx.addEventListener('click', function (e) {
-    if (e.target === idx || e.target.closest('[data-close]')) { closeIndex(); return; }
-    if (e.target.closest('[data-showall]')) { closeIndex(); showAll(visible[current]); return; }
-    var a = e.target.closest('[data-act]');
-    if (a) {
-      closeIndex();
-      if (a.getAttribute('data-act') === 'contact') go(document.querySelector('.r-contact'));
-      else go(visible[0]);
-      return;
-    }
-    var it = e.target.closest('.rx-item');
+  function setNav(open) {
+    navOpen = open;
+    pickLine(open && current >= 0 ? visible[current].getAttribute('data-chapter') : '');
+    openTop = scroller.scrollTop;
+    if (open) renderIndex();
+    bar.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', open);
+  }
+  toggle.addEventListener('click', function () { setNav(!navOpen); });
+  function hoverLine(e) {
+    var it = e.target.closest('[data-c]');
+    pickLine(it ? navChaps[parseInt(it.getAttribute('data-c'), 10)].name : (current >= 0 ? visible[current].getAttribute('data-chapter') : ''));
+  }
+  ['pointerover', 'focusin'].forEach(function (t) { document.getElementById('rnav').addEventListener(t, hoverLine); });
+  document.getElementById('rnav').addEventListener('pointerleave', hoverLine);
+  document.getElementById('rnav').addEventListener('click', function (e) {
+    if (e.target.closest('[data-showall]')) { setNav(false); showAll(visible[current]); return; }
+    if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); return; }
+    var it = e.target.closest('[data-c]');
     if (!it) return;
-    var r = all[parseInt(it.getAttribute('data-i'), 10)];
-    closeIndex();
-    if (r.hidden) showAll(r); else go(r);
+    var ch = navChaps[parseInt(it.getAttribute('data-c'), 10)];
+    var r = ch.reels.filter(function (x) { return !x.hidden; })[0];
+    setNav(false);
+    if (r) go(r); else showAll(ch.reels[0]);
   });
+  // Si richiude toccando fuori o scorrendo
+  document.addEventListener('pointerdown', function (e) { if (navOpen && !e.target.closest('#rbox')) setNav(false); });
+  scroller.addEventListener('scroll', function () { if (navOpen && Math.abs(scroller.scrollTop - openTop) > 24) setNav(false); }, { passive: true });
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
-    if (!idx.hidden) closeIndex();
+    if (navOpen) setNav(false);
     document.querySelectorAll('.area-panel.open').forEach(function (p) { closeArea(p.closest('.reel')); });
   });
-
-  // ---------- Logo: torna all'inizio ----------
-  document.getElementById('rhome').addEventListener('click', function () { go(visible[0]); });
 
   // ---------- Pagine separate: al ritorno si riparte dallo stesso reel ----------
   document.querySelectorAll('[data-keep]').forEach(function (a) {
@@ -473,7 +457,7 @@
     if (k !== current) go(visible[k]);
   }
   window.addEventListener('wheel', function (e) {
-    if (!idx.hidden || document.querySelector('.area-panel.open')) return;
+    if (navOpen || document.querySelector('.area-panel.open')) return;
     if (Math.abs(e.deltaY) < 4) return;
     e.preventDefault();
     var now = Date.now();
@@ -482,7 +466,7 @@
     step(e.deltaY > 0 ? 1 : -1);
   }, { passive: false });
   document.addEventListener('keydown', function (e) {
-    if (!idx.hidden) return;
+    if (navOpen) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); step(1); }
     else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
