@@ -228,14 +228,14 @@
   var nmChips = document.getElementById('nmChips');
   var nmPick = document.getElementById('nmPick');
   var ITEMS = {
-    arte:     { img: 'img/inaugurazione.jpg', title: "Inaugurazione di uno spazio d'arte", meta: 'Stasera · 19:30 · 0,6 km', angle: -100, why: ["Ami l'arte contemporanea", 'Stasera sei libero dopo le 19', '4 persone affini ci vanno'] },
-    musica:   { img: 'img/discoteca.jpg', title: 'Serata in musica con un gruppo di sei', meta: 'Stasera · 23:00 · centro', angle: -40, why: ['Ti piace ballare', 'Gruppo con gusti simili', 'Rientro a piedi'] },
+    arte:     { img: 'img/inaugurazione.jpg', title: "Inaugurazione di uno spazio d'arte", meta: 'Stasera · 19:30 · 0,6 km', angle: -150, why: ["Ami l'arte contemporanea", 'Stasera sei libero dopo le 19', '4 persone affini ci vanno'] },
+    musica:   { img: 'img/discoteca.jpg', title: 'Serata in musica con un gruppo di sei', meta: 'Stasera · 23:00 · centro', angle: -30, why: ['Ti piace ballare', 'Gruppo con gusti simili', 'Rientro a piedi'] },
     calcetto: { img: 'img/calcetto.jpg', title: 'Calcetto, manca un giocatore', meta: 'Stasera · 20:00 · quartiere', angle: 10, why: ['Fai sport di squadra', 'Livello simile al tuo', 'Ti aspettano in 9'] },
     lingue:   { img: 'img/lingue.jpg', title: 'Conversazione in inglese sotto i portici', meta: 'Domani · 18:00 · centro', angle: 60, why: ['Ami i piccoli gruppi', "Vuoi migliorare l'inglese", '5 persone affini'] },
     ceramica: { img: 'img/ceramica.jpg', title: 'Laboratorio di ceramica per principianti', meta: 'Sabato · 10:00 · 1,2 km', angle: 110, why: ['Ami le attività manuali', 'Pensato per chi inizia', 'Sabato mattina'] },
     trekking: { img: 'img/trekking.jpg', title: "Escursione all'alba", meta: 'Domenica · 6:00 · 8 posti', angle: 160, why: ["Ti rigenera l'aria aperta", 'Intensità media', 'Gruppo affine'] },
     casa:     { img: 'img/area-casa.jpg', title: 'Stanza con coinquilini affini', meta: 'Centro · 3 coinquilini', angle: 205, why: ['Cerchi casa in centro', 'Convivenza compatibile', 'Nessun fumatore'] },
-    bando:    { img: 'img/area-esplora.jpg', title: 'Bando per giovani creativi', meta: 'Opportunità · scade tra 12 giorni', angle: 245, why: ['Requisiti soddisfatti', 'In linea con la tua creatività', 'Ti avviso prima'] }
+    bando:    { img: 'img/area-esplora.jpg', title: 'Bando per giovani creativi', meta: 'Opportunità · scade tra 12 giorni', angle: 215, why: ['Requisiti soddisfatti', 'In linea con la tua creatività', 'Ti avviso prima'] }
   };
   var INTENTS = [
     ['Uscire stasera',     { arte: 94, musica: 88, calcetto: 82, lingue: 60, ceramica: 45, trekking: 35, casa: 15, bando: 20 }],
