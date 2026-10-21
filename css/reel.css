@@ -918,3 +918,25 @@ html.reel-root body { background: #0B1424; }
 
 /* Menu: tasto tema */
 .nm-orb { -webkit-backdrop-filter: none; backdrop-filter: none; will-change: width, height; }
+
+/* ================= v34: radar sempre visibile, "Sto cercando" in basso al posto della proposta ================= */
+.nm-stage { position: relative; min-height: 0; }
+.nm-stage .nm-map { position: absolute; left: 50%; top: 50%; width: var(--sq, 300px); height: var(--sq, 300px);
+  margin: calc(var(--sq, 300px) / -2) 0 0 calc(var(--sq, 300px) / -2); aspect-ratio: auto; max-width: none; border-radius: 50%;
+  background: transparent !important; box-shadow: none; overflow: visible; opacity: 1; }
+.nm-stage .radar-sweep { border-radius: 50%; }
+/* Le foto delle proposte: cerchi semplici, foto ancorata dentro (niente spostamenti su Safari) */
+.nm-map .node { display: block; box-sizing: border-box; -webkit-appearance: none; appearance: none; line-height: 0; font-size: 0; overflow: hidden; border-radius: 50%; }
+.nm-map .node img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.nm-slot { position: relative; height: 76px; }
+.nm-slot .nm-wait { position: absolute; inset: auto; left: 50%; top: 50%; translate: -50% -50%; width: auto; height: 46px; padding: 0 20px; border-radius: 23px;
+  background: rgba(72,157,254,.10); box-shadow: inset 0 0 0 1px rgba(72,157,254,.28); opacity: 1; transition: opacity .35s ease; }
+.nm-slot .nm-pick { position: absolute; inset: 0; height: 76px; }
+.nm-slot.found .nm-wait { opacity: 0; }
+.nm-slot.found .nm-pick { opacity: 1; transform: none; }
+.nm-slot:not(.found) .nm-pick { opacity: 0; transform: translateY(10px); }
+/* Scheda della proposta: foto sempre centrata in verticale, titolo su una riga */
+.nm-slot .nm-pick { align-items: center; align-content: center; }
+.nm-pick .pick-img { align-self: center; }
+.nm-pick .pick-main { min-width: 0; align-content: center; gap: 2px; }
+.nm-pick .pick-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

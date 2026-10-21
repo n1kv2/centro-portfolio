@@ -253,8 +253,8 @@
     nmNodes.appendChild(sp);
   }
   ids.forEach(function (id) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = 'node'; b.tabIndex = -1; b.setAttribute('aria-hidden', 'true');
+    var b = document.createElement('span');
+    b.className = 'node'; b.setAttribute('aria-hidden', 'true');
     b.innerHTML = '<img src="' + ITEMS[id].img + '" alt="">';
     nmNodes.appendChild(b); nodes[id] = b;
   });
@@ -277,16 +277,16 @@
       n.classList.toggle('lit', lit);
     });
   }
-  // La mappa vive dentro un elemento traslucido: piccolo al centro ("Sto cercando"),
-  // si espande a tutta l'area appena Nia inizia a scrivere, poi mostra le proposte.
+  // Il radar resta sempre visibile e fermo; in basso "Sto cercando" lascia il posto alla proposta scelta
   var nmStage = document.getElementById('nmStage');
-  var nmOrb = document.getElementById('nmOrb');
+  var nmMap = document.getElementById('nmMap');
+  var nmSlot = document.getElementById('nmSlot');
   function sizeNia() {
     var side = Math.floor(Math.min(nmStage.clientWidth, nmStage.clientHeight));
-    if (side > 0) nmOrb.style.setProperty('--sq', side + 'px');
+    if (side > 0) nmMap.style.setProperty('--sq', side + 'px');
   }
   window.addEventListener('resize', sizeNia);
-  function hidePick() { nmPick.classList.remove('show'); }
+  function hidePick() { nmSlot.classList.remove('found'); }
   function showIntent(k) {
     activeIntent = k; scores = INTENTS[k][1];
     placeNodes();
@@ -297,23 +297,18 @@
     ids.forEach(function (x) { nodes[x].classList.remove('sel'); });
     placeNodes();
     hidePick();
-    nmOrb.classList.remove('open');
   }
   function setIntent(k) {
     typeT.forEach(clearTimeout); typeT = [];
     var text = INTENTS[k][0];
     sizeNia();
-    if (reduce) { nmQ.textContent = text; nmOrb.classList.add('open'); showIntent(k); return; }
-    // Si richiude al centro, poi Nia scrive e la mappa si apre mentre scrive
-    var wasOpen = nmOrb.classList.contains('open');
+    if (reduce) { nmQ.textContent = text; showIntent(k); return; }
     collapseMap();
-    var t0 = wasOpen ? 900 : 200;
-    typeT.push(setTimeout(function () { nmQ.textContent = ''; }, t0 - 150));
-    typeT.push(setTimeout(function () { nmOrb.classList.add('open'); }, t0 + 60));
+    nmQ.textContent = '';
     for (var c = 1; c <= text.length; c++) {
-      (function (n) { typeT.push(setTimeout(function () { nmQ.textContent = text.slice(0, n); }, t0 + n * 55)); })(c);
+      (function (n) { typeT.push(setTimeout(function () { nmQ.textContent = text.slice(0, n); }, 200 + n * 55)); })(c);
     }
-    typeT.push(setTimeout(function () { showIntent(k); }, Math.max(t0 + text.length * 55 + 200, t0 + 1100)));
+    typeT.push(setTimeout(function () { showIntent(k); }, 200 + text.length * 55 + 450));
   }
   function pickNode(id) {
     if (activeIntent === null || scores[id] < 55) return;
@@ -322,7 +317,7 @@
     nmPick.innerHTML = '<img class="pick-img" src="' + it.img + '" alt="">' +
       '<div class="pick-main"><span class="pick-title">' + it.title + '</span><span class="pick-meta">' + it.meta + '</span>' +
       '<span class="aff"><i style="--a:' + sc + '%"></i>' + sc + '% affine</span></div>';
-    nmPick.classList.add('show');
+    nmSlot.classList.add('found');
   }
   function resetMap() {
     clearTimeout(mapTimer);
