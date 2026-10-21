@@ -17,7 +17,7 @@
   var TRACKS = { utente: 'Per chi usa l\'app', azienda: 'Per le aziende', investitore: 'Per chi investe' };
   var NAMES = { utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' };
   var mode = 'all';
-  var visible = [], bits = [], current = -1;
+  var visible = [], bits = [], chapters = [], current = -1;
   var pad = function (k) { return (k < 10 ? '0' : '') + k; };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ss = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
@@ -38,7 +38,14 @@
     }
     all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
     visible = all.filter(function (r) { return !r.hidden; });
-    seg.innerHTML = visible.map(function () { return '<i></i>'; }).join('');
+    // Un segmento per sezione (capitolo), come le storie di Instagram
+    chapters = [];
+    visible.forEach(function (r) {
+      var c = r.getAttribute('data-chapter');
+      if (!chapters.length || chapters[chapters.length - 1].name !== c) chapters.push({ name: c, reels: [] });
+      chapters[chapters.length - 1].reels.push(r);
+    });
+    seg.innerHTML = chapters.map(function (c) { return '<i title="' + c.name.replace(/"/g, '&quot;') + '"></i>'; }).join('');
     bits = Array.prototype.slice.call(seg.children);
     document.querySelectorAll('[data-go]').forEach(function (b) { b.classList.toggle('picked', b.getAttribute('data-go') === mode); });
     all.forEach(function (r) { if (r.hidden && r.classList.contains('on')) leave(r); });
@@ -104,7 +111,14 @@
     var r = visible[i];
     void r.offsetWidth;
     r.classList.add('on');
-    bits.forEach(function (b, k) { b.classList.toggle('done', k < i); b.classList.toggle('now', k === i); });
+    // Ogni sezione si riempie man mano che scorri i suoi momenti
+    var ci = 0;
+    chapters.forEach(function (c, k) { if (c.reels.indexOf(r) >= 0) ci = k; });
+    bits.forEach(function (b, k) {
+      var p = k < ci ? 1 : k > ci ? 0 : (chapters[ci].reels.indexOf(r) + 1) / chapters[ci].reels.length;
+      b.style.setProperty('--p', p.toFixed(3));
+      b.classList.toggle('now', k === ci);
+    });
     count.textContent = pad(i + 1) + ' / ' + pad(visible.length);
     chap.textContent = r.getAttribute('data-chapter');
     bar.classList.toggle('on-light', isLight(r));
@@ -441,29 +455,45 @@
   }
   document.querySelectorAll('.reel .r-h1, .reel .r-h2, .reel .r-big').forEach(splitWords);
 
-  // ---------- Altezza reale dello schermo ----------
-  // Su iPhone (Safari) la pagina continua sotto la barra ridotta: lo schermo visibile è più alto
-  // della misura standard. Ogni momento usa quindi l'altezza visibile più grande vista finora,
-  // e finché la barra è aperta tiene i contenuti sopra di essa.
+  // ---------- Altezza: ogni momento è alto esattamente quanto lo schermo visibile ----------
+  // Così lo scatto funziona come su TikTok: uno swipe, un momento. Se la barra del browser cambia
+  // altezza, i momenti si adattano e quello attuale viene riallineato all'istante (senza animazioni).
   var probe = document.createElement('div');
-  probe.style.cssText = 'position:absolute;top:0;left:-9999px;width:1px;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
+  probe.style.cssText = 'position:fixed;top:0;left:-9999px;width:1px;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
   document.body.appendChild(probe);
-  var fullH = 0, lastW = window.innerWidth;
-  function viewH() { return Math.round(window.visualViewport ? window.visualViewport.height : window.innerHeight); }
+  var lastH = 0, fitTimer = null;
   function fitHeight() {
-    if (window.innerWidth !== lastW) { fullH = 0; lastW = window.innerWidth; } // rotazione: si ricomincia
-    var now = Math.max(viewH(), window.innerHeight);
-    var prev = fullH;
-    fullH = Math.max(fullH, now, probe.offsetHeight);
-    var root = document.body.style;
-    root.setProperty('--reel-h', fullH + 'px');
-    root.setProperty('--bar-gap', Math.max(0, fullH - now) + 'px');
-    if (fullH !== prev && current >= 0 && visible[current]) window.scrollTo(0, visible[current].offsetTop);
+    var h = window.innerHeight;
+    if (h === lastH) return;
+    lastH = h;
+    var gap = Math.max(0, h - probe.offsetHeight); // spazio occupato dalla barra quando copre la pagina
+    document.body.style.setProperty('--reel-h', h + 'px');
+    document.body.style.setProperty('--bar-gap', gap + 'px');
+    if (current >= 0 && visible[current]) window.scrollTo({ top: visible[current].offsetTop, behavior: 'instant' });
   }
   fitHeight();
-  window.addEventListener('resize', fitHeight);
-  if (window.visualViewport) window.visualViewport.addEventListener('resize', fitHeight);
-  window.addEventListener('scroll', function () { if (viewH() > fullH) fitHeight(); }, { passive: true });
+  window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitHeight, 60); });
+
+  // ---------- Rotella e tastiera: un momento alla volta ----------
+  var wheelLock = 0;
+  function step(dir) {
+    var k = Math.max(0, Math.min(visible.length - 1, current + dir));
+    if (k !== current) go(visible[k]);
+  }
+  window.addEventListener('wheel', function (e) {
+    if (!idx.hidden || document.querySelector('.area-panel.open')) return;
+    if (Math.abs(e.deltaY) < 4) return;
+    e.preventDefault();
+    var now = Date.now();
+    if (now - wheelLock < 650) return;
+    wheelLock = now;
+    step(e.deltaY > 0 ? 1 : -1);
+  }, { passive: false });
+  document.addEventListener('keydown', function (e) {
+    if (!idx.hidden) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); step(1); }
+    else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
+  });
 
   // ---------- Avvio ----------
   var saved = null;

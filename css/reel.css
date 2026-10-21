@@ -709,3 +709,19 @@ html.reel-root { overflow-anchor: none; }
 /* ================= v11: altezza reale dello schermo (iOS 26) ================= */
 /* --reel-h e --bar-gap li calcola lo script; senza script resta la misura standard */
 .reel { height: var(--reel-h, 100lvh); padding-bottom: var(--bar-gap, 0px); }
+
+/* ================= v12: scorrimento come TikTok ================= */
+/* Niente scorrimento animato di default (non deve combattere con il dito) */
+html.reel-root { scroll-behavior: auto; scroll-snap-type: y mandatory; }
+/* Ogni momento è alto esattamente quanto lo schermo visibile: così si scatta sempre di un momento */
+.reel { height: var(--reel-h, 100svh); scroll-snap-align: start; scroll-snap-stop: always; padding-bottom: var(--bar-gap, 0px); }
+
+/* ================= v13: barra a sezioni, riempimento a gradiente (come le storie) ================= */
+.rseg { gap: 5px; }
+.rseg i { height: 4px; opacity: 1; background: color-mix(in srgb, currentColor 22%, transparent); }
+.rseg i.done, .rseg i.now { opacity: 1; }
+.rseg i::after { content: ""; position: absolute; inset: 0; border-radius: inherit; animation: none !important;
+  background: linear-gradient(90deg, #F06139, #D43998 40%, #8B1EBA 70%, #1E42BA);
+  transform-origin: left; transform: scaleX(var(--p, 0)); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.rseg i.done::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .rseg i::after { transition: none; } }
