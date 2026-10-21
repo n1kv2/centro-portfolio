@@ -5,8 +5,9 @@
 // - Dopo l'introduzione si sceglie un profilo: si vedono solo i suoi reel, poi un reel di direzione.
 //   Senza scelta si vede tutto in ordine.
 (function () {
-  // Scorre la pagina vera: così Safari e Chrome riducono la loro barra mentre si scorre
-  var scroller = document.scrollingElement || document.documentElement;
+  // I momenti scorrono dentro un contenitore alto quanto l'area visibile: l'altezza non cambia mai,
+  // quindi lo scatto è fluido anche quando Safari apre o chiude la sua barra.
+  var scroller = document.getElementById('reels');
   var all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
   var seg = document.getElementById('rseg');
   var count = document.getElementById('rcount');
@@ -55,7 +56,17 @@
   }
 
   function firstOf(track) { return all.filter(function (r) { return r.getAttribute('data-track') === track; })[0]; }
-  function go(reel, smooth) { window.scrollTo({ top: reel.offsetTop, behavior: smooth === false || reduce ? 'auto' : 'smooth' }); }
+  // Spostamento animato (rotella, frecce, indice, logo): lo scatto si sospende un istante, poi torna
+  var goTimer = null;
+  function go(reel, smooth) {
+    var instant = smooth === false || reduce;
+    clearTimeout(goTimer);
+    scroller.style.scrollSnapType = 'none';
+    scroller.scrollTo({ top: reel.offsetTop, behavior: instant ? 'auto' : 'smooth' });
+    var done = function () { scroller.style.scrollSnapType = ''; scroller.removeEventListener('scrollend', done); };
+    if ('onscrollend' in scroller) scroller.addEventListener('scrollend', done);
+    goTimer = setTimeout(done, instant ? 30 : 900);
+  }
 
   function choose(track) { mode = track; applyMode(); go(firstOf(track)); }
   function showAll(target) { mode = 'all'; applyMode(); if (target) go(target); }
@@ -126,15 +137,15 @@
     if (r.classList.contains('r-merge')) { sizeField(); playMerge(); }
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
-    renderIndex();
+    if (!idx.hidden) renderIndex();
   }
   function check() {
-    var mid = window.innerHeight / 2, top = window.scrollY, best = 0;
+    var mid = scroller.clientHeight / 2, top = scroller.scrollTop, best = 0;
     visible.forEach(function (r, k) { if (r.offsetTop <= top + mid && r.offsetTop + r.offsetHeight > top + mid) best = k; });
     activate(best);
   }
   var ticking = false;
-  window.addEventListener('scroll', function () {
+  scroller.addEventListener('scroll', function () {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () { check(); ticking = false; });
@@ -455,25 +466,6 @@
   }
   document.querySelectorAll('.reel .r-h1, .reel .r-h2, .reel .r-big').forEach(splitWords);
 
-  // ---------- Altezza: ogni momento è alto esattamente quanto lo schermo visibile ----------
-  // Così lo scatto funziona come su TikTok: uno swipe, un momento. Se la barra del browser cambia
-  // altezza, i momenti si adattano e quello attuale viene riallineato all'istante (senza animazioni).
-  var probe = document.createElement('div');
-  probe.style.cssText = 'position:fixed;top:0;left:-9999px;width:1px;height:100vh;height:100svh;visibility:hidden;pointer-events:none';
-  document.body.appendChild(probe);
-  var lastH = 0, fitTimer = null;
-  function fitHeight() {
-    var h = window.innerHeight;
-    if (h === lastH) return;
-    lastH = h;
-    var gap = Math.max(0, h - probe.offsetHeight); // spazio occupato dalla barra quando copre la pagina
-    document.body.style.setProperty('--reel-h', h + 'px');
-    document.body.style.setProperty('--bar-gap', gap + 'px');
-    if (current >= 0 && visible[current]) window.scrollTo({ top: visible[current].offsetTop, behavior: 'instant' });
-  }
-  fitHeight();
-  window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitHeight, 60); });
-
   // ---------- Rotella e tastiera: un momento alla volta ----------
   var wheelLock = 0;
   function step(dir) {
@@ -503,7 +495,7 @@
     mode = saved.mode;
     applyMode(true);
     var target = visible[Math.min(saved.i, visible.length - 1)] || visible[0];
-    window.scrollTo(0, target.offsetTop);
+    scroller.scrollTop = target.offsetTop;
     check();
   } else {
     applyMode();
