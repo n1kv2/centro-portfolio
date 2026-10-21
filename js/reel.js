@@ -50,6 +50,7 @@
     document.querySelectorAll('[data-go]').forEach(function (b) { b.classList.toggle('picked', b.getAttribute('data-go') === mode); });
     all.forEach(function (r) { if (r.hidden && r.classList.contains('on')) leave(r); });
     current = -1;
+    if (typeof fitAll === 'function') fitAll();
     if (!keepPos) check();
     renderIndex();
   }
@@ -456,15 +457,61 @@
     var k = Math.max(0, Math.min(visible.length - 1, current + dir));
     if (k !== current) go(visible[k]);
   }
+  // Rotella e trackpad: un gesto = un momento. L'inerzia del trackpad continua a mandare eventi
+  // per più di un secondo, quindi un nuovo passo parte solo dopo una pausa vera negli eventi.
+  var lastWheel = 0;
   window.addEventListener('wheel', function (e) {
     if (navOpen || document.querySelector('.area-panel.open')) return;
-    if (Math.abs(e.deltaY) < 4) return;
     e.preventDefault();
-    var now = Date.now();
-    if (now - wheelLock < 650) return;
+    var now = Date.now(), gap = now - lastWheel;
+    lastWheel = now;
+    if (Math.abs(e.deltaY) < 4) return;
+    if (gap < 220 || now - wheelLock < 450) return;
     wheelLock = now;
     step(e.deltaY > 0 ? 1 : -1);
   }, { passive: false });
+
+  // Tocco: anche con uno scorrimento veloce si avanza di un solo momento alla volta
+  var touchFrom = -1, settleTimer = null;
+  scroller.addEventListener('touchstart', function () { if (touchFrom < 0) touchFrom = current; }, { passive: true });
+  function settle() {
+    if (touchFrom < 0) return;
+    var mid = scroller.scrollTop + scroller.clientHeight / 2, k = 0;
+    visible.forEach(function (r, i) { if (r.offsetTop <= mid) k = i; });
+    var from = touchFrom;
+    touchFrom = -1;
+    if (Math.abs(k - from) > 1) go(visible[from + (k > from ? 1 : -1)]);
+  }
+  if ('onscrollend' in scroller) scroller.addEventListener('scrollend', settle);
+  else scroller.addEventListener('scroll', function () { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140); }, { passive: true });
+
+  // ---------- Ogni momento entra nello schermo ----------
+  // Su schermi bassi o con caratteri di sistema grandi il contenuto può non starci:
+  // in quel caso si rimpicciolisce quanto basta (mai sotto il 72%).
+  function fitReel(r) {
+    var kids = Array.prototype.filter.call(r.children, function (c) {
+      var p = getComputedStyle(c).position;
+      return p !== 'absolute' && p !== 'fixed' && !c.hidden;
+    });
+    kids.forEach(function (c) { c.style.zoom = ''; });
+    var room = r.clientHeight;
+    if (!room) return;
+    var need = kids.reduce(function (t, c) { return t + c.offsetHeight; }, 0);
+    if (need <= room) return;
+    var z = Math.max(0.72, room / need);
+    kids.forEach(function (c) { c.style.zoom = z.toFixed(3); });
+    need = kids.reduce(function (t, c) { return t + c.offsetHeight * z; }, 0);
+    if (need > room && z > 0.72) {
+      z = Math.max(0.72, z * room / need);
+      kids.forEach(function (c) { c.style.zoom = z.toFixed(3); });
+    }
+  }
+  function fitAll() { all.forEach(function (r) { if (!r.hidden) fitReel(r); }); if (merge) sizeField(); }
+  var fitTimer = null;
+  window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitAll, 150); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+  window.addEventListener('load', fitAll);
+
   document.addEventListener('keydown', function (e) {
     if (navOpen) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); step(1); }
@@ -484,4 +531,5 @@
   } else {
     applyMode();
   }
+  fitAll();
 })();
