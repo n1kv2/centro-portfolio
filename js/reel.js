@@ -441,6 +441,30 @@
   }
   document.querySelectorAll('.reel .r-h1, .reel .r-h2, .reel .r-big').forEach(splitWords);
 
+  // ---------- Altezza reale dello schermo ----------
+  // Su iPhone (Safari) la pagina continua sotto la barra ridotta: lo schermo visibile è più alto
+  // della misura standard. Ogni momento usa quindi l'altezza visibile più grande vista finora,
+  // e finché la barra è aperta tiene i contenuti sopra di essa.
+  var probe = document.createElement('div');
+  probe.style.cssText = 'position:absolute;top:0;left:-9999px;width:1px;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
+  document.body.appendChild(probe);
+  var fullH = 0, lastW = window.innerWidth;
+  function viewH() { return Math.round(window.visualViewport ? window.visualViewport.height : window.innerHeight); }
+  function fitHeight() {
+    if (window.innerWidth !== lastW) { fullH = 0; lastW = window.innerWidth; } // rotazione: si ricomincia
+    var now = Math.max(viewH(), window.innerHeight);
+    var prev = fullH;
+    fullH = Math.max(fullH, now, probe.offsetHeight);
+    var root = document.body.style;
+    root.setProperty('--reel-h', fullH + 'px');
+    root.setProperty('--bar-gap', Math.max(0, fullH - now) + 'px');
+    if (fullH !== prev && current >= 0 && visible[current]) window.scrollTo(0, visible[current].offsetTop);
+  }
+  fitHeight();
+  window.addEventListener('resize', fitHeight);
+  if (window.visualViewport) window.visualViewport.addEventListener('resize', fitHeight);
+  window.addEventListener('scroll', function () { if (viewH() > fullH) fitHeight(); }, { passive: true });
+
   // ---------- Avvio ----------
   var saved = null;
   try { saved = JSON.parse(ss.get('reel-pos') || 'null'); } catch (e) { saved = null; }
