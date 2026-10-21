@@ -27,33 +27,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=27">
+<link rel="stylesheet" href="css/reel.css?v=28">
 </head>
 <body class="reel-page">
 
-<!-- Box traslucido in alto: capitolo, avanzamento, indice -->
+<!-- Box traslucido in alto: si tocca e si allarga per scegliere la sezione -->
 <header class="rbar" id="rbar">
-  <div class="rbox">
-    <div class="rbox-row">
-      <button class="rlogo" type="button" id="rhome" aria-label="Torna all'inizio"><span class="brand-mark" aria-hidden="true"></span><span class="rchap" id="rchap">Introduzione</span></button>
-      <span class="rcount" id="rcount">01 / 10</span>
-      <button class="rindex-btn" type="button" id="rindexBtn" aria-haspopup="dialog" aria-controls="rindex" aria-label="Apri l'indice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg></button>
+  <div class="rbox" id="rbox">
+    <button class="rbox-row" type="button" id="rtoggle" aria-expanded="false" aria-controls="rnav" aria-label="Scegli la sezione">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="rchap" id="rchap">Introduzione</span>
+      <i class="rchev" aria-hidden="true"></i>
+    </button>
+    <div class="rnav" id="rnav">
+      <div class="rnav-in">
+        <div class="rnav-list" id="rnavList"></div>
+        <p class="rnav-mode" id="rnavMode"></p>
+      </div>
     </div>
     <div class="rseg" id="rseg" aria-hidden="true"></div>
   </div>
 </header>
-
-<!-- Indice dei momenti -->
-<div class="rindex" id="rindex" role="dialog" aria-modal="true" aria-labelledby="rindexTitle" hidden>
-  <div class="rindex-panel">
-    <div class="rindex-head"><p id="rindexTitle">Indice</p><button class="rindex-close" type="button" data-close aria-label="Chiudi indice">&times;</button></div>
-    <div class="rindex-list" id="rindexList"></div>
-    <p class="rindex-mode" id="rindexMode"></p>
-    <nav class="rx-links" aria-label="Azioni">
-      <a href="prova-chi-sono.html" data-keep>Chi sono</a><button type="button" data-act="contact">Contatti</button><button type="button" data-act="top">Ricomincia</button>
-    </nav>
-  </div>
-</div>
 
 <main class="reels" id="reels">
 
@@ -446,6 +440,6 @@
 
 </main>
 
-<script src="js/reel.js?v=24"></script>
+<script src="js/reel.js?v=25"></script>
 </body>
 </html>

@@ -750,3 +750,34 @@ html.reel-root body { background: #0B1424; }
 /* Zoom delle foto più leggero */
 .reel .r-photo { will-change: auto; }
 .reel.on .r-photo { will-change: transform; }
+
+/* ================= v28: niente burger né contatore — la barra si tocca e si allarga sulle sezioni ================= */
+.rbox { padding: 10px 14px; transition: background-color .3s, color .3s, border-radius .35s; }
+.rbox-row { width: 100%; display: flex; align-items: center; gap: 9px; padding: 2px 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; text-align: left; -webkit-tap-highlight-color: transparent; }
+.rbox-row .brand-mark { flex: none; width: 20px; height: 20px; background: currentColor; }
+.rbox-row .rchap { flex: 1; min-width: 0; }
+/* Freccina: dice che la barra si apre; un piccolo saltello all'inizio per farsi notare */
+.rchev { flex: none; width: 24px; height: 24px; border-radius: 50%; position: relative; background: color-mix(in srgb, currentColor 14%, transparent); transition: transform .35s cubic-bezier(.2,.8,.2,1); }
+.rchev::before { content: ""; position: absolute; left: 50%; top: 50%; width: 6px; height: 6px; border-right: 1.8px solid currentColor; border-bottom: 1.8px solid currentColor; transform: translate(-50%, -70%) rotate(45deg); }
+.rbar.open .rchev { transform: rotate(180deg); }
+.rbar:not(.open) .rchev { animation: chev-hint 1.6s ease 1.2s 2; }
+@keyframes chev-hint { 0%, 100% { translate: 0 0; } 30% { translate: 0 3px; } 55% { translate: 0 0; } 75% { translate: 0 2px; } }
+.rnav { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.2,.8,.2,1); }
+.rbar.open .rnav { grid-template-rows: 1fr; }
+.rnav-in { min-height: 0; overflow: hidden; opacity: 0; transition: opacity .25s ease; }
+.rbar.open .rnav-in { opacity: 1; transition-delay: .08s; }
+.rnav-list { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding-top: 12px; }
+.rnav-item { display: flex; align-items: center; min-height: 40px; padding: 8px 12px; border: 0; border-radius: 12px; cursor: pointer; text-align: left; text-decoration: none;
+  font: 600 .86rem/1.15 var(--f-body); color: inherit; background: color-mix(in srgb, currentColor 9%, transparent); -webkit-tap-highlight-color: transparent; }
+.rnav-item:active { background: color-mix(in srgb, currentColor 18%, transparent); }
+.rnav-item.here { background: #fff; color: #0B1B33; }
+.rbar.on-light .rnav-item.here { background: #0B1B33; color: #fff; }
+.rnav-item.off { opacity: .55; }
+.rnav-link { background: none; box-shadow: inset 0 0 0 1px color-mix(in srgb, currentColor 22%, transparent); }
+.rnav-mode { margin: 10px 2px 0; font-size: .8rem; opacity: .8; }
+.rnav-mode button { border: 0; background: none; padding: 0; color: inherit; font: 700 .8rem var(--f-body); text-decoration: underline; cursor: pointer; }
+.rbar.open .rseg { opacity: 0; }
+.rseg { transition: opacity .25s; }
+.rbar.open .rbox { background: rgba(10, 20, 38, .55); }
+.rbar.open.on-light .rbox { background: rgba(255,255,255,.82); }
+@media (prefers-reduced-motion: reduce) { .rnav, .rnav-in, .rchev { transition: none; } .rbar .rchev { animation: none !important; } }
