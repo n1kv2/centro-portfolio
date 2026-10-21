@@ -173,23 +173,64 @@
   var list = document.getElementById('rindexList');
   var modeEl = document.getElementById('rindexMode');
   var idxBtn = document.getElementById('rindexBtn');
+  // Indice a capitoli: ogni capitolo è una card che si apre e mostra i suoi reel
+  var CHAPTER_DESC = {
+    'Introduzione': 'Il problema e che cos\'è CEnTRO',
+    'Per chi usa l\'app': 'Come funziona, Nia e le aree dell\'app',
+    'Per le aziende': 'Raggiungere e capire il pubblico',
+    'Per chi investe': 'Ricavi, crescita e prove',
+    'Prossimo passo': 'Scegli cosa vedere ora',
+    'Contatti': 'Parliamone'
+  };
+  var openChaps = {};
   function renderIndex() {
-    var html = '', last = '', n = 0;
+    var chaps = [], byName = {};
     all.forEach(function (r) {
       if (r === router && router.hidden) return;
       var c = r.getAttribute('data-chapter');
-      if (c !== last) { html += '<p class="rx-chap">' + c + '</p>'; last = c; }
-      var off = r.hidden, k = visible.indexOf(r);
-      html += '<button type="button" class="rx-item' + (k === current ? ' now' : '') + (off ? ' off' : '') + '" data-i="' + all.indexOf(r) + '">' +
-        '<span class="n">' + (off ? '·' : pad(k + 1)) + '</span><b>' + r.getAttribute('data-title') + '</b><span>' + r.getAttribute('data-desc') + '</span></button>';
-      n++;
+      if (!byName[c]) { byName[c] = { name: c, reels: [] }; chaps.push(byName[c]); }
+      byName[c].reels.push(r);
+    });
+    var curChap = current >= 0 ? visible[current].getAttribute('data-chapter') : '';
+    var html = '';
+    chaps.forEach(function (ch, ci) {
+      var off = ch.reels.every(function (r) { return r.hidden; });
+      var isOpen = !!openChaps[ch.name];
+      var here = ch.name === curChap;
+      html += '<div class="rx-chap' + (isOpen ? ' open' : '') + (here ? ' here' : '') + (off ? ' off' : '') + '">' +
+        '<button type="button" class="rx-head" data-chap="' + ch.name.replace(/"/g, '&quot;') + '" aria-expanded="' + isOpen + '">' +
+          '<span class="rx-n">' + pad(ci + 1) + '</span>' +
+          '<span class="rx-t"><b>' + ch.name + '</b><span>' + (CHAPTER_DESC[ch.name] || '') + (off ? ' · fuori dal percorso' : '') + '</span></span>' +
+          '<span class="rx-c">' + ch.reels.length + '</span><i class="rx-chev" aria-hidden="true"></i>' +
+        '</button><div class="rx-sub"><div class="rx-sub-in">';
+      ch.reels.forEach(function (r) {
+        var k = visible.indexOf(r);
+        html += '<button type="button" class="rx-item' + (k === current ? ' now' : '') + (r.hidden ? ' off' : '') + '" data-i="' + all.indexOf(r) + '">' +
+          '<b>' + r.getAttribute('data-title') + '</b><span>' + r.getAttribute('data-desc') + '</span></button>';
+      });
+      html += '</div></div></div>';
     });
     list.innerHTML = html;
     modeEl.innerHTML = mode === 'all'
       ? 'Stai vedendo tutto. Puoi scegliere un percorso dal reel «Chi sei?».'
       : 'Percorso: ' + NAMES[mode] + '. <button type="button" data-showall>Vedi tutto</button>';
   }
-  function openIndex() { idx.hidden = false; document.body.classList.add('lock'); var now = list.querySelector('.now'); if (now) now.scrollIntoView({ block: 'center' }); }
+  list.addEventListener('click', function (e) {
+    var h = e.target.closest('.rx-head');
+    if (!h) return;
+    e.stopPropagation();
+    var name = h.getAttribute('data-chap');
+    openChaps[name] = !openChaps[name];
+    var box = h.parentNode;
+    box.classList.toggle('open', openChaps[name]);
+    h.setAttribute('aria-expanded', openChaps[name]);
+  });
+  function openIndex() {
+    openChaps = {};
+    if (current >= 0) openChaps[visible[current].getAttribute('data-chapter')] = true;
+    renderIndex();
+    idx.hidden = false; document.body.classList.add('lock');
+  }
   function closeIndex() { idx.hidden = true; document.body.classList.remove('lock'); idxBtn.focus({ preventScroll: true }); }
   idxBtn.addEventListener('click', openIndex);
   idx.addEventListener('click', function (e) {
@@ -229,7 +270,6 @@
     var act = a.getAttribute('data-act');
     closeIndex();
     if (act === 'contact') go(document.querySelector('.r-contact'));
-    else if (act === 'choose') go(document.getElementById('choose'));
     else if (act === 'top') go(visible[0]);
   });
 
