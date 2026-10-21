@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=28">
+<link rel="stylesheet" href="css/reel.css?v=29">
 </head>
 <body class="reel-page">
 
@@ -39,13 +39,13 @@
       <span class="rchap" id="rchap">Introduzione</span>
       <i class="rchev" aria-hidden="true"></i>
     </button>
+    <div class="rseg" id="rseg" aria-hidden="true"></div>
     <div class="rnav" id="rnav">
       <div class="rnav-in">
         <div class="rnav-list" id="rnavList"></div>
         <p class="rnav-mode" id="rnavMode"></p>
       </div>
     </div>
-    <div class="rseg" id="rseg" aria-hidden="true"></div>
   </div>
 </header>
 
@@ -69,7 +69,7 @@
       <span style="--x:6%;--y:41%;--r:4deg;--d:.48s">Post di tre giorni fa</span>
     </div>
     <div class="r-in r-bottom">
-      <p class="nd-label"><span>01</span>Il problema</p>
+      <p class="nd-label">Il problema</p>
       <h2 class="r-h2 small-h">In città succede di tutto. <em>Quasi sempre lo scopri dopo.</em></h2>
       <p class="r-body">E quando lo scopri in tempo, spesso non hai nessuno con cui andarci.</p>
     </div>
@@ -78,13 +78,13 @@
   <section class="reel r-dark r-what" data-reel data-chapter="Introduzione" data-title="Che cos'è CEnTRO" data-desc="L'app che ti conosce e ti porta fuori">
     <div class="r-in r-center">
       <p class="nd-kicker">CEnTRO</p>
-      <p class="r-big">è l'app che <span class="nd-mark">ti conosce</span> e <span class="nd-mark">ti porta fuori.</span></p>
+      <p class="r-big">è l'app che ti <span class="nd-mark">conosce</span> e ti <span class="nd-mark">porta fuori.</span></p>
     </div>
   </section>
 
   <section class="reel r-dark r-merge" data-reel data-chapter="Introduzione" data-title="Tante app, una sola" data-desc="Tutto ciò che serve per vivere la città, in un posto">
     <div class="r-in r-top">
-      <p class="nd-label"><span>02</span>Tutto in un posto</p>
+      <p class="nd-label">Tutto in un posto</p>
       <h2 class="r-h2 on-dark small-h">Oggi la città è sparsa in dieci app. <em>In CEnTRO sta insieme.</em></h2>
     </div>
     <div class="merge" id="merge" aria-hidden="true">
@@ -96,7 +96,7 @@
 
   <section class="reel r-light r-choose" data-reel data-chapter="Introduzione" data-title="Chi sei?" data-desc="Scegli il tuo percorso" id="choose">
     <div class="r-in r-center">
-      <p class="nd-label"><span>03</span>Scegli il tuo percorso</p>
+      <p class="nd-label">Scegli il tuo percorso</p>
       <h2 class="r-h2">Chi sei?</h2>
       <div class="paths">
         <button type="button" class="path" data-go="utente"><b>Utente</b><span>Voglio scoprire cosa fare in città, e con chi.</span></button>
@@ -109,7 +109,7 @@
 
   <section class="reel r-light r-quiz" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Ti racconti" data-desc="Il questionario è il punto di partenza">
     <div class="r-in r-top">
-      <p class="nd-label"><span>U1</span>Come funziona</p>
+      <p class="nd-label">Come funziona</p>
       <h2 class="r-h2">Ti racconti.</h2>
       <p class="r-body">Un questionario su gusti, interessi e modo di stare con gli altri.</p>
     </div>
@@ -129,7 +129,7 @@
 
   <section class="reel r-light r-niamap" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Nia" data-desc="La mappa che avvicina ciò che ti somiglia">
     <div class="r-in r-top nm-top">
-      <p class="nd-label"><span>U2</span>Nia, la tua mappa</p>
+      <p class="nd-label">Nia, la tua mappa</p>
       <h2 class="r-h2 small-h">Dimmi cosa cerchi. <em>Nia avvicina ciò che ti somiglia.</em></h2>
     </div>
     <div class="nm">
@@ -149,7 +149,7 @@
 
   <section class="reel r-light r-feed" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Proposte su misura" data-desc="Ogni giorno, in ordine di affinità">
     <div class="r-in r-top">
-      <p class="nd-label"><span>U3</span>Come funziona</p>
+      <p class="nd-label">Come funziona</p>
       <h2 class="r-h2">Ricevi proposte <em>su misura.</em></h2>
       <p class="r-body">Ogni giorno, le cose da fare in città, in ordine di affinità con te.</p>
     </div>
@@ -163,7 +163,7 @@
   <section class="reel r-dark r-group r-shot" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="In gruppo o da solo" data-desc="Con il tuo gruppo o con persone nuove">
     <img class="r-photo" src="img/piazza.jpg" alt="Quattro amici seduti sui gradini di una piazza scelgono insieme cosa fare." loading="lazy">
     <div class="r-in r-top">
-      <p class="nd-label"><span>U4</span>Con chi andarci</p>
+      <p class="nd-label">Con chi andarci</p>
       <h2 class="r-h2 on-dark">In gruppo <em>o da solo.</em></h2>
     </div>
     <div class="modes">
@@ -185,14 +185,14 @@
   <section class="reel r-area r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Eventi" data-desc="Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.">
     <img class="r-photo" src="img/area-evento.jpg" alt="Una ragazza e i suoi amici guardano il telefono a un concerto all'aperto." loading="lazy">
     <div class="r-in r-bottom area-cap">
-      <p class="nd-label"><span>01</span>Area · Eventi</p>
+      <p class="nd-label">Area · Eventi</p>
       <h2 class="r-h2">Eventi scelti per te.</h2>
       <p class="area-line">Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.</p>
       <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
     <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <p class="nd-label"><span>01</span>Eventi</p>
+        <p class="nd-label">Eventi</p>
         <h3 class="ap-title">Eventi scelti per te.</h3>
         <p class="ap-text">Ogni evento ha una locandina chiara: quando, dove, quanto costa e chi ci va. L'ordine non è casuale: in cima c'è ciò che è più vicino ai tuoi gusti.</p>
         <div class="viz viz-feed" aria-hidden="true">
@@ -210,14 +210,14 @@
   <section class="reel r-area r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Community" data-desc="Chiunque propone un'attività e arrivano persone affini con cui farla.">
     <img class="r-photo" src="img/area-community.jpg" alt="Un gruppo di ragazzi suona la chitarra su un prato." loading="lazy">
     <div class="r-in r-bottom area-cap">
-      <p class="nd-label"><span>02</span>Area · Community</p>
+      <p class="nd-label">Area · Community</p>
       <h2 class="r-h2">Attività create dalle persone.</h2>
       <p class="area-line">Chiunque propone un'attività e arrivano persone affini con cui farla.</p>
       <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
     <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <p class="nd-label"><span>02</span>Community</p>
+        <p class="nd-label">Community</p>
         <h3 class="ap-title">Attività create dalle persone.</h3>
         <p class="ap-text">Una partita, un aperitivo in lingua, una suonata al parco. Nia aiuta a scrivere descrizione e date, e le richieste di partecipazione arrivano ordinate per affinità con il gruppo.</p>
         <div class="viz viz-group" aria-hidden="true">
@@ -235,14 +235,14 @@
   <section class="reel r-area r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Spotted" data-desc="Domande, consigli e aiuti tra le persone della città.">
     <img class="r-photo" src="img/area-spot.jpg" alt="Una ragazza legge i biglietti appesi a una bacheca." loading="lazy">
     <div class="r-in r-bottom area-cap">
-      <p class="nd-label"><span>03</span>Area · Spotted</p>
+      <p class="nd-label">Area · Spotted</p>
       <h2 class="r-h2">Chiedere e dare una mano.</h2>
       <p class="area-line">Domande, consigli e aiuti tra le persone della città.</p>
       <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
     <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <p class="nd-label"><span>03</span>Spotted</p>
+        <p class="nd-label">Spotted</p>
         <h3 class="ap-title">Chiedere e dare una mano.</h3>
         <p class="ap-text">Un oggetto ritrovato, un consiglio sul quartiere, qualcuno con cui condividere un passaggio. È lo spazio che dà un motivo per aprire CEnTRO anche nei giorni senza eventi.</p>
         <div class="viz viz-spot" aria-hidden="true">
@@ -260,14 +260,14 @@
   <section class="reel r-area r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Esplora" data-desc="Bandi, concorsi ed esperienze in azienda, scelti per interessi, requisiti e scadenze.">
     <img class="r-photo" src="img/area-esplora.jpg" alt="Una ragazza parla con un ragazzo a uno stand di bandi e tirocini." loading="lazy">
     <div class="r-in r-bottom area-cap">
-      <p class="nd-label"><span>04</span>Area · Esplora</p>
+      <p class="nd-label">Area · Esplora</p>
       <h2 class="r-h2">Opportunità a cui puoi partecipare.</h2>
       <p class="area-line">Bandi, concorsi ed esperienze in azienda, scelti per interessi, requisiti e scadenze.</p>
       <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
     <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <p class="nd-label"><span>04</span>Esplora</p>
+        <p class="nd-label">Esplora</p>
         <h3 class="ap-title">Opportunità a cui puoi partecipare.</h3>
         <p class="ap-text">Ogni opportunità dice subito se hai i requisiti e quanto manca alla scadenza. Enti e aziende ricevono candidature più adatte.</p>
         <div class="viz viz-explore" aria-hidden="true">
@@ -285,14 +285,14 @@
   <section class="reel r-area r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Casa" data-desc="Annunci collegati alle tue esigenze e alle preferenze di convivenza.">
     <img class="r-photo" src="img/area-casa.jpg" alt="Tre ragazzi tra gli scatoloni cercano casa al computer." loading="lazy">
     <div class="r-in r-bottom area-cap">
-      <p class="nd-label"><span>05</span>Area · Casa</p>
+      <p class="nd-label">Area · Casa</p>
       <h2 class="r-h2">La casa giusta, con le persone giuste.</h2>
       <p class="area-line">Annunci collegati alle tue esigenze e alle preferenze di convivenza.</p>
       <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
     <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <p class="nd-label"><span>05</span>Casa</p>
+        <p class="nd-label">Casa</p>
         <h3 class="ap-title">La casa giusta, con le persone giuste.</h3>
         <p class="ap-text">Il match casa confronta i futuri coinquilini tema per tema: pulizia, orari, ospiti, fumo. Le agenzie ricevono richieste da chi è davvero compatibile con l'annuncio.</p>
         <div class="viz viz-home" aria-hidden="true">
@@ -313,7 +313,7 @@
 
   <section class="reel r-light r-reach" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="Le persone giuste" data-desc="La proposta arriva prima a chi è affine">
     <div class="r-in r-top">
-      <p class="nd-label"><span>A1</span>Per le aziende</p>
+      <p class="nd-label">Per le aziende</p>
       <h2 class="r-h2">Non solo più persone. <em>Le persone giuste.</em></h2>
       <p class="r-body">La tua proposta arriva prima a chi è affine, anche se non la stava cercando.</p>
     </div>
@@ -322,7 +322,7 @@
 
   <section class="reel r-dark r-discover" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="Discover" data-desc="Quando qualcuno chiede a Nia, Nia propone te">
     <div class="r-in r-top">
-      <p class="nd-label"><span>A2</span>Abbonamento Discover</p>
+      <p class="nd-label">Abbonamento Discover</p>
       <h2 class="r-h2 on-dark small-h">Qualcuno chiede un consiglio a Nia. <em>Nia propone te.</em></h2>
     </div>
     <div class="dchat" aria-hidden="true">
@@ -343,7 +343,7 @@
 
   <section class="reel r-light r-tools" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="Strumenti e personalizzazione" data-desc="Pubblico su misura, richieste ordinate, gestione">
     <div class="r-in r-center">
-      <p class="nd-label"><span>A3</span>Strumenti avanzati</p>
+      <p class="nd-label">Strumenti avanzati</p>
       <h2 class="r-h2 small-h">Tutto su misura, <em>tutto in un posto.</em></h2>
       <ul class="more on-light">
         <li><b>Pubblico su misura</b><span>Scegli a chi mostrare la proposta: interessi, zona, momento della giornata.</span></li>
@@ -353,12 +353,13 @@
     </div>
   </section>
 
-  <section class="reel r-dark r-ins" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="CEnTRO Insights" data-desc="C'è mercato per la tua idea? Chiedilo alla città">
+  <section class="reel r-dark r-ins" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="CEnTRO Insights" data-desc="Come far crescere ciò che hai creato">
     <div class="r-in r-top">
-      <p class="nd-label"><span>A4</span>CEnTRO Insights</p>
-      <h2 class="r-h2 on-dark small-h">C'è mercato per la tua idea? <em>Chiedilo alla città.</em></h2>
+      <p class="nd-label">CEnTRO Insights</p>
+      <h2 class="r-h2 on-dark small-h">Hai già creato qualcosa? <em>Insights ti dice come farlo crescere.</em></h2>
     </div>
     <div class="isearch" aria-hidden="true">
+      <p class="is-label">Market Explorer · l'unico in cui chiedi tu</p>
       <div class="is-bar"><span class="is-q" id="isQ"></span><i class="is-caret"></i></div>
       <ul class="is-res">
         <li style="--d:0s"><span>Domanda potenziale</span><b>Alta</b><i style="--w:82%"></i></li>
@@ -368,21 +369,21 @@
       </ul>
     </div>
     <div class="r-in r-bottom is-foot">
-      <p class="is-tools">Business · Housing · Event · Market Explorer</p>
-      <a class="glass-btn" href="prova-insights.html" data-keep>Scopri i 4 strumenti<i aria-hidden="true"></i></a>
+      <p class="is-tools">Business, Housing ed Event: i dati di ciò che hai creato, già pronti.</p>
+      <a class="glass-btn" href="prova-insights.html" data-keep>Scopri gli strumenti<i aria-hidden="true"></i></a>
     </div>
   </section>
 
   <section class="reel r-dark r-thesis" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="La tesi" data-desc="Perché le aziende pagano">
     <div class="r-in r-center">
-      <p class="nd-label"><span>I1</span>Per chi investe</p>
+      <p class="nd-label">Per chi investe</p>
       <p class="r-big">Le persone la usano per uscire. <em>Le aziende pagano per raggiungerle e capirle.</em></p>
     </div>
   </section>
 
   <section class="reel r-light r-rev" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Tre fonti di ricavo" data-desc="Pubblicità, abbonamenti, commissioni">
     <div class="r-in r-center">
-      <p class="nd-label"><span>I2</span>Tre fonti di ricavo</p>
+      <p class="nd-label">Tre fonti di ricavo</p>
       <ol class="revs">
         <li><span>1</span><b>Pubblicità mirata</b><p>Negozi e inserzionisti pagano per arrivare a chi ha i gusti giusti.</p></li>
         <li><span>2</span><b>Abbonamenti business</b><p>Discover per farsi proporre da Nia, strumenti di gestione e CEnTRO Insights.</p></li>
@@ -393,20 +394,20 @@
 
   <section class="reel r-dark r-grow" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Perché può crescere" data-desc="Un circolo che si rinforza">
     <div class="r-in r-top">
-      <p class="nd-label"><span>I3</span>Perché può crescere</p>
+      <p class="nd-label">Perché può crescere</p>
     </div>
     <div class="cyc" aria-hidden="true">
       <svg viewBox="0 0 300 300"><circle cx="150" cy="150" r="104"/><circle class="cyc-run" cx="150" cy="150" r="104" pathLength="1"/></svg>
       <span class="cy c1">Più persone</span><span class="cy c2">Più proposte</span><span class="cy c3">Suggerimenti migliori</span>
     </div>
     <div class="r-in r-bottom">
-      <p class="r-say on-dark">Un dato che altri non hanno: <em>ciò che le persone dicono e ciò che fanno, insieme.</em></p>
+      <p class="r-say on-dark">Un dato che altri non hanno: <em class="sans">ciò che le persone dicono e ciò che fanno, insieme.</em></p>
     </div>
   </section>
 
   <section class="reel r-light r-proof" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Cosa dimostreremo" data-desc="Le prove dell'MVP e a che punto siamo">
     <div class="r-in r-center">
-      <p class="nd-label"><span>I4</span>Cosa dimostreremo</p>
+      <p class="nd-label">Cosa dimostreremo</p>
       <ul class="proofs">
         <li>Il questionario prevede ciò che piace</li>
         <li>Le persone partecipano davvero</li>
@@ -421,14 +422,14 @@
 
   <section class="reel r-light r-route" data-reel data-router data-chapter="Prossimo passo" data-title="Cosa vedere ora" data-desc="Scegli dove andare" hidden id="router">
     <div class="r-in r-center">
-      <p class="nd-label"><span>→</span>Prossimo passo</p>
+      <p class="nd-label">Prossimo passo</p>
       <h2 class="r-h2">Cosa vuoi <em>vedere ora?</em></h2>
       <div class="paths" id="routerPaths"></div>
     </div>
   </section>
 
   <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Contatti" data-title="Parliamone" data-desc="Nicholas Vigo, fondatore">
-    <img class="r-photo" src="img/trekking-sosta.jpg" alt="Un gruppo in cammino su un sentiero di montagna." loading="lazy">
+    <img class="r-photo" src="img/stretta-di-mano.jpg" alt="Due persone si stringono la mano." loading="lazy">
     <div class="r-in r-center">
       <p class="nd-label">Parliamone</p>
       <p class="r-big small">Per una demo, una collaborazione o un incontro.</p>
@@ -440,6 +441,6 @@
 
 </main>
 
-<script src="js/reel.js?v=25"></script>
+<script src="js/reel.js?v=26"></script>
 </body>
 </html>

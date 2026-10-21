@@ -355,6 +355,18 @@
   var toggle = document.getElementById('rtoggle');
   var navOpen = false, openTop = 0;
   var navChaps = [];
+  // Icone delle sezioni (tratto sottile, del colore del testo)
+  var ICON_PATHS = {
+    'Introduzione': '<circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z"/>',
+    'Per chi usa l\'app': '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.6 3.6-5.5 7-5.5s6.2 1.9 7 5.5"/>',
+    'Le aree dell\'app': '<rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/>',
+    'Per le aziende': '<path d="M4 10l1.5-5h13L20 10"/><path d="M4 10c0 1.7 1.3 2.5 2.7 2.5S9.3 11.7 9.3 10c0 1.7 1.3 2.5 2.7 2.5s2.7-.8 2.7-2.5c0 1.7 1.3 2.5 2.7 2.5S20 11.7 20 10"/><path d="M5.5 12.5V20h13v-7.5"/>',
+    'Per chi investe': '<path d="M4 19h16"/><path d="M5 15l4.5-4.5 3.5 3L19 7.5"/><path d="M14.5 7.5H19V12"/>',
+    'Prossimo passo': '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
+    'Contatti': '<rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4.5 7.5l7.5 5.5 7.5-5.5"/>',
+    'Chi sono': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.3c1.2-2 3.2-3.1 5.5-3.1s4.3 1.1 5.5 3.1"/>'
+  };
+  function icon(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICON_PATHS[name] || '') + '</svg>'; }
   function renderIndex() {
     var byName = {};
     navChaps = [];
@@ -367,19 +379,30 @@
     var curChap = current >= 0 ? visible[current].getAttribute('data-chapter') : '';
     navList.innerHTML = navChaps.map(function (ch, k) {
       var off = ch.reels.every(function (r) { return r.hidden; });
-      return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + ch.name + '</button>';
-    }).join('') + '<a class="rnav-item rnav-link" href="prova-chi-sono.html" data-keep>Chi sono</a>';
+      return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
+    }).join('') + '<a class="rnav-item rnav-link" href="prova-chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>';
     navMode.innerHTML = mode === 'all' ? '' : 'Percorso ' + NAMES[mode].toLowerCase() + ' · <button type="button" data-showall>Vedi tutto</button>';
     navMode.hidden = mode === 'all';
   }
+  // Con il menu aperto si evidenzia la linea della sezione (quella attuale, o quella che stai per scegliere)
+  function pickLine(name) {
+    bits.forEach(function (b, k) { b.classList.toggle('seg-pick', !!chapters[k] && chapters[k].name === name); });
+  }
   function setNav(open) {
     navOpen = open;
+    pickLine(open && current >= 0 ? visible[current].getAttribute('data-chapter') : '');
     openTop = scroller.scrollTop;
     if (open) renderIndex();
     bar.classList.toggle('open', open);
     toggle.setAttribute('aria-expanded', open);
   }
   toggle.addEventListener('click', function () { setNav(!navOpen); });
+  function hoverLine(e) {
+    var it = e.target.closest('[data-c]');
+    pickLine(it ? navChaps[parseInt(it.getAttribute('data-c'), 10)].name : (current >= 0 ? visible[current].getAttribute('data-chapter') : ''));
+  }
+  ['pointerover', 'focusin'].forEach(function (t) { document.getElementById('rnav').addEventListener(t, hoverLine); });
+  document.getElementById('rnav').addEventListener('pointerleave', hoverLine);
   document.getElementById('rnav').addEventListener('click', function (e) {
     if (e.target.closest('[data-showall]')) { setNav(false); showAll(visible[current]); return; }
     if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); return; }

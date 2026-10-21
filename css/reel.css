@@ -781,3 +781,17 @@ html.reel-root body { background: #0B1424; }
 .rbar.open .rbox { background: rgba(10, 20, 38, .55); }
 .rbar.open.on-light .rbox { background: rgba(255,255,255,.82); }
 @media (prefers-reduced-motion: reduce) { .rnav, .rnav-in, .rchev { transition: none; } .rbar .rchev { animation: none !important; } }
+
+/* ================= v29: icone nel menu, frase in DM Sans ================= */
+.rnav-item { gap: 9px; }
+.rnav-item svg { flex: none; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; opacity: .85; }
+.rnav-item.here svg { opacity: 1; }
+.r-say em.sans { font-family: var(--f-body); font-style: normal; font-weight: 500; font-size: .86em; letter-spacing: -.01em; }
+
+/* ================= v29b: menu aperto — le linee restano sopra le sezioni e si evidenzia quella scelta ================= */
+.rbar.open .rseg { opacity: 1; }
+.rseg i { transition: opacity .25s, transform .25s; }
+.rbar.open .rseg i:not(.seg-pick) { opacity: .35; }
+.rbar.open .rseg i.seg-pick { transform: scaleY(1.5); }
+.rbar.open .rseg i.seg-pick::after { transform: scaleX(1); }
+.is-label { margin: 0 0 8px; font: 500 .64rem/1.3 var(--nd-mono); letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
