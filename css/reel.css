@@ -705,3 +705,7 @@ html.reel-root, html.reel-root body { height: auto; overflow: visible; overflow-
 }
 
 html.reel-root { overflow-anchor: none; }
+
+/* ================= v11: altezza reale dello schermo (iOS 26) ================= */
+/* --reel-h e --bar-gap li calcola lo script; senza script resta la misura standard */
+.reel { height: var(--reel-h, 100lvh); padding-bottom: var(--bar-gap, 0px); }
