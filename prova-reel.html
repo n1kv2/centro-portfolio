@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=32">
+<link rel="stylesheet" href="css/reel.css?v=33">
 </head>
 <body class="reel-page">
 
@@ -134,14 +134,18 @@
     </div>
     <div class="nm">
       <div class="nm-caprow" id="nmChips" aria-live="polite"></div>
-      <div class="map nm-map" aria-label="Più una proposta è vicina al centro, più è affine a te">
-        <svg class="map-bg" viewBox="0 0 400 400" aria-hidden="true">
-          <circle class="zone z3" cx="200" cy="200" r="196"/><circle class="zone z2" cx="200" cy="200" r="126"/><circle class="zone z1" cx="200" cy="200" r="70"/>
-          <text class="ring-label" x="200" y="146">molto affine</text><text class="ring-label" x="200" y="90">affine</text><text class="ring-label" x="200" y="22">da esplorare</text>
-        </svg>
-        <div class="radar-sweep" aria-hidden="true"></div>
-        <div class="me" aria-hidden="true"><span>Tu</span></div>
-        <div class="nodes" id="nmNodes"></div>
+      <div class="nm-stage" id="nmStage">
+        <div class="nm-orb" id="nmOrb">
+          <span class="nm-wait" aria-hidden="true"><i></i>Sto cercando</span>
+          <div class="map nm-map" aria-label="Più una proposta è vicina al centro, più è affine a te">
+            <svg class="map-bg" viewBox="0 0 400 400" aria-hidden="true">
+              <circle class="zone z3" cx="200" cy="200" r="198"/><circle class="zone z2" cx="200" cy="200" r="128"/><circle class="zone z1" cx="200" cy="200" r="70"/>
+              <text class="ring-label" x="200" y="146">molto affine</text><text class="ring-label" x="200" y="88">affine</text><text class="ring-label" x="200" y="22">da esplorare</text>
+            </svg>
+            <div class="me" aria-hidden="true"><span>Tu</span></div>
+            <div class="nodes" id="nmNodes"></div>
+          </div>
+        </div>
       </div>
       <article class="pick nm-pick" id="nmPick" aria-live="polite"></article>
     </div>
@@ -444,6 +448,6 @@
 
 </main>
 
-<script src="js/reel.js?v=29"></script>
+<script src="js/reel.js?v=30"></script>
 </body>
 </html>
