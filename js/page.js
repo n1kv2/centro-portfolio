@@ -14,4 +14,17 @@
     if (photo.complete) { photo.naturalWidth ? ok() : ko(); }
     photo.addEventListener('load', ok); photo.addEventListener('error', ko);
   }
+  // CEnTRO con la n minuscola anche nelle scritte in maiuscolo
+  var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), list = [];
+  while (w.nextNode()) if (w.currentNode.nodeValue.indexOf('CEnTRO') >= 0) list.push(w.currentNode);
+  list.forEach(function (t) {
+    var el = t.parentNode;
+    if (!el || getComputedStyle(el).textTransform !== 'uppercase') return;
+    var parts = t.nodeValue.split('CEnTRO'), frag = document.createDocumentFragment();
+    parts.forEach(function (part, i) {
+      if (part) frag.appendChild(document.createTextNode(part));
+      if (i < parts.length - 1) { var sp = document.createElement('span'); sp.className = 'cn'; sp.textContent = 'CEnTRO'; frag.appendChild(sp); }
+    });
+    el.replaceChild(frag, t);
+  });
 })();

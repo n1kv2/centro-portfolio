@@ -1,4 +1,4 @@
-// Tema: automatico (chiaro dall'alba al tramonto all'Aquila, scuro la sera), chiaro o scuro.
+// Tema: chiaro di base; scuro solo se lo si attiva (resta disponibile anche "auto": chiaro di giorno, scuro la sera).
 // Caricato nell'head per applicare il tema prima che la pagina compaia.
 (function () {
   var KEY = 'centro-theme';
@@ -25,7 +25,7 @@
     return { rise: toDate(rise), set: toDate(set) };
   }
 
-  function read() { try { return localStorage.getItem(KEY) || 'auto'; } catch (err) { return 'auto'; } }
+  function read() { try { return localStorage.getItem(KEY) || 'light'; } catch (err) { return 'light'; } }
   function write(v) { try { localStorage.setItem(KEY, v); } catch (err) { /* nessun salvataggio disponibile */ } }
 
   function resolve(pref) {
