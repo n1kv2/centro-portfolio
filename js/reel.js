@@ -205,8 +205,9 @@
     merge.classList.remove('reset');
     if (reduce) { merge.classList.add('merged', 'done'); return; }
     mergeTimers = [
-      setTimeout(function () { merge.classList.add('merged'); }, 3200),
-      setTimeout(function () { merge.classList.add('done'); }, 4700)
+      // Si uniscono quasi subito, così si vede prima di scorrere oltre
+      setTimeout(function () { merge.classList.add('merged'); }, 900),
+      setTimeout(function () { merge.classList.add('done'); }, 2000)
     ];
   }
   document.getElementById('mergeReplay').addEventListener('click', playMerge);

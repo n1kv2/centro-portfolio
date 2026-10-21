@@ -129,3 +129,25 @@ html.js [data-pg].in { opacity: 1; transform: none; }
 .rec-a { margin: 0; font-weight: 700; font-size: .95rem; line-height: 1.35; }
 .rec-v { margin: 0; padding-top: 10px; border-top: 1px dashed var(--nd-line); font-size: .8rem; line-height: 1.4; color: var(--nd-ink2); }
 .rec-v span { display: block; margin-bottom: 3px; font: 500 .6rem/1 var(--nd-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--nd-muted); }
+/* v4: consigli più asciutti (numero → cosa fare), gusti del pubblico */
+.recs { gap: 6px; }
+.rec { grid-template-columns: 4.6rem minmax(0,1fr); align-items: center; gap: 12px; padding: 12px 14px; }
+.rec-n { font-size: 1.45rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; color: var(--app-blue); display: grid; gap: 3px; }
+.rec-n small { font: 500 .66rem/1 var(--nd-mono); letter-spacing: .04em; color: var(--nd-muted); }
+.rec-b { display: grid; gap: 2px; }
+.rec-b b { font-size: .95rem; line-height: 1.25; }
+.rec-b span { font-size: .8rem; line-height: 1.35; color: var(--nd-ink2); }
+.rec-b em { margin-top: 4px; font-style: normal; font: 500 .6rem/1.3 var(--nd-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--nd-muted); }
+.tastes { display: flex; flex-wrap: wrap; gap: 6px; }
+.tastes span { display: inline-flex; align-items: baseline; gap: 6px; padding: calc(6px + var(--v) * .06px) calc(10px + var(--v) * .06px); border-radius: 99px;
+  background: color-mix(in srgb, var(--app-blue) calc(var(--v) * 1%), var(--nd-bg)); color: var(--nd-ink);
+  font-size: calc(.74rem + var(--v) * .0045rem); opacity: 0; transform: scale(.9); transition: opacity .5s ease, transform .5s cubic-bezier(.2,1.3,.4,1); }
+.tastes span:nth-child(-n+2) { color: #fff; }
+.tastes b { font-weight: 700; }
+.tastes i { font-style: normal; font: 500 .7em/1 var(--nd-mono); opacity: .8; }
+.dash.in .tastes span, html:not(.js) .tastes span { opacity: 1; transform: none; }
+.tastes span:nth-child(2) { transition-delay: .06s; } .tastes span:nth-child(3) { transition-delay: .12s; } .tastes span:nth-child(4) { transition-delay: .18s; }
+.tastes span:nth-child(5) { transition-delay: .24s; } .tastes span:nth-child(6) { transition-delay: .3s; } .tastes span:nth-child(7) { transition-delay: .36s; }
+@media (prefers-reduced-motion: reduce) { .tastes span { transition: none; opacity: 1; transform: none; } }
+.tastes span:nth-child(-n+2) { background: #1F6FD6; color: #fff; }
+.tastes span:nth-child(n+3) { background: color-mix(in srgb, var(--app-blue) calc(var(--v) * .9%), var(--nd-bg)); }
