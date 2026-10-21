@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="it">
+<html lang="it" class="reel-root">
 <head>
 <meta charset="utf-8">
 <script>document.documentElement.classList.add('js');</script>
@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=13">
+<link rel="stylesheet" href="css/reel.css?v=15">
 </head>
 <body class="reel-page">
 
@@ -91,7 +91,7 @@
   <section class="reel r-dark r-merge" data-reel data-chapter="Introduzione" data-title="Tante app, una sola" data-desc="Tutto ciò che serve per vivere la città, in un posto">
     <div class="r-in r-top">
       <p class="nd-label"><span>02</span>Tutto in un posto</p>
-      <h2 class="r-h2 on-dark">Oggi la città è sparsa in dieci app. <em>In CEnTRO sta insieme.</em></h2>
+      <h2 class="r-h2 on-dark small-h">Oggi la città è sparsa in dieci app. <em>In CEnTRO sta insieme.</em></h2>
     </div>
     <div class="merge" id="merge" aria-hidden="true">
       <div class="merge-field" id="mergeField"></div>
@@ -136,22 +136,16 @@
   <section class="reel r-light r-niamap" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Nia" data-desc="La mappa che avvicina ciò che ti somiglia">
     <div class="r-in r-top nm-top">
       <p class="nd-label"><span>U2</span>Nia, la tua mappa</p>
-      <h2 class="r-h2 small-h">Scegli cosa cerchi. <em>Nia avvicina ciò che ti somiglia.</em></h2>
+      <h2 class="r-h2 small-h">Dimmi cosa cerchi. <em>Nia avvicina ciò che ti somiglia.</em></h2>
     </div>
     <div class="nm">
-      <div class="nia-chips nm-chips" id="nmChips" role="radiogroup" aria-label="Cosa cerchi"></div>
+      <div class="nm-caprow" id="nmChips" aria-live="polite"></div>
       <div class="map nm-map" aria-label="Più una proposta è vicina al centro, più è affine a te">
         <svg class="map-bg" viewBox="0 0 400 400" aria-hidden="true">
-          <path class="river" d="M-10 300 C 80 260 120 330 210 300 S 330 230 410 260"/>
-          <path class="street" d="M30 -10 C 60 120 40 240 90 410"/>
-          <path class="street" d="M-10 120 C 120 140 260 100 410 150"/>
-          <path class="street" d="M250 -10 C 230 100 300 220 270 410"/>
-          <path class="street" d="M-10 220 C 100 200 180 240 410 210"/>
-          <path class="street thin" d="M140 -10 C 160 80 120 180 170 260"/>
-          <path class="street thin" d="M330 40 C 300 120 360 200 330 330"/>
           <circle class="ring" cx="200" cy="200" r="70"/><circle class="ring" cx="200" cy="200" r="125"/><circle class="ring" cx="200" cy="200" r="180"/>
           <text class="ring-label" x="200" y="124">molto affine</text><text class="ring-label" x="200" y="69">affine</text><text class="ring-label" x="200" y="14">da esplorare</text>
         </svg>
+        <div class="radar-sweep" aria-hidden="true"></div>
         <div class="me" aria-hidden="true"><span>Tu</span></div>
         <div class="nodes" id="nmNodes"></div>
       </div>
@@ -183,7 +177,7 @@
         <div class="av-group" aria-hidden="true"><i style="--c:#F06139"></i><i style="--c:#2FB37A"></i><i style="--c:#6A3FD1"></i><i style="--c:#2E9BD6"></i></div>
         <p class="m-k">Con il tuo gruppo</p>
         <b>Scegliete insieme cosa fare</b>
-        <p>Eventi, attività e attività create dalla community: il gruppo nato su CEnTRO continua a uscire.</p>
+        <p>Eventi, attività e Community: il gruppo nato su CEnTRO continua a uscire.</p>
       </article>
       <article style="--d:1.4s">
         <div class="av-solo" aria-hidden="true"><i style="--c:#D43998"></i><span>+</span></div>
@@ -200,11 +194,10 @@
       <p class="nd-label"><span>01</span>Area · Eventi</p>
       <h2 class="r-h2">Eventi scelti per te.</h2>
       <p class="area-line">Il feed mette per primi gli eventi più affini, anche quelli che non avresti mai cercato.</p>
-      <button class="glass-btn" type="button" data-area-open>Approfondisci<i aria-hidden="true"></i></button>
+      <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
-    <div class="area-panel" aria-hidden="true">
+    <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <button class="ap-close" type="button" data-area-close aria-label="Chiudi">&times;</button>
         <p class="nd-label"><span>01</span>Eventi</p>
         <h3 class="ap-title">Eventi scelti per te.</h3>
         <p class="ap-text">Ogni evento ha una locandina chiara: quando, dove, quanto costa e chi ci va. L'ordine non è casuale: in cima c'è ciò che è più vicino ai tuoi gusti.</p>
@@ -215,6 +208,7 @@
                 <p class="vf-cap">Ordinati per affinità con il tuo profilo</p>
               </div>
         <dl class="gain"><div><dt>Per te</dt><dd>Scopri senza cercare.</dd></div><div><dt>Per chi organizza</dt><dd>Arriva a chi è davvero interessato.</dd></div></dl>
+        <p class="ap-hint">Tocca per chiudere</p>
       </div>
     </div>
   </section>
@@ -225,11 +219,10 @@
       <p class="nd-label"><span>02</span>Area · Community</p>
       <h2 class="r-h2">Attività create dalle persone.</h2>
       <p class="area-line">Chiunque propone un'attività e arrivano persone affini con cui farla.</p>
-      <button class="glass-btn" type="button" data-area-open>Approfondisci<i aria-hidden="true"></i></button>
+      <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
-    <div class="area-panel" aria-hidden="true">
+    <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <button class="ap-close" type="button" data-area-close aria-label="Chiudi">&times;</button>
         <p class="nd-label"><span>02</span>Community</p>
         <h3 class="ap-title">Attività create dalle persone.</h3>
         <p class="ap-text">Una partita, un aperitivo in lingua, una suonata al parco. Nia aiuta a scrivere descrizione e date, e le richieste di partecipazione arrivano ordinate per affinità con il gruppo.</p>
@@ -240,6 +233,7 @@
                 <p class="vf-cap">Richieste ordinate per affinità con il gruppo</p>
               </div>
         <dl class="gain"><div><dt>Per te</dt><dd>Trovi compagnia per ciò che ti piace.</dd></div><div><dt>Per la piattaforma</dt><dd>Nascono gruppi che tornano a scegliere.</dd></div></dl>
+        <p class="ap-hint">Tocca per chiudere</p>
       </div>
     </div>
   </section>
@@ -250,11 +244,10 @@
       <p class="nd-label"><span>03</span>Area · Spotted</p>
       <h2 class="r-h2">Chiedere e dare una mano.</h2>
       <p class="area-line">Domande, consigli e aiuti tra le persone della città.</p>
-      <button class="glass-btn" type="button" data-area-open>Approfondisci<i aria-hidden="true"></i></button>
+      <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
-    <div class="area-panel" aria-hidden="true">
+    <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <button class="ap-close" type="button" data-area-close aria-label="Chiudi">&times;</button>
         <p class="nd-label"><span>03</span>Spotted</p>
         <h3 class="ap-title">Chiedere e dare una mano.</h3>
         <p class="ap-text">Un oggetto ritrovato, un consiglio sul quartiere, qualcuno con cui condividere un passaggio. È lo spazio che dà un motivo per aprire CEnTRO anche nei giorni senza eventi.</p>
@@ -265,6 +258,7 @@
                 <p class="vf-cap">Risolto in pochi minuti dalla community</p>
               </div>
         <dl class="gain"><div><dt>Per te</dt><dd>Un aiuto vicino, ogni giorno.</dd></div><div><dt>Per la piattaforma</dt><dd>Un motivo per aprire l'app anche senza eventi.</dd></div></dl>
+        <p class="ap-hint">Tocca per chiudere</p>
       </div>
     </div>
   </section>
@@ -275,11 +269,10 @@
       <p class="nd-label"><span>04</span>Area · Esplora</p>
       <h2 class="r-h2">Opportunità a cui puoi partecipare.</h2>
       <p class="area-line">Bandi, concorsi ed esperienze in azienda, scelti per interessi, requisiti e scadenze.</p>
-      <button class="glass-btn" type="button" data-area-open>Approfondisci<i aria-hidden="true"></i></button>
+      <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
-    <div class="area-panel" aria-hidden="true">
+    <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <button class="ap-close" type="button" data-area-close aria-label="Chiudi">&times;</button>
         <p class="nd-label"><span>04</span>Esplora</p>
         <h3 class="ap-title">Opportunità a cui puoi partecipare.</h3>
         <p class="ap-text">Ogni opportunità dice subito se hai i requisiti e quanto manca alla scadenza. Enti e aziende ricevono candidature più adatte.</p>
@@ -290,6 +283,7 @@
                 <div class="ve-dead"><span>Scadenza</span><i></i><b>12 giorni</b></div>
               </div>
         <dl class="gain"><div><dt>Per te</dt><dd>Solo opportunità a cui puoi partecipare.</dd></div><div><dt>Per enti e aziende</dt><dd>Candidature più adatte.</dd></div></dl>
+        <p class="ap-hint">Tocca per chiudere</p>
       </div>
     </div>
   </section>
@@ -300,11 +294,10 @@
       <p class="nd-label"><span>05</span>Area · Casa</p>
       <h2 class="r-h2">La casa giusta, con le persone giuste.</h2>
       <p class="area-line">Annunci collegati alle tue esigenze e alle preferenze di convivenza.</p>
-      <button class="glass-btn" type="button" data-area-open>Approfondisci<i aria-hidden="true"></i></button>
+      <button class="glass-btn" type="button" data-area-open>Scopri di più<i aria-hidden="true"></i></button>
     </div>
-    <div class="area-panel" aria-hidden="true">
+    <div class="area-panel" aria-hidden="true" data-area-close>
       <div class="ap-in feat">
-        <button class="ap-close" type="button" data-area-close aria-label="Chiudi">&times;</button>
         <p class="nd-label"><span>05</span>Casa</p>
         <h3 class="ap-title">La casa giusta, con le persone giuste.</h3>
         <p class="ap-text">Il match casa confronta i futuri coinquilini tema per tema: pulizia, orari, ospiti, fumo. Le agenzie ricevono richieste da chi è davvero compatibile con l'annuncio.</p>
@@ -319,6 +312,7 @@
                 <p class="vf-cap">Compatibilità tra coinquilini, tema per tema</p>
               </div>
         <dl class="gain"><div><dt>Per te</dt><dd>Una casa e persone giuste con cui viverla.</dd></div><div><dt>Per le agenzie</dt><dd>Meno contatti a vuoto.</dd></div></dl>
+        <p class="ap-hint">Tocca per chiudere</p>
       </div>
     </div>
   </section>
@@ -452,6 +446,6 @@
 
 </main>
 
-<script src="js/reel.js?v=13"></script>
+<script src="js/reel.js?v=15"></script>
 </body>
 </html>

@@ -159,7 +159,7 @@
     var inner = k < 6, idx = inner ? k : k - 6, tot = inner ? 6 : 8;
     var ang = (idx / tot) * 360 + (inner ? 0 : 22.5);
     var delay = (inner ? 0.25 : 0) + idx * 0.05;
-    return '<span class="mt" style="--a:' + ang + 'deg;--r:calc(var(--fs) * ' + (inner ? 0.30 : 0.45) + ');--d:' + delay.toFixed(2) + 's">' +
+    return '<span class="mt" style="--a:' + ang + 'deg;--r:calc(var(--fs) * ' + (inner ? 0.27 : 0.45) + ');--d:' + delay.toFixed(2) + 's">' +
       '<span><i style="--c:linear-gradient(145deg,' + a[1] + ',' + a[2] + ')"></i><em>' + a[0] + '</em></span></span>';
   }).join('');
   function sizeField() { field.style.setProperty('--fs', field.offsetWidth + 'px'); }
@@ -219,17 +219,15 @@
   }
   ids.forEach(function (id) {
     var b = document.createElement('button');
-    b.type = 'button'; b.className = 'node'; b.setAttribute('aria-label', ITEMS[id].title);
+    b.type = 'button'; b.className = 'node'; b.tabIndex = -1; b.setAttribute('aria-hidden', 'true');
     b.innerHTML = '<img src="' + ITEMS[id].img + '" alt="">';
-    b.addEventListener('click', function () { pickNode(id); });
     nmNodes.appendChild(b); nodes[id] = b;
   });
-  var chipEls = INTENTS.map(function (it, k) {
-    var c = document.createElement('button');
-    c.type = 'button'; c.className = 'nia-chip'; c.setAttribute('role', 'radio'); c.textContent = it[0];
-    c.addEventListener('click', function () { clearTimeout(mapTimer); setIntent(k); });
-    nmChips.appendChild(c); return c;
-  });
+  // Nessun tasto: una scritta mostra cosa sta cercando Nia, e cambia da sola
+  var nmCap = document.createElement('p');
+  nmCap.className = 'nm-cap';
+  nmChips.appendChild(nmCap);
+  var chipEls = [];
   function placeNodes() {
     ids.forEach(function (id, i) {
       var n = nodes[id], sc = activeIntent !== null ? scores[id] : 0, lit = activeIntent !== null && sc >= 55;
@@ -237,12 +235,14 @@
       var a = ITEMS[id].angle * Math.PI / 180;
       n.style.left = (50 + r * Math.cos(a)) + '%'; n.style.top = (50 + r * Math.sin(a)) + '%';
       n.style.setProperty('--z', lit ? (sc >= 85 ? '54px' : sc >= 70 ? '46px' : '38px') : '14px');
-      n.classList.toggle('lit', lit); n.tabIndex = lit ? 0 : -1;
+      n.classList.toggle('lit', lit);
     });
   }
   function setIntent(k) {
     activeIntent = k; scores = INTENTS[k][1];
-    chipEls.forEach(function (c, j) { c.setAttribute('aria-checked', j === k ? 'true' : 'false'); });
+    nmCap.classList.remove('show'); void nmCap.offsetWidth;
+    nmCap.innerHTML = '<span>Stai cercando</span>' + INTENTS[k][0];
+    nmCap.classList.add('show');
     placeNodes();
     pickNode(ids.slice().sort(function (a, b) { return scores[b] - scores[a]; })[0]);
   }
@@ -257,13 +257,19 @@
   }
   function resetMap() {
     clearTimeout(mapTimer); activeIntent = null;
-    chipEls.forEach(function (c) { c.setAttribute('aria-checked', 'false'); });
+    nmCap.classList.remove('show'); nmCap.innerHTML = '';
     ids.forEach(function (k) { nodes[k].classList.remove('sel'); });
     placeNodes();
     nmPick.classList.add('empty');
-    nmPick.innerHTML = '<p class="pick-hint">Tocca una scelta: le proposte giuste si avvicinano e si mostrano.</p>';
+    nmPick.innerHTML = '<p class="pick-hint">Nia sta leggendo il tuo profilo…</p>';
   }
-  function demoMap() { resetMap(); mapTimer = setTimeout(function () { setIntent(0); }, 1400); }
+  // Sequenza automatica: ogni scelta resta qualche secondo, poi passa alla successiva, all'infinito
+  function demoMap() {
+    resetMap();
+    var k = 0;
+    var step = function () { setIntent(k); k = (k + 1) % INTENTS.length; mapTimer = setTimeout(step, 3200); };
+    mapTimer = setTimeout(step, 1300);
+  }
   resetMap();
 
   // ---------- Aree: pannello "Approfondisci" ----------
@@ -282,7 +288,8 @@
     if (visible[current] === reel) bar.classList.toggle('on-light', isLight(reel));
   }
   document.querySelectorAll('[data-area-open]').forEach(function (b) { b.addEventListener('click', function () { openArea(b.closest('.reel')); }); });
-  document.querySelectorAll('[data-area-close]').forEach(function (b) { b.addEventListener('click', function () { closeArea(b.closest('.reel')); }); });
+  // La scheda si chiude con un solo tocco, ovunque
+  document.querySelectorAll('[data-area-close]').forEach(function (p) { p.addEventListener('click', function () { closeArea(p.closest('.reel')); }); });
 
   // ---------- Insights: la ricerca si scrive da sola ----------
   var isQ = document.getElementById('isQ');

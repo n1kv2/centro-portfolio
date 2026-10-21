@@ -481,7 +481,7 @@ button.rlogo { border: 0; background: none; padding: 0; color: inherit; cursor: 
 /* ================= v6 ================= */
 /* Contenitore a schermo intero: la pagina non scorre, scattano solo i reel (stabile anche su iPhone) */
 html { scroll-snap-type: none; }
-html, body.reel-page { height: 100%; overflow: hidden; }
+html.reel-root, html.reel-root body { height: 100%; overflow: hidden; }
 .reels { position: fixed; inset: 0; overflow-y: auto; overflow-x: hidden; scroll-snap-type: y mandatory; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
 .reels::-webkit-scrollbar { display: none; }
 .reel { height: 100%; min-height: 0; }
@@ -601,3 +601,47 @@ html, body.reel-page { height: 100%; overflow: hidden; }
 .area-panel .nd-label { color: var(--nd-muted); opacity: 1; }
 .area-panel .nd-label span { color: var(--nd-ink); }
 .area-panel .nd-label::after { background: var(--nd-line); opacity: 1; }
+
+/* ================= v7 ================= */
+/* Nia: radar, niente strade */
+.nm-chips { pointer-events: none; overflow-x: auto; scrollbar-width: none; }
+.nm-chips::-webkit-scrollbar { display: none; }
+.nm-chips .nia-chip { transition: background-color .35s, color .35s, border-color .35s, transform .35s; }
+.nm-chips .nia-chip.on { background: var(--app-blue); border-color: var(--app-blue); color: #fff; transform: scale(1.04); }
+.nm-map { background: var(--surface) !important; }
+.nm-map .ring { stroke: rgba(72,157,254,.45); }
+.radar-sweep { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+  background: conic-gradient(from 0deg, rgba(72,157,254,0) 0deg, rgba(72,157,254,0) 300deg, rgba(72,157,254,.16) 355deg, rgba(72,157,254,0) 360deg);
+  -webkit-mask: radial-gradient(circle, #000 0 70%, transparent 71%); mask: radial-gradient(circle, #000 0 70%, transparent 71%);
+  animation: sweep 4.5s linear infinite; }
+@keyframes sweep { to { transform: rotate(360deg); } }
+.nm-map .nodes, .nm-map .me { z-index: 1; }
+.nm-map .node { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .radar-sweep { animation: none; } }
+.area-panel { cursor: pointer; }
+.ap-hint { margin: 8px 0 0; text-align: center; font: 500 .66rem/1 var(--nd-mono); letter-spacing: .16em; text-transform: uppercase; color: var(--nd-muted); }
+/* Tante app: tutto dentro lo schermo e lontano dai testi */
+.merge { margin-top: 18px; margin-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); overflow: hidden; }
+.merge-field { width: min(80vw, 38vh, 360px); }
+.mt i { width: 42px; height: 42px; border-radius: 12px; box-shadow: none; }
+/* Icona dell'app pulita, senza ombra né alone */
+.merge-icon { box-shadow: none; outline: 1px solid rgba(255,255,255,.18); outline-offset: 6px; }
+.merge-icon::before { content: none; }
+
+/* ================= v8 ================= */
+/* Icona al centro: nessun contorno */
+.merge-icon { outline: none; }
+/* App: ferme e distanziate, sempre dentro la loro area (mai sopra i testi) */
+.merge { margin-top: 10px; overflow: hidden; }
+.merge-field { width: min(90vw, 44vh, 340px); animation: none; }
+.mt > span { animation: bob 5s ease-in-out infinite; animation-delay: calc(var(--d) * -6); }
+@keyframes bob { 50% { transform: translate(-50%, -27px); } }
+.merge.merged .mt > span { animation: none; }
+/* Nia: nessun tasto, solo una scritta che cambia */
+.nm-caprow { min-height: 40px; display: flex; align-items: center; }
+.nm-cap { margin: 0; display: flex; align-items: baseline; gap: 10px; font-family: var(--nd-display); font-size: 1.35rem; color: var(--nd-ink);
+  opacity: 0; transform: translateY(8px); }
+.nm-cap.show { animation: capIn .5s cubic-bezier(.2,.9,.3,1) forwards; }
+@keyframes capIn { to { opacity: 1; transform: none; } }
+.nm-cap span { font: 500 .66rem/1 var(--nd-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--app-blue); }
+@media (prefers-reduced-motion: reduce) { .mt > span { animation: none; } .nm-cap.show { animation: none; opacity: 1; transform: none; } }
