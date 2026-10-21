@@ -670,3 +670,38 @@ html.reel-root, html.reel-root body { height: 100%; overflow: hidden; }
 .nm-caprow { min-height: 52px; display: block; }
 .nm-bar { height: 50px; box-shadow: 0 10px 26px rgba(11,27,51,.1), inset 0 0 0 1px var(--nd-line); background: var(--surface); color: var(--nd-ink); }
 .nm-bar .is-q { white-space: nowrap; overflow: hidden; }
+
+/* ================= v10: barre del browser e schermi bassi ================= */
+/* Scorre la pagina (non più un contenitore fisso): Safari e Chrome riducono la barra mentre scorri */
+html.reel-root { scroll-snap-type: y mandatory; }
+html.reel-root, html.reel-root body { height: auto; overflow: visible; overflow-x: clip; }
+.reels { position: static; inset: auto; overflow: visible; scroll-snap-type: none; }
+/* Ogni momento è alto quanto lo schermo con le barre ridotte, ma tiene i contenuti
+   sopra lo spazio che la barra occupa quando è aperta */
+.reel-page { --bar-gap: 0px; }
+@supports (height: 100lvh) { .reel-page { --bar-gap: calc(100lvh - 100svh); } }
+.reel { height: 100vh; height: 100lvh; min-height: 0; padding-bottom: var(--bar-gap); box-sizing: border-box; }
+.r-hint { bottom: calc(18px + var(--bar-gap) + env(safe-area-inset-bottom, 0px)); }
+.merge-replay { bottom: calc(24px + var(--bar-gap) + env(safe-area-inset-bottom, 0px)); }
+.area-panel { padding-bottom: calc(40px + var(--bar-gap) + env(safe-area-inset-bottom, 0px)); }
+
+/* Momento 2: i biglietti restano nella parte alta, lontani dal testo */
+.noise { inset: auto; top: calc(92px + env(safe-area-inset-top, 0px)); left: 0; right: 0; height: 34%; padding-top: 0; overflow: hidden; }
+.noise span { max-width: 74%; font-size: .78rem; padding: 8px 12px; }
+.r-problem .noise span:nth-child(1) { --y: 10% !important; }
+.r-problem .noise span:nth-child(2) { --y: 4% !important; --x: 40% !important; }
+.r-problem .noise span:nth-child(3) { --y: 38% !important; }
+.r-problem .noise span:nth-child(4) { --y: 52% !important; --x: 40% !important; }
+.r-problem .noise span:nth-child(5) { --y: 76% !important; }
+
+/* Titoli lunghi più compatti */
+.r-h2.small-h { font-size: clamp(1.9rem, 8.6vw, 2.5rem); }
+@media (max-height: 720px) {
+  .r-h2 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+  .r-top { padding-top: calc(100px + env(safe-area-inset-top, 0px)); }
+  .dchat, .isearch { gap: 8px; }
+  .dc-card { padding: 12px 14px; }
+  .is-res li { padding: 8px 12px; }
+}
+
+html.reel-root { overflow-anchor: none; }
