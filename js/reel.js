@@ -113,6 +113,7 @@
     if (r.classList.contains('r-feed')) resetFeed(r);
     if (r.classList.contains('r-ins')) resetSearch();
     if (r.classList.contains('r-niamap')) resetMap();
+    if (r.classList.contains('r-tools')) resetTools();
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
   function activate(i) {
@@ -136,6 +137,7 @@
     if (r.classList.contains('r-merge')) { sizeField(); playMerge(); }
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
+    if (r.classList.contains('r-tools')) playTools();
     if (navOpen) renderIndex();
   }
   function check() {
@@ -263,10 +265,14 @@
   function placeNodes() {
     ids.forEach(function (id, i) {
       var n = nodes[id], sc = activeIntent !== null ? scores[id] : 0, lit = activeIntent !== null && sc >= 55;
-      var r = lit ? 16 + (100 - sc) * 0.42 : 36 + (i * 17 % 9);
+      // Ogni proposta finisce nella zona della sua affinità: dentro "molto affine" (≥85), "affine" (70–84), "da esplorare" (55–69)
+      var r = !lit ? 40 + (i * 17 % 6)
+        : sc >= 85 ? 12 + (100 - sc) * 0.35
+        : sc >= 70 ? 20.5 + (84 - sc) * 0.6
+        : 34 + (69 - sc) * 0.55;
       var a = ITEMS[id].angle * Math.PI / 180;
       n.style.left = (50 + r * Math.cos(a)) + '%'; n.style.top = (50 + r * Math.sin(a)) + '%';
-      n.style.setProperty('--z', lit ? (sc >= 85 ? '54px' : sc >= 70 ? '46px' : '38px') : '14px');
+      n.style.setProperty('--z', lit ? (sc >= 85 ? '40px' : sc >= 70 ? '34px' : '30px') : '10px');
       n.classList.toggle('lit', lit);
     });
   }
@@ -317,6 +323,29 @@
   }
   resetMap();
 
+  // ---------- Strumenti per le aziende: le spunte si completano una dopo l'altra, ogni voce si apre ----------
+  var tks = document.getElementById('tks');
+  var tkTimers = [];
+  function resetTools() {
+    tkTimers.forEach(clearTimeout); tkTimers = [];
+    tks.querySelectorAll('.tk').forEach(function (t) { t.classList.remove('ok', 'open'); t.querySelector('.tk-h').setAttribute('aria-expanded', 'false'); });
+  }
+  function playTools() {
+    resetTools();
+    tks.querySelectorAll('.tk').forEach(function (t, k) {
+      if (reduce) { t.classList.add('ok'); return; }
+      tkTimers.push(setTimeout(function () { t.classList.add('ok'); }, 700 + k * 420));
+    });
+  }
+  tks.addEventListener('click', function (e) {
+    var h = e.target.closest('.tk-h');
+    if (!h) return;
+    var t = h.parentNode, open = !t.classList.contains('open');
+    tks.querySelectorAll('.tk.open').forEach(function (x) { x.classList.remove('open'); x.querySelector('.tk-h').setAttribute('aria-expanded', 'false'); });
+    t.classList.toggle('open', open); t.classList.add('ok');
+    h.setAttribute('aria-expanded', open);
+  });
+
   // ---------- Aree: pannello "Approfondisci" ----------
   function openArea(reel) {
     var p = reel.querySelector('.area-panel');
@@ -348,7 +377,7 @@
     for (var c = 1; c <= QUERY.length; c++) {
       (function (n) { typeTimers.push(setTimeout(function () { isQ.textContent = QUERY.slice(0, n); }, 700 + n * 55)); })(c);
     }
-    typeTimers.push(setTimeout(function () { insReel.classList.add('found'); }, 900 + QUERY.length * 55));
+    typeTimers.push(setTimeout(function () { insReel.classList.add('found'); }, 1400 + QUERY.length * 55));
   }
 
   // ---------- Sezioni: la barra in alto si allarga al tocco ----------
@@ -458,29 +487,39 @@
     if (k !== current) go(visible[k]);
   }
   // Rotella e trackpad: un gesto = un momento. L'inerzia del trackpad continua a mandare eventi
-  // per più di un secondo, quindi un nuovo passo parte solo dopo una pausa vera negli eventi.
-  var lastWheel = 0;
+  // che calano piano piano: si ignorano. Un nuovo passo parte dopo una pausa negli eventi
+  // oppure quando la spinta torna a crescere (nuovo gesto mentre l'inerzia non è finita).
+  var lastWheel = 0, lastAbs = 0, armed = true;
   window.addEventListener('wheel', function (e) {
     if (navOpen || document.querySelector('.area-panel.open')) return;
+    if (e.ctrlKey) return;
     e.preventDefault();
-    var now = Date.now(), gap = now - lastWheel;
+    var now = Date.now(), abs = Math.abs(e.deltaY) * (e.deltaMode === 1 ? 30 : 1);
+    if (now - lastWheel > 180) armed = true;
+    else if (abs > lastAbs * 1.8 && abs > 25 && now - wheelLock > 400) armed = true;
     lastWheel = now;
-    if (Math.abs(e.deltaY) < 4) return;
-    if (gap < 220 || now - wheelLock < 450) return;
+    lastAbs = abs;
+    if (!armed || abs < 3) return;
+    if (now - wheelLock < 380) { armed = false; return; }
+    armed = false;
     wheelLock = now;
     step(e.deltaY > 0 ? 1 : -1);
   }, { passive: false });
 
   // Tocco: anche con uno scorrimento veloce si avanza di un solo momento alla volta
   var touchFrom = -1, settleTimer = null;
-  scroller.addEventListener('touchstart', function () { if (touchFrom < 0) touchFrom = current; }, { passive: true });
+  var touching = false;
+  scroller.addEventListener('touchstart', function () { touching = true; if (touchFrom < 0) touchFrom = current; }, { passive: true });
+  ['touchend', 'touchcancel'].forEach(function (t) { scroller.addEventListener(t, function () { touching = false; }, { passive: true }); });
   function settle() {
-    if (touchFrom < 0) return;
+    if (touching) return;
     var mid = scroller.scrollTop + scroller.clientHeight / 2, k = 0;
     visible.forEach(function (r, i) { if (r.offsetTop <= mid) k = i; });
     var from = touchFrom;
     touchFrom = -1;
-    if (Math.abs(k - from) > 1) go(visible[from + (k > from ? 1 : -1)]);
+    if (from >= 0 && Math.abs(k - from) > 1) { go(visible[from + (k > from ? 1 : -1)]); return; }
+    // Se lo scorrimento si ferma a metà tra due momenti (succede su Safari dopo un cambio di percorso), si allinea
+    if (Math.abs(scroller.scrollTop - visible[k].offsetTop) > 2 && scroller.style.scrollSnapType !== 'none') go(visible[k]);
   }
   if ('onscrollend' in scroller) scroller.addEventListener('scrollend', settle);
   else scroller.addEventListener('scroll', function () { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140); }, { passive: true });
@@ -493,18 +532,21 @@
       var p = getComputedStyle(c).position;
       return p !== 'absolute' && p !== 'fixed' && !c.hidden;
     });
-    kids.forEach(function (c) { c.style.zoom = ''; });
+    kids.forEach(function (c) { c.style.scale = ''; c.style.marginBottom = ''; c.style.transformOrigin = ''; });
     var room = r.clientHeight;
     if (!room) return;
-    var need = kids.reduce(function (t, c) { return t + c.offsetHeight; }, 0);
+    var hs = kids.map(function (c) { return c.offsetHeight; });
+    var mb = kids.map(function (c) { return parseFloat(getComputedStyle(c).marginBottom) || 0; });
+    var need = hs.reduce(function (t, h) { return t + h; }, 0);
     if (need <= room) return;
+    // Si rimpicciolisce dall'alto e si recupera lo spazio con un margine negativo:
+    // l'altezza del momento non cambia mai, quindi lo scatto resta preciso (anche su Safari)
     var z = Math.max(0.72, room / need);
-    kids.forEach(function (c) { c.style.zoom = z.toFixed(3); });
-    need = kids.reduce(function (t, c) { return t + c.offsetHeight * z; }, 0);
-    if (need > room && z > 0.72) {
-      z = Math.max(0.72, z * room / need);
-      kids.forEach(function (c) { c.style.zoom = z.toFixed(3); });
-    }
+    kids.forEach(function (c, i) {
+      c.style.transformOrigin = '50% 0';
+      c.style.scale = z.toFixed(3);
+      c.style.marginBottom = (mb[i] - hs[i] * (1 - z)).toFixed(1) + 'px';
+    });
   }
   function fitAll() { all.forEach(function (r) { if (!r.hidden) fitReel(r); }); if (merge) sizeField(); }
   var fitTimer = null;
