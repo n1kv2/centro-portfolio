@@ -38,15 +38,15 @@
     }
     all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
     visible = all.filter(function (r) { return !r.hidden; });
-    // Un segmento per sezione (capitolo), come le storie di Instagram
-    chapters = [];
-    visible.forEach(function (r) {
-      var c = r.getAttribute('data-chapter');
-      if (!chapters.length || chapters[chapters.length - 1].name !== c) chapters.push({ name: c, reels: [] });
-      chapters[chapters.length - 1].reels.push(r);
-    });
-    seg.innerHTML = chapters.map(function (c) { return '<i title="' + c.name.replace(/"/g, '&quot;') + '"></i>'; }).join('');
-    bits = Array.prototype.slice.call(seg.children);
+    // Sei segmenti fissi, uno per sezione: non cambiano mai, anche quando si sceglie un percorso.
+    // Le sezioni saltate restano vuote; "Prossimo passo" conta come parte del percorso scelto.
+    var names = [];
+    all.forEach(function (r) { var c = r.getAttribute('data-chapter'); if (c !== 'Prossimo passo' && names.indexOf(c) < 0) names.push(c); });
+    chapters = names.map(function (n) { return { name: n, reels: visible.filter(function (r) { return r.getAttribute('data-chapter') === n; }) }; });
+    if (!bits.length) {
+      seg.innerHTML = chapters.map(function (c) { return '<i title="' + c.name.replace(/"/g, '&quot;') + '"></i>'; }).join('');
+      bits = Array.prototype.slice.call(seg.children);
+    }
     document.querySelectorAll('[data-go]').forEach(function (b) { b.classList.toggle('picked', b.getAttribute('data-go') === mode); });
     all.forEach(function (r) { if (r.hidden && r.classList.contains('on')) leave(r); });
     current = -1;
@@ -113,6 +113,7 @@
     if (r.classList.contains('r-feed')) resetFeed(r);
     if (r.classList.contains('r-ins')) resetSearch();
     if (r.classList.contains('r-niamap')) resetMap();
+    if (r.classList.contains('r-tools')) resetTools();
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
   function activate(i) {
@@ -123,10 +124,11 @@
     void r.offsetWidth;
     r.classList.add('on');
     // Ogni sezione si riempie man mano che scorri i suoi momenti
-    var ci = 0;
-    chapters.forEach(function (c, k) { if (c.reels.indexOf(r) >= 0) ci = k; });
+    var ci = 0, isRouter = r === router;
+    chapters.forEach(function (c, k) { if (c.reels.indexOf(r) >= 0 || (isRouter && c.name === TRACKS[mode])) ci = k; });
     bits.forEach(function (b, k) {
-      var p = k < ci ? 1 : k > ci ? 0 : (chapters[ci].reels.indexOf(r) + 1) / chapters[ci].reels.length;
+      var c = chapters[k];
+      var p = k < ci ? 1 : k > ci ? 0 : isRouter ? 1 : (c.reels.indexOf(r) + 1) / Math.max(1, c.reels.length);
       b.style.setProperty('--p', p.toFixed(3));
       b.classList.toggle('now', k === ci);
     });
@@ -136,6 +138,7 @@
     if (r.classList.contains('r-merge')) { sizeField(); playMerge(); }
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
+    if (r.classList.contains('r-tools')) playTools();
     if (navOpen) renderIndex();
   }
   function check() {
@@ -263,59 +266,101 @@
   function placeNodes() {
     ids.forEach(function (id, i) {
       var n = nodes[id], sc = activeIntent !== null ? scores[id] : 0, lit = activeIntent !== null && sc >= 55;
-      var r = lit ? 16 + (100 - sc) * 0.42 : 36 + (i * 17 % 9);
+      // Ogni proposta finisce nella zona della sua affinità: dentro "molto affine" (≥85), "affine" (70–84), "da esplorare" (55–69)
+      var r = !lit ? 40 + (i * 17 % 6)
+        : sc >= 85 ? 12 + (100 - sc) * 0.35
+        : sc >= 70 ? 20.5 + (84 - sc) * 0.6
+        : 34 + (69 - sc) * 0.55;
       var a = ITEMS[id].angle * Math.PI / 180;
       n.style.left = (50 + r * Math.cos(a)) + '%'; n.style.top = (50 + r * Math.sin(a)) + '%';
-      n.style.setProperty('--z', lit ? (sc >= 85 ? '54px' : sc >= 70 ? '46px' : '38px') : '14px');
+      n.style.setProperty('--z', lit ? (sc >= 85 ? '36px' : sc >= 70 ? '31px' : '27px') : '8px');
       n.classList.toggle('lit', lit);
     });
   }
+  // La mappa vive dentro un elemento traslucido: piccolo al centro ("Sto cercando"),
+  // si espande a tutta l'area appena Nia inizia a scrivere, poi mostra le proposte.
+  var nmStage = document.getElementById('nmStage');
+  var nmOrb = document.getElementById('nmOrb');
+  function sizeNia() {
+    var side = Math.floor(Math.min(nmStage.clientWidth, nmStage.clientHeight));
+    if (side > 0) nmOrb.style.setProperty('--sq', side + 'px');
+  }
+  window.addEventListener('resize', sizeNia);
+  function hidePick() { nmPick.classList.remove('show'); }
   function showIntent(k) {
     activeIntent = k; scores = INTENTS[k][1];
     placeNodes();
     pickNode(ids.slice().sort(function (a, b) { return scores[b] - scores[a]; })[0]);
   }
-  function setIntent(k) {
-    typeT.forEach(clearTimeout); typeT = [];
-    var text = INTENTS[k][0];
-    if (reduce) { nmQ.textContent = text; showIntent(k); return; }
-    nmQ.textContent = '';
-    // Mentre Nia scrive, le proposte tornano puntini grigi
+  function collapseMap() {
     activeIntent = null;
     ids.forEach(function (x) { nodes[x].classList.remove('sel'); });
     placeNodes();
-    nmPick.classList.add('empty');
-    nmPick.innerHTML = '<p class="pick-hint">Nia sta cercando…</p>';
+    hidePick();
+    nmOrb.classList.remove('open');
+  }
+  function setIntent(k) {
+    typeT.forEach(clearTimeout); typeT = [];
+    var text = INTENTS[k][0];
+    sizeNia();
+    if (reduce) { nmQ.textContent = text; nmOrb.classList.add('open'); showIntent(k); return; }
+    // Si richiude al centro, poi Nia scrive e la mappa si apre mentre scrive
+    var wasOpen = nmOrb.classList.contains('open');
+    collapseMap();
+    var t0 = wasOpen ? 900 : 200;
+    typeT.push(setTimeout(function () { nmQ.textContent = ''; }, t0 - 150));
+    typeT.push(setTimeout(function () { nmOrb.classList.add('open'); }, t0 + 60));
     for (var c = 1; c <= text.length; c++) {
-      (function (n) { typeT.push(setTimeout(function () { nmQ.textContent = text.slice(0, n); }, n * 55)); })(c);
+      (function (n) { typeT.push(setTimeout(function () { nmQ.textContent = text.slice(0, n); }, t0 + n * 55)); })(c);
     }
-    typeT.push(setTimeout(function () { showIntent(k); }, text.length * 55 + 250));
+    typeT.push(setTimeout(function () { showIntent(k); }, Math.max(t0 + text.length * 55 + 200, t0 + 1100)));
   }
   function pickNode(id) {
     if (activeIntent === null || scores[id] < 55) return;
     ids.forEach(function (k) { nodes[k].classList.toggle('sel', k === id); });
     var it = ITEMS[id], sc = scores[id];
-    nmPick.classList.remove('empty');
     nmPick.innerHTML = '<img class="pick-img" src="' + it.img + '" alt="">' +
       '<div class="pick-main"><span class="pick-title">' + it.title + '</span><span class="pick-meta">' + it.meta + '</span>' +
       '<span class="aff"><i style="--a:' + sc + '%"></i>' + sc + '% affine</span></div>';
+    nmPick.classList.add('show');
   }
   function resetMap() {
-    clearTimeout(mapTimer); activeIntent = null;
+    clearTimeout(mapTimer);
     typeT.forEach(clearTimeout); typeT = []; nmQ.textContent = '';
-    ids.forEach(function (k) { nodes[k].classList.remove('sel'); });
-    placeNodes();
-    nmPick.classList.add('empty');
-    nmPick.innerHTML = '<p class="pick-hint">Nia sta leggendo il tuo profilo…</p>';
+    collapseMap();
   }
-  // Sequenza automatica: ogni scelta resta qualche secondo, poi passa alla successiva, all'infinito
+  // Sequenza automatica: ogni ricerca resta qualche secondo, poi si richiude e parte la successiva
   function demoMap() {
     resetMap();
+    sizeNia();
     var k = 0;
-    var step = function () { setIntent(k); k = (k + 1) % INTENTS.length; mapTimer = setTimeout(step, 4000); };
-    mapTimer = setTimeout(step, 1000);
+    var step = function () { setIntent(k); k = (k + 1) % INTENTS.length; mapTimer = setTimeout(step, 6000); };
+    mapTimer = setTimeout(step, 700);
   }
   resetMap();
+
+  // ---------- Strumenti per le aziende: le spunte si completano una dopo l'altra, ogni voce si apre ----------
+  var tks = document.getElementById('tks');
+  var tkTimers = [];
+  function resetTools() {
+    tkTimers.forEach(clearTimeout); tkTimers = [];
+    tks.querySelectorAll('.tk').forEach(function (t) { t.classList.remove('ok', 'open'); t.querySelector('.tk-h').setAttribute('aria-expanded', 'false'); });
+  }
+  function playTools() {
+    resetTools();
+    tks.querySelectorAll('.tk').forEach(function (t, k) {
+      if (reduce) { t.classList.add('ok'); return; }
+      tkTimers.push(setTimeout(function () { t.classList.add('ok'); }, 700 + k * 420));
+    });
+  }
+  tks.addEventListener('click', function (e) {
+    var h = e.target.closest('.tk-h');
+    if (!h) return;
+    var t = h.parentNode, open = !t.classList.contains('open');
+    tks.querySelectorAll('.tk.open').forEach(function (x) { x.classList.remove('open'); x.querySelector('.tk-h').setAttribute('aria-expanded', 'false'); });
+    t.classList.toggle('open', open); t.classList.add('ok');
+    h.setAttribute('aria-expanded', open);
+  });
 
   // ---------- Aree: pannello "Approfondisci" ----------
   function openArea(reel) {
@@ -348,7 +393,7 @@
     for (var c = 1; c <= QUERY.length; c++) {
       (function (n) { typeTimers.push(setTimeout(function () { isQ.textContent = QUERY.slice(0, n); }, 700 + n * 55)); })(c);
     }
-    typeTimers.push(setTimeout(function () { insReel.classList.add('found'); }, 900 + QUERY.length * 55));
+    typeTimers.push(setTimeout(function () { insReel.classList.add('found'); }, 1400 + QUERY.length * 55));
   }
 
   // ---------- Sezioni: la barra in alto si allarga al tocco ----------
@@ -368,31 +413,41 @@
     'Contatti': '<rect x="3.5" y="5.5" width="17" height="13" rx="3"/><path d="M4.5 7.5l7.5 5.5 7.5-5.5"/>',
     'Chi sono': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="10" r="3"/><path d="M6.5 18.3c1.2-2 3.2-3.1 5.5-3.1s4.3 1.1 5.5 3.1"/>'
   };
+  // Tema: il tasto passa da chiaro a scuro e viceversa (sole per tornare al chiaro, luna per lo scuro)
+  var SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/>';
+  var MOON = '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>';
+  function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+  function themeBtn() {
+    var dark = isDark();
+    return '<button type="button" class="rnav-item rnav-link rnav-theme" data-theme-toggle aria-label="' + (dark ? 'Passa al tema chiaro' : 'Passa al tema scuro') + '">' +
+      '<svg viewBox="0 0 24 24" aria-hidden="true">' + (dark ? SUN : MOON) + '</svg><span>' + (dark ? 'Tema chiaro' : 'Tema scuro') + '</span></button>';
+  }
   function icon(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICON_PATHS[name] || '') + '</svg>'; }
   function renderIndex() {
     var byName = {};
     navChaps = [];
     all.forEach(function (r) {
-      if (r === router && router.hidden) return;
+      if (r === router) return;
       var c = r.getAttribute('data-chapter');
       if (!byName[c]) { byName[c] = { name: c, reels: [] }; navChaps.push(byName[c]); }
       byName[c].reels.push(r);
     });
-    var curChap = current >= 0 ? visible[current].getAttribute('data-chapter') : '';
+    var curChap = current >= 0 ? chapOf(visible[current]) : '';
     navList.innerHTML = navChaps.map(function (ch, k) {
       var off = ch.reels.every(function (r) { return r.hidden; });
       return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
-    }).join('') + '<a class="rnav-item rnav-link" href="chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>';
+    }).join('') + '<a class="rnav-item rnav-link" href="chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn();
     navMode.innerHTML = mode === 'all' ? '' : 'Percorso ' + NAMES[mode].toLowerCase() + ' · <button type="button" data-showall>Vedi tutto</button>';
     navMode.hidden = mode === 'all';
   }
   // Con il menu aperto si evidenzia la linea della sezione (quella attuale, o quella che stai per scegliere)
+  function chapOf(r) { return r === router ? TRACKS[mode] : r.getAttribute('data-chapter'); }
   function pickLine(name) {
     bits.forEach(function (b, k) { b.classList.toggle('seg-pick', !!chapters[k] && chapters[k].name === name); });
   }
   function setNav(open) {
     navOpen = open;
-    pickLine(open && current >= 0 ? visible[current].getAttribute('data-chapter') : '');
+    pickLine(open && current >= 0 ? chapOf(visible[current]) : '');
     openTop = scroller.scrollTop;
     if (open) renderIndex();
     bar.classList.toggle('open', open);
@@ -401,12 +456,17 @@
   toggle.addEventListener('click', function () { setNav(!navOpen); });
   function hoverLine(e) {
     var it = e.target.closest('[data-c]');
-    pickLine(it ? navChaps[parseInt(it.getAttribute('data-c'), 10)].name : (current >= 0 ? visible[current].getAttribute('data-chapter') : ''));
+    pickLine(it ? navChaps[parseInt(it.getAttribute('data-c'), 10)].name : (current >= 0 ? chapOf(visible[current]) : ''));
   }
   ['pointerover', 'focusin'].forEach(function (t) { document.getElementById('rnav').addEventListener(t, hoverLine); });
   document.getElementById('rnav').addEventListener('pointerleave', hoverLine);
   document.getElementById('rnav').addEventListener('click', function (e) {
     if (e.target.closest('[data-showall]')) { setNav(false); showAll(visible[current]); return; }
+    if (e.target.closest('[data-theme-toggle]')) {
+      if (window.centroTheme) window.centroTheme.set(isDark() ? 'light' : 'dark');
+      renderIndex();
+      return;
+    }
     if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); return; }
     var it = e.target.closest('[data-c]');
     if (!it) return;
@@ -458,29 +518,39 @@
     if (k !== current) go(visible[k]);
   }
   // Rotella e trackpad: un gesto = un momento. L'inerzia del trackpad continua a mandare eventi
-  // per più di un secondo, quindi un nuovo passo parte solo dopo una pausa vera negli eventi.
-  var lastWheel = 0;
+  // che calano piano piano: si ignorano. Un nuovo passo parte dopo una pausa negli eventi
+  // oppure quando la spinta torna a crescere (nuovo gesto mentre l'inerzia non è finita).
+  var lastWheel = 0, lastAbs = 0, armed = true;
   window.addEventListener('wheel', function (e) {
     if (navOpen || document.querySelector('.area-panel.open')) return;
+    if (e.ctrlKey) return;
     e.preventDefault();
-    var now = Date.now(), gap = now - lastWheel;
+    var now = Date.now(), abs = Math.abs(e.deltaY) * (e.deltaMode === 1 ? 30 : 1);
+    if (now - lastWheel > 180) armed = true;
+    else if (abs > lastAbs * 1.8 && abs > 25 && now - wheelLock > 400) armed = true;
     lastWheel = now;
-    if (Math.abs(e.deltaY) < 4) return;
-    if (gap < 220 || now - wheelLock < 450) return;
+    lastAbs = abs;
+    if (!armed || abs < 3) return;
+    if (now - wheelLock < 380) { armed = false; return; }
+    armed = false;
     wheelLock = now;
     step(e.deltaY > 0 ? 1 : -1);
   }, { passive: false });
 
   // Tocco: anche con uno scorrimento veloce si avanza di un solo momento alla volta
   var touchFrom = -1, settleTimer = null;
-  scroller.addEventListener('touchstart', function () { if (touchFrom < 0) touchFrom = current; }, { passive: true });
+  var touching = false;
+  scroller.addEventListener('touchstart', function () { touching = true; if (touchFrom < 0) touchFrom = current; }, { passive: true });
+  ['touchend', 'touchcancel'].forEach(function (t) { scroller.addEventListener(t, function () { touching = false; }, { passive: true }); });
   function settle() {
-    if (touchFrom < 0) return;
+    if (touching) return;
     var mid = scroller.scrollTop + scroller.clientHeight / 2, k = 0;
     visible.forEach(function (r, i) { if (r.offsetTop <= mid) k = i; });
     var from = touchFrom;
     touchFrom = -1;
-    if (Math.abs(k - from) > 1) go(visible[from + (k > from ? 1 : -1)]);
+    if (from >= 0 && Math.abs(k - from) > 1) { go(visible[from + (k > from ? 1 : -1)]); return; }
+    // Se lo scorrimento si ferma a metà tra due momenti (succede su Safari dopo un cambio di percorso), si allinea
+    if (Math.abs(scroller.scrollTop - visible[k].offsetTop) > 2 && scroller.style.scrollSnapType !== 'none') go(visible[k]);
   }
   if ('onscrollend' in scroller) scroller.addEventListener('scrollend', settle);
   else scroller.addEventListener('scroll', function () { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 140); }, { passive: true });
@@ -493,20 +563,23 @@
       var p = getComputedStyle(c).position;
       return p !== 'absolute' && p !== 'fixed' && !c.hidden;
     });
-    kids.forEach(function (c) { c.style.zoom = ''; });
+    kids.forEach(function (c) { c.style.scale = ''; c.style.marginBottom = ''; c.style.transformOrigin = ''; });
     var room = r.clientHeight;
     if (!room) return;
-    var need = kids.reduce(function (t, c) { return t + c.offsetHeight; }, 0);
+    var hs = kids.map(function (c) { return c.offsetHeight; });
+    var mb = kids.map(function (c) { return parseFloat(getComputedStyle(c).marginBottom) || 0; });
+    var need = hs.reduce(function (t, h) { return t + h; }, 0);
     if (need <= room) return;
+    // Si rimpicciolisce dall'alto e si recupera lo spazio con un margine negativo:
+    // l'altezza del momento non cambia mai, quindi lo scatto resta preciso (anche su Safari)
     var z = Math.max(0.72, room / need);
-    kids.forEach(function (c) { c.style.zoom = z.toFixed(3); });
-    need = kids.reduce(function (t, c) { return t + c.offsetHeight * z; }, 0);
-    if (need > room && z > 0.72) {
-      z = Math.max(0.72, z * room / need);
-      kids.forEach(function (c) { c.style.zoom = z.toFixed(3); });
-    }
+    kids.forEach(function (c, i) {
+      c.style.transformOrigin = '50% 0';
+      c.style.scale = z.toFixed(3);
+      c.style.marginBottom = (mb[i] - hs[i] * (1 - z)).toFixed(1) + 'px';
+    });
   }
-  function fitAll() { all.forEach(function (r) { if (!r.hidden) fitReel(r); }); if (merge) sizeField(); }
+  function fitAll() { all.forEach(function (r) { if (!r.hidden) fitReel(r); }); if (merge) sizeField(); sizeNia(); }
   var fitTimer = null;
   window.addEventListener('resize', function () { clearTimeout(fitTimer); fitTimer = setTimeout(fitAll, 150); });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
