@@ -223,10 +223,10 @@
     b.innerHTML = '<img src="' + ITEMS[id].img + '" alt="">';
     nmNodes.appendChild(b); nodes[id] = b;
   });
-  // Nessun tasto: una scritta mostra cosa sta cercando Nia, e cambia da sola
-  var nmCap = document.createElement('p');
-  nmCap.className = 'nm-cap';
-  nmChips.appendChild(nmCap);
+  // Barra di ricerca: Nia scrive da sola cosa stai cercando, poi la mappa si aggiorna
+  nmChips.innerHTML = '<div class="is-bar nm-bar"><span class="is-q" id="nmQ"></span><i class="is-caret"></i></div>';
+  var nmQ = document.getElementById('nmQ');
+  var typeT = [];
   var chipEls = [];
   function placeNodes() {
     ids.forEach(function (id, i) {
@@ -238,13 +238,26 @@
       n.classList.toggle('lit', lit);
     });
   }
-  function setIntent(k) {
+  function showIntent(k) {
     activeIntent = k; scores = INTENTS[k][1];
-    nmCap.classList.remove('show'); void nmCap.offsetWidth;
-    nmCap.innerHTML = '<span>Stai cercando</span>' + INTENTS[k][0];
-    nmCap.classList.add('show');
     placeNodes();
     pickNode(ids.slice().sort(function (a, b) { return scores[b] - scores[a]; })[0]);
+  }
+  function setIntent(k) {
+    typeT.forEach(clearTimeout); typeT = [];
+    var text = INTENTS[k][0];
+    if (reduce) { nmQ.textContent = text; showIntent(k); return; }
+    nmQ.textContent = '';
+    // Mentre Nia scrive, le proposte tornano puntini grigi
+    activeIntent = null;
+    ids.forEach(function (x) { nodes[x].classList.remove('sel'); });
+    placeNodes();
+    nmPick.classList.add('empty');
+    nmPick.innerHTML = '<p class="pick-hint">Nia sta cercando…</p>';
+    for (var c = 1; c <= text.length; c++) {
+      (function (n) { typeT.push(setTimeout(function () { nmQ.textContent = text.slice(0, n); }, n * 55)); })(c);
+    }
+    typeT.push(setTimeout(function () { showIntent(k); }, text.length * 55 + 250));
   }
   function pickNode(id) {
     if (activeIntent === null || scores[id] < 55) return;
@@ -257,7 +270,7 @@
   }
   function resetMap() {
     clearTimeout(mapTimer); activeIntent = null;
-    nmCap.classList.remove('show'); nmCap.innerHTML = '';
+    typeT.forEach(clearTimeout); typeT = []; nmQ.textContent = '';
     ids.forEach(function (k) { nodes[k].classList.remove('sel'); });
     placeNodes();
     nmPick.classList.add('empty');
@@ -267,8 +280,8 @@
   function demoMap() {
     resetMap();
     var k = 0;
-    var step = function () { setIntent(k); k = (k + 1) % INTENTS.length; mapTimer = setTimeout(step, 3200); };
-    mapTimer = setTimeout(step, 1300);
+    var step = function () { setIntent(k); k = (k + 1) % INTENTS.length; mapTimer = setTimeout(step, 4000); };
+    mapTimer = setTimeout(step, 1000);
   }
   resetMap();
 

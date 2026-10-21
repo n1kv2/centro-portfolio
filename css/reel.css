@@ -666,3 +666,7 @@ html.reel-root, html.reel-root body { height: 100%; overflow: hidden; }
 @keyframes drift  { from { transform: translate(-50%, -19px); } to { transform: translate(calc(-50% + 2px), -26px); } }
 @keyframes drift2 { from { transform: translate(calc(-50% + 2px), -24px); } to { transform: translate(calc(-50% - 2px), -17px); } }
 @keyframes drift3 { from { transform: translate(calc(-50% - 2px), -18px); } to { transform: translate(calc(-50% + 1px), -25px); } }
+/* Nia: barra di ricerca che si scrive da sola */
+.nm-caprow { min-height: 52px; display: block; }
+.nm-bar { height: 50px; box-shadow: 0 10px 26px rgba(11,27,51,.1), inset 0 0 0 1px var(--nd-line); background: var(--surface); color: var(--nd-ink); }
+.nm-bar .is-q { white-space: nowrap; overflow: hidden; }
