@@ -940,3 +940,11 @@ html.reel-root body { background: #0B1424; }
 .nm-pick .pick-img { align-self: center; }
 .nm-pick .pick-main { min-width: 0; align-content: center; gap: 2px; }
 .nm-pick .pick-title { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ================= v36: etichette delle zone del radar, leggibili e allineate in colonna in alto ================= */
+.zl { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.zl span { position: absolute; left: 50%; top: var(--y); translate: -50% -50%; white-space: nowrap;
+  font: 600 .68rem/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: #3F6FB0; }
+:root[data-theme="dark"] .zl span { color: #8DB8F2; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .zl span { color: #8DB8F2; } }
+.zl span { padding: 3px 8px; border-radius: 99px; background: var(--nd-bg); box-shadow: inset 0 0 0 1px rgba(72,157,254,.3); }
