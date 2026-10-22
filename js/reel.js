@@ -113,6 +113,7 @@
     if (r.classList.contains('r-ins')) resetSearch();
     if (r.classList.contains('r-niamap')) resetMap();
     if (r.classList.contains('r-tools')) resetTools();
+    if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
   function activate(i) {
@@ -138,6 +139,7 @@
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
+
     if (navOpen) renderIndex();
   }
   function check() {
@@ -599,10 +601,101 @@
   window.addEventListener('load', fitAll);
 
   document.addEventListener('keydown', function (e) {
-    if (navOpen) return;
+    if (navOpen || /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); step(1); }
     else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
+
+  // ---------- Contatti: due chip in basso; toccandone una si apre il riquadro con la scelta ----------
+  var cbox = document.getElementById('cbox');
+  var cglass = document.querySelector('.cpanel-glass');
+  function contactTab(t) {
+    var prev = cbox.getAttribute('data-tab') || '';
+    // Da una scelta all'altra il riquadro cambia altezza con un movimento morbido
+    var switching = prev && t && prev !== t && !reduce;
+    var from = switching ? cglass.offsetHeight : 0;
+    cbox.setAttribute('data-tab', t);
+    cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
+    if (t) {
+      document.getElementById('paneApp').hidden = t !== 'app';
+      document.getElementById('paneInfo').hidden = t !== 'info';
+    }
+    if (switching) {
+      cglass.style.height = 'auto';
+      var to = cglass.offsetHeight;
+      cglass.style.height = from + 'px';
+      void cglass.offsetHeight;
+      cglass.style.height = to + 'px';
+      var end = function (e) { if (e.propertyName !== 'height') return; cglass.style.height = ''; cglass.removeEventListener('transitionend', end); };
+      cglass.addEventListener('transitionend', end);
+    }
+  }
+  if (cbox) {
+    contactTab('');
+    cbox.querySelector('.cchips').addEventListener('click', function (e) {
+      var b = e.target.closest('.cchip');
+      if (!b) return;
+      var t = b.getAttribute('data-tab');
+      contactTab(cbox.getAttribute('data-tab') === t ? '' : t);
+    });
+  }
+
+  // ---------- Invio dei moduli dei contatti ----------
+  // Per ora passano da FormSubmit e arrivano come email a hello.centro26@gmail.com.
+  // Con Supabase basterà cambiare data-endpoint nei due moduli.
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function sendForm(form, data) {
+    var hp = form.querySelector('.hp');
+    if (hp && hp.value) return Promise.resolve(); // compilato da un programma automatico: si ignora
+    data._captcha = 'false'; data._template = 'table';
+    return fetch(form.getAttribute('data-endpoint'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { if (!r.ok) throw new Error('invio'); return r.json().catch(function () { return {}; }); })
+      .then(function (j) { if (j && String(j.success) === 'false') throw new Error('invio'); });
+  }
+  function noteFor(form, note) {
+    var base = note.innerHTML;
+    return function (t, cls) {
+      if (t === null) note.innerHTML = base; else note.textContent = t;
+      form.className = form.className.replace(/\s?(err|ok|busy)\b/g, '') + (cls ? ' ' + cls : '');
+    };
+  }
+  var FAIL = 'Non è andato a buon fine. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
+
+  // Accesso anticipato: solo l'email
+  var eaForm = document.getElementById('eaForm');
+  if (eaForm) {
+    var eaInput = document.getElementById('eaInput'), eaSay = noteFor(eaForm, document.getElementById('eaNote'));
+    eaInput.addEventListener('input', function () { if (/\berr\b/.test(eaForm.className)) eaSay(null, ''); });
+    eaForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = eaInput.value.trim();
+      if (!EMAIL_RE.test(v)) { eaSay('Scrivi un’email valida.', 'err'); eaInput.focus(); return; }
+      eaSay('Invio in corso…', 'busy');
+      sendForm(eaForm, { email: v, _subject: 'Accesso anticipato CEnTRO: nuova iscrizione' })
+        .then(function () { eaInput.value = ''; eaSay('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok'); })
+        .catch(function () { eaSay(FAIL, 'err'); });
+    });
+  }
+
+  // Richiesta di informazioni: testo e email per la risposta
+  var rqForm = document.getElementById('rqForm');
+  if (rqForm) {
+    var rqText = document.getElementById('rqText'), rqEmail = document.getElementById('rqEmail'), rqSay = noteFor(rqForm, document.getElementById('rqNote'));
+    [rqText, rqEmail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(rqForm.className)) rqSay(null, ''); }); });
+    rqForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var t = rqText.value.trim(), m = rqEmail.value.trim();
+      if (t.length < 5) { rqSay('Scrivi la tua richiesta.', 'err'); rqText.focus(); return; }
+      if (!EMAIL_RE.test(m)) { rqSay('Scrivi un’email valida per la risposta.', 'err'); rqEmail.focus(); return; }
+      rqSay('Invio in corso…', 'busy');
+      sendForm(rqForm, { richiesta: t, email: m, _replyto: m, _subject: 'Richiesta di informazioni da CEnTRO' })
+        .then(function () { rqText.value = ''; rqEmail.value = ''; rqSay('Ricevuta! Ti rispondo al più presto.', 'ok'); })
+        .catch(function () { rqSay(FAIL, 'err'); });
+    });
+  }
 
   // ---------- CEnTRO con la n minuscola anche nelle scritte in maiuscolo ----------
   function keepBrand(root) {

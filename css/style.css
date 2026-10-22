@@ -89,7 +89,6 @@ p { margin: 0; text-wrap: pretty; }
 
 /* ---------- Il percorso: tappe che si completano scorrendo ---------- */
 
-
 /* ---------- Introduzione: schermata di app che si uniscono ---------- */
 
 @keyframes float { 50% { transform: translateY(-6px) rotate(var(--r)); } }
