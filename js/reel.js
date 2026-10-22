@@ -113,6 +113,7 @@
     if (r.classList.contains('r-ins')) resetSearch();
     if (r.classList.contains('r-niamap')) resetMap();
     if (r.classList.contains('r-tools')) resetTools();
+    if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
   function activate(i) {
@@ -138,7 +139,7 @@
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
-    if (r.classList.contains('r-contact') && cbox) contactTab(mode === 'azienda' || mode === 'investitore' ? 'info' : 'app');
+
     if (navOpen) renderIndex();
   }
   function check() {
@@ -605,17 +606,22 @@
     else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
 
-  // ---------- Contatti: un solo riquadro, due scelte (provare l'app / chiedere informazioni) ----------
+  // ---------- Contatti: due chip in basso; toccandone una si apre il riquadro con la scelta ----------
   var cbox = document.getElementById('cbox');
   function contactTab(t) {
     cbox.setAttribute('data-tab', t);
-    cbox.querySelectorAll('[role="tab"]').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-tab') === t); });
+    cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
     document.getElementById('paneApp').hidden = t !== 'app';
     document.getElementById('paneInfo').hidden = t !== 'info';
   }
   if (cbox) {
-    contactTab('app');
-    cbox.querySelector('.cseg').addEventListener('click', function (e) { var b = e.target.closest('[data-tab]'); if (b) contactTab(b.getAttribute('data-tab')); });
+    contactTab('');
+    cbox.querySelector('.cchips').addEventListener('click', function (e) {
+      var b = e.target.closest('.cchip');
+      if (!b) return;
+      var t = b.getAttribute('data-tab');
+      contactTab(cbox.getAttribute('data-tab') === t ? '' : t);
+    });
   }
 
   // Richiesta di informazioni: per ora solo l'aspetto, l'invio si collega dopo
