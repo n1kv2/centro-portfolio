@@ -23,7 +23,6 @@ html { scroll-snap-type: y mandatory; }
 .r-body { margin: 20px 0 0; max-width: 30ch; font-size: 1.08rem; line-height: 1.55; color: var(--nd-ink2); }
 .r-big { margin: 22px 0 0; font-family: var(--nd-display); font-size: clamp(2.6rem, 12vw, 3.7rem); line-height: 1.04; letter-spacing: -.015em; text-wrap: balance; }
 .r-big.small { font-size: clamp(1.8rem, 8vw, 2.4rem); line-height: 1.15; }
-.reel .nd-label::after { max-width: 120px; }
 .r-dark { color: var(--nd-band-ink); }
 
 /* Entrata: il contenuto di ogni reel entra quando il reel è attivo */
@@ -93,7 +92,6 @@ html.js .reel.on .r-in > *:nth-child(3) { transition-delay: .24s; }
 .r-dark .r-body { color: inherit; opacity: .75; }
 .r-dark .nd-label, .r-dark .nd-label span { color: inherit; }
 .r-dark .nd-label { opacity: .75; }
-.r-dark .nd-label::after { background: currentColor; opacity: .25; }
 .r-big em { font-style: italic; }
 .r-top { padding-top: calc(118px + env(safe-area-inset-top, 0px)); }
 .r-center { padding-top: 72px; }
@@ -461,7 +459,6 @@ html.reel-root, html.reel-root body { height: 100%; overflow: hidden; }
 
 .area-panel .nd-label { color: var(--nd-muted); opacity: 1; }
 .area-panel .nd-label span { color: var(--nd-ink); }
-.area-panel .nd-label::after { background: var(--nd-line); opacity: 1; }
 
 /* ================= v7 ================= */
 /* Nia: radar, niente strade */
