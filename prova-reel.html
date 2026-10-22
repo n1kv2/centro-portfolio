@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=43">
+<link rel="stylesheet" href="css/reel.css?v=44">
 </head>
 <body class="reel-page">
 
@@ -437,12 +437,20 @@
       <p class="r-big small">Per una demo, una collaborazione o un incontro.</p>
       <p class="r-mail">hello.centro26@gmail.com</p>
       <div class="r-ctas"><a class="r-btn" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a><a class="r-btn ghost" href="prova-chi-sono.html" data-keep>Chi sono</a></div>
-      
+      <form class="ea" id="eaForm" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" novalidate>
+        <p class="ea-k">Accesso anticipato</p>
+        <p class="ea-t">Vuoi provare l'app per primo?</p>
+        <div class="ea-row">
+          <input id="eaInput" name="contatto" type="text" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="Email o numero WhatsApp" aria-label="Email o numero WhatsApp">
+          <button type="submit" class="ea-btn">Avvisami</button>
+        </div>
+        <p class="ea-note" id="eaNote" aria-live="polite">Ti scriviamo solo quando l'app è disponibile.</p>
+      </form>
     </div>
   </section>
 
 </main>
 
-<script src="js/reel.js?v=37"></script>
+<script src="js/reel.js?v=38"></script>
 </body>
 </html>
