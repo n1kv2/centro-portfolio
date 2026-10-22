@@ -608,11 +608,27 @@
 
   // ---------- Contatti: due chip in basso; toccandone una si apre il riquadro con la scelta ----------
   var cbox = document.getElementById('cbox');
+  var cglass = document.querySelector('.cpanel-glass');
   function contactTab(t) {
+    var prev = cbox.getAttribute('data-tab') || '';
+    // Da una scelta all'altra il riquadro cambia altezza con un movimento morbido
+    var switching = prev && t && prev !== t && !reduce;
+    var from = switching ? cglass.offsetHeight : 0;
     cbox.setAttribute('data-tab', t);
     cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
-    document.getElementById('paneApp').hidden = t !== 'app';
-    document.getElementById('paneInfo').hidden = t !== 'info';
+    if (t) {
+      document.getElementById('paneApp').hidden = t !== 'app';
+      document.getElementById('paneInfo').hidden = t !== 'info';
+    }
+    if (switching) {
+      cglass.style.height = 'auto';
+      var to = cglass.offsetHeight;
+      cglass.style.height = from + 'px';
+      void cglass.offsetHeight;
+      cglass.style.height = to + 'px';
+      var end = function (e) { if (e.propertyName !== 'height') return; cglass.style.height = ''; cglass.removeEventListener('transitionend', end); };
+      cglass.addEventListener('transitionend', end);
+    }
   }
   if (cbox) {
     contactTab('');

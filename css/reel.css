@@ -883,3 +883,11 @@ html.js .feat .viz-spot.cyc.go > p:nth-child(3) { transition-delay: 1s; }
 .cchip[aria-expanded="true"] { background: #fff; color: #0B1B33; box-shadow: none; }
 @media (prefers-reduced-motion: reduce) { .cpanel, .cpanel-glass, .cbox .cpane, .cchip { transition: none; } }
 .cbox .cpane { align-self: center; }
+/* v52: ogni scelta alta quanto il suo contenuto, stesso spazio sopra e sotto; il cambio di altezza è animato */
+.cpanel-glass { display: block; padding: 18px; overflow: hidden; box-sizing: border-box; transition: opacity .35s ease, transform .6s cubic-bezier(.3,.8,.2,1), height .45s cubic-bezier(.3,.8,.2,1); }
+.cbox[data-tab="app"] .cpanel-glass, .cbox[data-tab="info"] .cpanel-glass { transition: opacity .45s ease .08s, transform .6s cubic-bezier(.3,.8,.2,1), height .45s cubic-bezier(.3,.8,.2,1); }
+.cbox .cpane { align-self: auto; animation: cp-fade .4s ease; }
+.cbox .cpane[hidden] { display: none !important; }
+@keyframes cp-fade { from { opacity: 0; } to { opacity: 1; } }
+.cbox .cpane > :last-child { margin-bottom: 0; }
+.cbox .cp-t { margin-top: 0; }
