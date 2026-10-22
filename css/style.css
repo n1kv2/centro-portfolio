@@ -89,7 +89,6 @@ p { margin: 0; text-wrap: pretty; }
 
 /* ---------- Il percorso: tappe che si completano scorrendo ---------- */
 
-section[id], #contatti { scroll-margin-top: 72px; }
 
 /* ---------- Introduzione: schermata di app che si uniscono ---------- */
 

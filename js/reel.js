@@ -359,7 +359,7 @@
   var SPOT = [
     [['q', 'Qualcuno ha perso le chiavi a Coppito?'], ['a', 'Sì, sono mie! Dove le trovo?'], ['q', 'In portineria, all’ingresso.'], 'Risolto in pochi minuti dalla community'],
     [['a', 'Cerco un passaggio per Pescara sabato.'], ['q', 'C’è un gruppo per Pescara: chiedi lì!'], ['q', 'Partiamo in tre, c’è posto.'], 'La richiesta trova il gruppo giusto'],
-    [['a', 'Pasticceria per una torta di laurea?'], ['q', 'Quella sotto i portici, perfetta.'], ['q', 'Confermo, prendi la millefoglie!'], 'Tre consigli in un’ora']
+    [['q', 'Una pasticceria per una torta di laurea?'], ['a', 'Quella sotto i portici: la mia era perfetta!'], ['q', 'Grazie, ci passo domani.'], 'Un consiglio dato a chi lo chiedeva']
   ];
   var spotK = 0, spotTimer = null;
   function renderSpot(k) {
