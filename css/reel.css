@@ -896,3 +896,13 @@ html.js .feat .viz-spot.cyc.go > p:nth-child(3) { transition-delay: 1s; }
 .rq.err .ea-note { color: #FFC2B3; opacity: 1; }
 .rq.ok .ea-note { color: #A6E3B8; opacity: 1; font-weight: 600; }
 .rq.busy .ea-btn { opacity: .6; pointer-events: none; }
+
+/* v54: le chip non si dissolvono (la dissolvenza spegne la sfocatura per mezzo secondo): entrano solo scivolando,
+   e hanno un fondo semitrasparente che regge anche senza sfocatura */
+html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
+.cchips { transform: translateY(14px); transition: transform .7s cubic-bezier(.2,.8,.2,1) .2s; }
+.r-contact.on .cchips { transform: none; }
+.cchip { background: rgba(20,32,56,.42); }
+.cchip[aria-expanded="true"] { background: #fff; }
+.cpanel-glass { background: rgba(20,32,56,.38); }
+@media (prefers-reduced-motion: reduce) { .cchips { transform: none; transition: none; } }
