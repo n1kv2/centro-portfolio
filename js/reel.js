@@ -84,7 +84,7 @@
       if (t === mode) return;
       html += '<button type="button" class="path" data-route="' + t + '"><b>' + TRACKS[t] + '</b><span>Passa al percorso ' + NAMES[t].toLowerCase() + '.</span></button>';
     });
-    html += '<button type="button" class="path" data-route="contact"><b>Parliamone</b><span>Vai ai contatti.</span></button>';
+    html += '<button type="button" class="path" data-route="contact"><b>Il prossimo passo</b><span>Prova l\'app o contattami.</span></button>';
     routerPaths.innerHTML = html;
   }
   routerPaths.addEventListener('click', function (e) {
