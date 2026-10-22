@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=44">
+<link rel="stylesheet" href="css/reel.css?v=49">
 </head>
 <body class="reel-page">
 
@@ -430,27 +430,45 @@
     </div>
   </section>
 
-  <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Contatti" data-title="Parliamone" data-desc="Nicholas Vigo, fondatore">
+  <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Contatti" data-title="Parliamone" data-desc="Provare l'app o chiedere informazioni">
     <img class="r-photo" src="img/stretta-di-mano.jpg" alt="Due persone si stringono la mano." loading="lazy">
-    <div class="r-in r-center">
-      <p class="nd-label">Parliamone</p>
-      <p class="r-big small">Per una demo, una collaborazione o un incontro.</p>
-      <p class="r-mail">hello.centro26@gmail.com</p>
-      <div class="r-ctas"><a class="r-btn" href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a><a class="r-btn ghost" href="prova-chi-sono.html" data-keep>Chi sono</a></div>
-      <form class="ea" id="eaForm" data-endpoint="" novalidate>
-        <p class="ea-k">Accesso anticipato</p>
-        <p class="ea-t">Vuoi provare l'app per primo?</p>
-        <div class="ea-row">
-          <input id="eaInput" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
-          <button type="submit" class="ea-btn">Avvisami</button>
+    <div class="r-in r-bottom">
+      <p class="nd-label">Contatti</p>
+      <h2 class="r-h2 on-dark small-h">Restiamo in contatto.</h2>
+      <div class="cbox" id="cbox">
+        <div class="cseg" role="tablist" aria-label="Cosa ti serve">
+          <i class="cseg-pill" aria-hidden="true"></i>
+          <button type="button" role="tab" id="tabApp" aria-selected="true" aria-controls="paneApp" data-tab="app">Voglio provare l'app</button>
+          <button type="button" role="tab" id="tabInfo" aria-selected="false" aria-controls="paneInfo" data-tab="info">Voglio informazioni</button>
         </div>
-        <p class="ea-note" id="eaNote" aria-live="polite">Una sola email quando l'app è disponibile. Puoi disiscriverti quando vuoi.</p>
-      </form>
+        <div class="cpane" id="paneApp" role="tabpanel" aria-labelledby="tabApp">
+          <p class="cp-t">Provala per primo.</p>
+          <p class="cp-d">Lascia l'email: ti avvisiamo appena l'app è disponibile.</p>
+          <form class="ea" id="eaForm" data-endpoint="" novalidate>
+            <div class="ea-row">
+              <input id="eaInput" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
+              <button type="submit" class="ea-btn">Avvisami</button>
+            </div>
+            <p class="ea-note" id="eaNote" aria-live="polite">Una sola email quando è pronta. Puoi disiscriverti quando vuoi.</p>
+          </form>
+        </div>
+        <div class="cpane" id="paneInfo" role="tabpanel" aria-labelledby="tabInfo" hidden>
+          <p class="cp-t">Demo, collaborazioni, investimenti.</p>
+          <form class="rq" id="rqForm" novalidate>
+            <textarea id="rqText" name="richiesta" rows="3" placeholder="Scrivi la tua richiesta" aria-label="La tua richiesta"></textarea>
+            <div class="ea-row">
+              <input id="rqEmail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email per la risposta">
+              <button type="submit" class="ea-btn">Invia</button>
+            </div>
+            <p class="ea-note">Ti rispondo personalmente. <a href="prova-chi-sono.html" data-keep>Chi sono</a></p>
+          </form>
+        </div>
+      </div>
     </div>
   </section>
 
 </main>
 
-<script src="js/reel.js?v=39"></script>
+<script src="js/reel.js?v=41"></script>
 </body>
 </html>

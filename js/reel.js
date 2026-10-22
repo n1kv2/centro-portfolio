@@ -138,6 +138,7 @@
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
+    if (r.classList.contains('r-contact') && cbox) contactTab(mode === 'azienda' || mode === 'investitore' ? 'info' : 'app');
     if (navOpen) renderIndex();
   }
   function check() {
@@ -603,6 +604,23 @@
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); step(1); }
     else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
+
+  // ---------- Contatti: un solo riquadro, due scelte (provare l'app / chiedere informazioni) ----------
+  var cbox = document.getElementById('cbox');
+  function contactTab(t) {
+    cbox.setAttribute('data-tab', t);
+    cbox.querySelectorAll('[role="tab"]').forEach(function (b) { b.setAttribute('aria-selected', b.getAttribute('data-tab') === t); });
+    document.getElementById('paneApp').hidden = t !== 'app';
+    document.getElementById('paneInfo').hidden = t !== 'info';
+  }
+  if (cbox) {
+    contactTab('app');
+    cbox.querySelector('.cseg').addEventListener('click', function (e) { var b = e.target.closest('[data-tab]'); if (b) contactTab(b.getAttribute('data-tab')); });
+  }
+
+  // Richiesta di informazioni: per ora solo l'aspetto, l'invio si collega dopo
+  var rqForm = document.getElementById('rqForm');
+  if (rqForm) rqForm.addEventListener('submit', function (e) { e.preventDefault(); });
 
   // ---------- Accesso anticipato: chi lascia l'email viene avvisato quando l'app è disponibile ----------
   // data-endpoint: indirizzo del modulo che raccoglie le iscrizioni (da collegare al servizio scelto)
