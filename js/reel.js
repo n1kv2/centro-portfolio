@@ -604,31 +604,26 @@
     else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
 
-  // ---------- Accesso anticipato: email o numero WhatsApp per sapere quando l'app è disponibile ----------
+  // ---------- Accesso anticipato: chi lascia l'email viene avvisato quando l'app è disponibile ----------
+  // data-endpoint: indirizzo del modulo che raccoglie le iscrizioni (da collegare al servizio scelto)
   var eaForm = document.getElementById('eaForm');
   if (eaForm) {
     var eaInput = document.getElementById('eaInput'), eaNote = document.getElementById('eaNote');
+    var NOTE = eaNote.textContent;
     var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var kindOf = function (v) {
-      if (EMAIL.test(v)) return 'email';
-      var digits = v.replace(/[\s().-]/g, '');
-      return /^\+?\d{8,15}$/.test(digits) ? 'whatsapp' : '';
-    };
     var say = function (t, cls) { eaNote.textContent = t; eaForm.className = 'ea' + (cls ? ' ' + cls : ''); };
-    eaInput.addEventListener('input', function () { if (eaForm.classList.contains('err')) say("Ti scriviamo solo quando l'app è disponibile.", ''); });
+    eaInput.addEventListener('input', function () { if (eaForm.classList.contains('err')) say(NOTE, ''); });
     eaForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      var v = eaInput.value.trim(), kind = kindOf(v);
-      if (!kind) { say('Scrivi un’email valida o un numero WhatsApp (anche con +39).', 'err'); eaInput.focus(); return; }
+      var v = eaInput.value.trim();
+      if (!EMAIL.test(v)) { say('Scrivi un’email valida.', 'err'); eaInput.focus(); return; }
+      var url = eaForm.getAttribute('data-endpoint');
+      if (!url) { say('Le iscrizioni apriranno a breve. Intanto scrivi a hello.centro26@gmail.com.', 'err'); return; }
       say('Invio in corso…', 'busy');
-      fetch(eaForm.getAttribute('data-endpoint'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ contatto: v, tipo: kind === 'email' ? 'Email' : 'WhatsApp', _subject: 'Nuovo iscritto all’accesso anticipato di CEnTRO', _template: 'table', _captcha: 'false' })
-      }).then(function (r) {
-        if (!r.ok) throw new Error('invio');
+      var body = new FormData(); body.append('EMAIL', v); body.append('email', v);
+      fetch(url, { method: 'POST', body: body, mode: 'no-cors' }).then(function () {
         eaInput.value = '';
-        say(kind === 'email' ? 'Fatto! Ti scriviamo appena l’app è disponibile.' : 'Fatto! Ti scriviamo su WhatsApp appena l’app è disponibile.', 'ok');
+        say('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok');
       }).catch(function () {
         say('Non è andato a buon fine. Riprova tra poco o scrivi a hello.centro26@gmail.com.', 'err');
       });
