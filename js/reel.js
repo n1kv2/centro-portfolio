@@ -18,7 +18,6 @@
   var NAMES = { utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' };
   var mode = 'all';
   var visible = [], bits = [], chapters = [], current = -1;
-  var pad = function (k) { return (k < 10 ? '0' : '') + k; };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ss = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
              set: function (k, v) { try { sessionStorage.setItem(k, v); } catch (e) { /* niente memoria */ } },
@@ -92,14 +91,7 @@
     var b = e.target.closest('[data-route]');
     if (!b) return;
     var r = b.getAttribute('data-route');
-    if (r === 'all') {
-      // Prosegue con ciò che viene dopo il percorso appena visto, non dall'inizio
-      var lastSeen = all.filter(function (x) { return x.getAttribute('data-track') === mode; }).pop();
-      showAll(null);
-      var after = all.slice(all.indexOf(lastSeen) + 1).filter(function (x) { return !x.hidden; })[0] || all[0];
-      go(after);
-    }
-    else if (r === 'contact') go(document.querySelector('.r-contact'));
+    if (r === 'contact') go(document.querySelector('.r-contact'));
     else choose(r);
   });
   document.querySelectorAll('[data-go]').forEach(function (b) {
@@ -253,12 +245,6 @@
     ['Opportunità',        { bando: 92, ceramica: 58, lingue: 55, arte: 50, trekking: 30, calcetto: 20, musica: 15, casa: 12 }]
   ];
   var ids = Object.keys(ITEMS), nodes = {}, scores = {}, activeIntent = null, mapTimer = null;
-  for (var d = 0; d < 14; d++) {
-    var sp = document.createElement('span'); sp.className = 'dust';
-    var ang0 = (d * 137.5) * Math.PI / 180, rad0 = 22 + (d * 23 % 24);
-    sp.style.left = (50 + rad0 * Math.cos(ang0)) + '%'; sp.style.top = (50 + rad0 * Math.sin(ang0)) + '%';
-    nmNodes.appendChild(sp);
-  }
   ids.forEach(function (id) {
     var b = document.createElement('span');
     b.className = 'node'; b.setAttribute('aria-hidden', 'true');
@@ -269,7 +255,6 @@
   nmChips.innerHTML = '<div class="is-bar nm-bar"><span class="is-q" id="nmQ"></span><i class="is-caret"></i></div>';
   var nmQ = document.getElementById('nmQ');
   var typeT = [];
-  var chipEls = [];
   function placeNodes() {
     ids.forEach(function (id, i) {
       var n = nodes[id], sc = activeIntent !== null ? scores[id] : 0, lit = activeIntent !== null && sc >= 55;
@@ -327,17 +312,22 @@
     nmSlot.classList.add('found');
   }
   function resetMap() {
-    clearTimeout(mapTimer);
+    clearTimeout(mapTimer); clearTimeout(introTimer);
+    if (niaReel) niaReel.classList.remove('intro-done');
     typeT.forEach(clearTimeout); typeT = []; nmQ.textContent = '';
     collapseMap();
   }
   // Sequenza automatica: ogni ricerca resta qualche secondo, poi si richiude e parte la successiva
+  var niaReel = document.querySelector('.r-niamap'), introTimer = null;
   function demoMap() {
     resetMap();
-    sizeNia();
+    // Prima il titolo al centro, poi sfuma e lascia il posto al radar
+    niaReel.classList.remove('intro-done');
+    clearTimeout(introTimer);
+    introTimer = setTimeout(function () { niaReel.classList.add('intro-done'); sizeNia(); }, reduce ? 0 : 1900);
     var k = 0;
     var step = function () { setIntent(k); k = (k + 1) % INTENTS.length; mapTimer = setTimeout(step, 6000); };
-    mapTimer = setTimeout(step, 700);
+    mapTimer = setTimeout(step, reduce ? 0 : 2600);
   }
   resetMap();
 
@@ -367,9 +357,9 @@
   // ---------- Spotted: richieste diverse nello stesso riquadro (in blu quelle dell'utente) ----------
   var vizSpot = document.getElementById('vizSpot');
   var SPOT = [
-    [['q', 'Qualcuno ha perso un mazzo di chiavi a Coppito?'], ['a', 'Sì, è mio! Dove lo trovo?'], ['q', "L'ho lasciato in portineria."], 'Risolto in pochi minuti dalla community'],
-    [['a', 'Cerco un passaggio per Pescara sabato mattina.'], ['q', "C'è già un gruppo per chi va a Pescara: chiedi lì!"], ['q', 'Partiamo in tre, c’è posto.'], 'La richiesta trova il gruppo giusto'],
-    [['a', 'Una pasticceria con torte perfette per una laurea?'], ['q', 'Quella sotto i portici: la mia l’hanno fatta lì.'], ['q', 'Confermo, chiedi della millefoglie!'], 'Tre consigli in un’ora']
+    [['q', 'Qualcuno ha perso le chiavi a Coppito?'], ['a', 'Sì, sono mie! Dove le trovo?'], ['q', 'In portineria, all’ingresso.'], 'Risolto in pochi minuti dalla community'],
+    [['a', 'Cerco un passaggio per Pescara sabato.'], ['q', 'C’è un gruppo per Pescara: chiedi lì!'], ['q', 'Partiamo in tre, c’è posto.'], 'La richiesta trova il gruppo giusto'],
+    [['a', 'Pasticceria per una torta di laurea?'], ['q', 'Quella sotto i portici, perfetta.'], ['q', 'Confermo, prendi la millefoglie!'], 'Tre consigli in un’ora']
   ];
   var spotK = 0, spotTimer = null;
   function renderSpot(k) {
@@ -377,8 +367,16 @@
     vizSpot.innerHTML = c.slice(0, 3).map(function (m) { return '<p class="vs-' + m[0] + '">' + m[1] + '</p>'; }).join('') + '<p class="vf-cap">' + c[3] + '</p>';
   }
   function stopSpot() { clearInterval(spotTimer); spotTimer = null; }
+  // Il riquadro prende l'altezza della conversazione più lunga: niente spazio vuoto, niente scatti al cambio
+  function sizeSpot() {
+    vizSpot.style.height = '';
+    var h = 0;
+    for (var i = 0; i < SPOT.length; i++) { renderSpot(i); h = Math.max(h, vizSpot.offsetHeight); }
+    vizSpot.style.boxSizing = 'border-box'; vizSpot.style.height = h + 'px';
+  }
   function playSpot() {
     stopSpot();
+    sizeSpot();
     spotK = 0; renderSpot(0);
     vizSpot.classList.add('cyc'); vizSpot.classList.remove('go'); void vizSpot.offsetWidth;
     setTimeout(function () { vizSpot.classList.add('go'); }, 300);
@@ -427,7 +425,6 @@
 
   // ---------- Sezioni: la barra in alto si allarga al tocco ----------
   var navList = document.getElementById('rnavList');
-  var navMode = document.getElementById('rnavMode');
   var toggle = document.getElementById('rtoggle');
   var navOpen = false, openTop = 0;
   var navChaps = [];
@@ -466,8 +463,6 @@
       var off = ch.reels.every(function (r) { return r.hidden; });
       return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
     }).join('') + '<a class="rnav-item rnav-link" href="prova-chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn();
-    navMode.innerHTML = '';
-    navMode.hidden = true;
   }
   // Con il menu aperto si evidenzia la linea della sezione (quella attuale, o quella che stai per scegliere)
   // Torna allo stato iniziale: nessun percorso, nessuna scelta, primo momento (come ricaricare)
@@ -495,7 +490,6 @@
   ['pointerover', 'focusin'].forEach(function (t) { document.getElementById('rnav').addEventListener(t, hoverLine); });
   document.getElementById('rnav').addEventListener('pointerleave', hoverLine);
   document.getElementById('rnav').addEventListener('click', function (e) {
-    if (e.target.closest('[data-showall]')) { setNav(false); showAll(visible[current]); return; }
     if (e.target.closest('[data-theme-toggle]')) {
       if (window.centroTheme) window.centroTheme.set(isDark() ? 'light' : 'dark');
       renderIndex();
@@ -572,23 +566,7 @@
     step(e.deltaY > 0 ? 1 : -1);
   }, { passive: false });
 
-  // Tocco: anche con uno scorrimento veloce si avanza di un solo momento alla volta
-  var touchFrom = -1, settleTimer = null;
-  var touching = false;
-  scroller.addEventListener('touchstart', function () { touching = true; if (touchFrom < 0) touchFrom = current; }, { passive: true });
-  ['touchend', 'touchcancel'].forEach(function (t) { scroller.addEventListener(t, function () { touching = false; }, { passive: true }); });
-  function settle() {
-    if (touching) return;
-    var mid = scroller.scrollTop + scroller.clientHeight / 2, k = 0;
-    visible.forEach(function (r, i) { if (r.offsetTop <= mid) k = i; });
-    var from = touchFrom;
-    touchFrom = -1;
-    if (from >= 0 && Math.abs(k - from) > 1) { go(visible[from + (k > from ? 1 : -1)]); return; }
-    // Se lo scorrimento si ferma a metà tra due momenti (succede su Safari dopo un cambio di percorso), si allinea
-    if (Math.abs(scroller.scrollTop - visible[k].offsetTop) > 2 && scroller.style.scrollSnapType !== 'none') go(visible[k], false);
-  }
-  if ('onscrollend' in scroller) scroller.addEventListener('scrollend', settle);
-  else scroller.addEventListener('scroll', function () { clearTimeout(settleTimer); settleTimer = setTimeout(settle, 90); }, { passive: true });
+  // Tocco: lo scorrimento e l'aggancio ai momenti sono quelli nativi del telefono (fluidi anche veloci)
 
   // ---------- Ogni momento entra nello schermo ----------
   // Su schermi bassi o con caratteri di sistema grandi il contenuto può non starci:
