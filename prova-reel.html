@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=52">
+<link rel="stylesheet" href="css/reel.css?v=53">
 </head>
 <body class="reel-page">
 
@@ -442,7 +442,8 @@
         <div class="cpane" id="paneApp" role="region" aria-labelledby="chipApp" hidden>
           <p class="cp-t">Provala per primo.</p>
           <p class="cp-d">Lascia l'email: ti avvisiamo appena l'app è disponibile.</p>
-          <form class="ea" id="eaForm" data-endpoint="" novalidate>
+          <form class="ea" id="eaForm" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="ea-row">
               <input id="eaInput" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
               <button type="submit" class="ea-btn">Avvisami</button>
@@ -452,13 +453,14 @@
         </div>
         <div class="cpane" id="paneInfo" role="region" aria-labelledby="chipInfo" hidden>
           <p class="cp-t">Demo, collaborazioni, investimenti.</p>
-          <form class="rq" id="rqForm" novalidate>
+          <form class="rq" id="rqForm" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <textarea id="rqText" name="richiesta" rows="3" placeholder="Scrivi la tua richiesta" aria-label="La tua richiesta"></textarea>
             <div class="ea-row">
               <input id="rqEmail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email per la risposta">
               <button type="submit" class="ea-btn">Invia</button>
             </div>
-            <p class="ea-note">Ti rispondo personalmente. <a href="prova-chi-sono.html" data-keep>Chi sono</a></p>
+            <p class="ea-note" id="rqNote" aria-live="polite">Ti rispondo personalmente. <a href="prova-chi-sono.html" data-keep>Chi sono</a></p>
           </form>
         </div>
             </div>
@@ -474,6 +476,6 @@
 
 </main>
 
-<script src="js/reel.js?v=43"></script>
+<script src="js/reel.js?v=44"></script>
 </body>
 </html>

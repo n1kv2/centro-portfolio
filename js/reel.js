@@ -640,33 +640,60 @@
     });
   }
 
-  // Richiesta di informazioni: per ora solo l'aspetto, l'invio si collega dopo
-  var rqForm = document.getElementById('rqForm');
-  if (rqForm) rqForm.addEventListener('submit', function (e) { e.preventDefault(); });
+  // ---------- Invio dei moduli dei contatti ----------
+  // Per ora passano da FormSubmit e arrivano come email a hello.centro26@gmail.com.
+  // Con Supabase basterà cambiare data-endpoint nei due moduli.
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  function sendForm(form, data) {
+    var hp = form.querySelector('.hp');
+    if (hp && hp.value) return Promise.resolve(); // compilato da un programma automatico: si ignora
+    data._captcha = 'false'; data._template = 'table';
+    return fetch(form.getAttribute('data-endpoint'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (r) { if (!r.ok) throw new Error('invio'); return r.json().catch(function () { return {}; }); })
+      .then(function (j) { if (j && String(j.success) === 'false') throw new Error('invio'); });
+  }
+  function noteFor(form, note) {
+    var base = note.innerHTML;
+    return function (t, cls) {
+      if (t === null) note.innerHTML = base; else note.textContent = t;
+      form.className = form.className.replace(/\s?(err|ok|busy)\b/g, '') + (cls ? ' ' + cls : '');
+    };
+  }
+  var FAIL = 'Non è andato a buon fine. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
 
-  // ---------- Accesso anticipato: chi lascia l'email viene avvisato quando l'app è disponibile ----------
-  // data-endpoint: indirizzo del modulo che raccoglie le iscrizioni (da collegare al servizio scelto)
+  // Accesso anticipato: solo l'email
   var eaForm = document.getElementById('eaForm');
   if (eaForm) {
-    var eaInput = document.getElementById('eaInput'), eaNote = document.getElementById('eaNote');
-    var NOTE = eaNote.textContent;
-    var EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-    var say = function (t, cls) { eaNote.textContent = t; eaForm.className = 'ea' + (cls ? ' ' + cls : ''); };
-    eaInput.addEventListener('input', function () { if (eaForm.classList.contains('err')) say(NOTE, ''); });
+    var eaInput = document.getElementById('eaInput'), eaSay = noteFor(eaForm, document.getElementById('eaNote'));
+    eaInput.addEventListener('input', function () { if (/\berr\b/.test(eaForm.className)) eaSay(null, ''); });
     eaForm.addEventListener('submit', function (e) {
       e.preventDefault();
       var v = eaInput.value.trim();
-      if (!EMAIL.test(v)) { say('Scrivi un’email valida.', 'err'); eaInput.focus(); return; }
-      var url = eaForm.getAttribute('data-endpoint');
-      if (!url) { say('Le iscrizioni apriranno a breve. Intanto scrivi a hello.centro26@gmail.com.', 'err'); return; }
-      say('Invio in corso…', 'busy');
-      var body = new FormData(); body.append('EMAIL', v); body.append('email', v);
-      fetch(url, { method: 'POST', body: body, mode: 'no-cors' }).then(function () {
-        eaInput.value = '';
-        say('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok');
-      }).catch(function () {
-        say('Non è andato a buon fine. Riprova tra poco o scrivi a hello.centro26@gmail.com.', 'err');
-      });
+      if (!EMAIL_RE.test(v)) { eaSay('Scrivi un’email valida.', 'err'); eaInput.focus(); return; }
+      eaSay('Invio in corso…', 'busy');
+      sendForm(eaForm, { email: v, _subject: 'Accesso anticipato CEnTRO: nuova iscrizione' })
+        .then(function () { eaInput.value = ''; eaSay('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok'); })
+        .catch(function () { eaSay(FAIL, 'err'); });
+    });
+  }
+
+  // Richiesta di informazioni: testo e email per la risposta
+  var rqForm = document.getElementById('rqForm');
+  if (rqForm) {
+    var rqText = document.getElementById('rqText'), rqEmail = document.getElementById('rqEmail'), rqSay = noteFor(rqForm, document.getElementById('rqNote'));
+    [rqText, rqEmail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(rqForm.className)) rqSay(null, ''); }); });
+    rqForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var t = rqText.value.trim(), m = rqEmail.value.trim();
+      if (t.length < 5) { rqSay('Scrivi la tua richiesta.', 'err'); rqText.focus(); return; }
+      if (!EMAIL_RE.test(m)) { rqSay('Scrivi un’email valida per la risposta.', 'err'); rqEmail.focus(); return; }
+      rqSay('Invio in corso…', 'busy');
+      sendForm(rqForm, { richiesta: t, email: m, _replyto: m, _subject: 'Richiesta di informazioni da CEnTRO' })
+        .then(function () { rqText.value = ''; rqEmail.value = ''; rqSay('Ricevuta! Ti rispondo al più presto.', 'ok'); })
+        .catch(function () { rqSay(FAIL, 'err'); });
     });
   }
 

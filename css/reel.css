@@ -891,3 +891,8 @@ html.js .feat .viz-spot.cyc.go > p:nth-child(3) { transition-delay: 1s; }
 @keyframes cp-fade { from { opacity: 0; } to { opacity: 1; } }
 .cbox .cpane > :last-child { margin-bottom: 0; }
 .cbox .cp-t { margin-top: 0; }
+/* campo nascosto contro i programmi automatici */
+.hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; opacity: 0; }
+.rq.err .ea-note { color: #FFC2B3; opacity: 1; }
+.rq.ok .ea-note { color: #A6E3B8; opacity: 1; font-weight: 600; }
+.rq.busy .ea-btn { opacity: .6; pointer-events: none; }
