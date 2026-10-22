@@ -829,3 +829,10 @@ html.js .feat .viz-spot.cyc.go > p:nth-child(3) { transition-delay: 1s; }
 .nm-map .node:not(.lit) { opacity: 0; }
 .nm-map .node { transition: left .9s cubic-bezier(.3,.8,.3,1), top .9s cubic-bezier(.3,.8,.3,1), width .5s ease, height .5s ease, margin .5s ease, opacity .5s ease; }
 @media (prefers-reduced-motion: reduce) { .r-niamap .nm-top, .r-niamap .nm { transition: none; } }
+/* Ogni momento si aggancia esattamente al suo inizio */
+.reel { scroll-margin: 0; }
+/* "Perché può crescere": la prima parte è un titolo (serif), il resto testo normale */
+.r-body-h { display: block; margin-bottom: 6px; font-family: var(--nd-display); font-size: 1.7rem; line-height: 1.12; font-weight: 400; opacity: 1; }
+.r-body:has(.r-body-h) { opacity: 1; }
+.r-body:has(.r-body-h) { color: rgba(242,245,250,.82); }
+.r-body .r-body-h { color: #F2F5FA; }
