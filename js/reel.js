@@ -648,12 +648,25 @@
     var hp = form.querySelector('.hp');
     if (hp && hp.value) return Promise.resolve(); // compilato da un programma automatico: si ignora
     data._captcha = 'false'; data._template = 'table';
-    return fetch(form.getAttribute('data-endpoint'), {
+    var url = form.getAttribute('data-endpoint');
+    // FormSubmit a volte impiega decine di secondi: l'invio viene affidato al browser in background
+    // (continua anche se la pagina si chiude) e chi scrive vede subito la conferma
+    if (navigator.sendBeacon) {
+      var fd = new FormData();
+      Object.keys(data).forEach(function (k) { fd.append(k, data[k]); });
+      if (navigator.sendBeacon(url.replace('/ajax/', '/'), fd)) return Promise.resolve();
+    }
+    // Riserva: invio normale, con un tempo massimo per non restare bloccati
+    var ctrl = 'AbortController' in window ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 30000);
+    return fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
-    }).then(function (r) { if (!r.ok) throw new Error('invio'); return r.json().catch(function () { return {}; }); })
-      .then(function (j) { if (j && String(j.success) === 'false') throw new Error('invio'); });
+      body: JSON.stringify(data),
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('invio'); return r.json().catch(function () { return {}; }); })
+      .then(function (j) { if (j && String(j.success) === 'false') throw new Error('invio'); })
+      .catch(function (e) { clearTimeout(timer); throw e; });
   }
   function noteFor(form, note) {
     var base = note.innerHTML;
@@ -662,7 +675,7 @@
       form.className = form.className.replace(/\s?(err|ok|busy)\b/g, '') + (cls ? ' ' + cls : '');
     };
   }
-  var FAIL = 'Non è andato a buon fine. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
+  var FAIL = 'Il servizio non ha risposto. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
 
   // Accesso anticipato: solo l'email
   var eaForm = document.getElementById('eaForm');
