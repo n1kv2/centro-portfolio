@@ -113,6 +113,7 @@
     if (r.classList.contains('r-ins')) resetSearch();
     if (r.classList.contains('r-niamap')) resetMap();
     if (r.classList.contains('r-tools')) resetTools();
+    if (r.classList.contains('r-overview') && deck) stopDeck();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
@@ -139,6 +140,7 @@
     if (r.classList.contains('r-ins')) playSearch();
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
+    if (r.classList.contains('r-overview') && deck) playDeck();
 
     if (navOpen) renderIndex();
   }
@@ -342,6 +344,27 @@
       if (r.hidden) showAll(r); else go(r);
     });
   });
+
+  // ---------- Le aree come un mazzo di card: la prima viene scartata e avanza la successiva ----------
+  var deck = document.getElementById('deck2');
+  var deckCards = deck ? Array.prototype.slice.call(deck.querySelectorAll('.dc')) : [];
+  var deckTimer = null, deckOrder = deckCards.slice();
+  function deckLayout() { deckOrder.forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); c.classList.remove('out', 'back'); }); }
+  function deckNext() {
+    var top = deckOrder[0];
+    top.classList.add('out');
+    deckOrder.push(deckOrder.shift());
+    deckOrder.slice(0, -1).forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); });
+    // finita l'uscita, la card scartata torna in fondo al mazzo senza farsi vedere
+    setTimeout(function () { top.classList.add('back'); top.classList.remove('out'); top.setAttribute('data-pos', 3); void top.offsetWidth; top.classList.remove('back'); }, 650);
+  }
+  function stopDeck() { clearInterval(deckTimer); deckTimer = null; }
+  function playDeck() {
+    stopDeck();
+    deckOrder = deckCards.slice(); deckLayout();
+    if (!reduce) deckTimer = setInterval(deckNext, 1700);
+  }
+  if (deck) deckLayout();
 
   // ---------- Strumenti per le aziende: le spunte si completano una dopo l'altra, ogni voce si apre ----------
   var tks = document.getElementById('tks');
