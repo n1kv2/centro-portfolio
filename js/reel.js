@@ -333,6 +333,16 @@
   }
   resetMap();
 
+  // ---------- Le aree in breve: toccando un'area si va al suo momento ----------
+  document.querySelectorAll('[data-goto]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.getAttribute('data-goto');
+      var r = all.filter(function (x) { return x.getAttribute('data-title') === t; })[0];
+      if (!r) return;
+      if (r.hidden) showAll(r); else go(r);
+    });
+  });
+
   // ---------- Strumenti per le aziende: le spunte si completano una dopo l'altra, ogni voce si apre ----------
   var tks = document.getElementById('tks');
   var tkTimers = [];
