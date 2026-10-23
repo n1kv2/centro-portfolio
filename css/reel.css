@@ -957,19 +957,38 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-overview .deck2 { opacity: 0; transform: translateY(24px); transition: opacity .6s ease .3s, transform .8s cubic-bezier(.2,.8,.2,1) .3s; }
 .r-overview.on .deck2 { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .dc, .r-overview .deck2 { transition: none; } .r-overview .deck2 { opacity: 1; transform: none; } }
-/* v62: card non cliccabili ma trascinabili in orizzontale (lo scorrimento verticale resta quello dei momenti) */
-.deck2 { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
-.dc { cursor: grab; -webkit-touch-callout: none; }
-.dc:active { cursor: grabbing; filter: none; }
-.dc img { pointer-events: none; }
-.dc.out-r { z-index: 5; transform: translate(calc(-50% + 125%), calc(-50% + 30px)) rotate(18deg); opacity: 0; transition: transform .6s cubic-bezier(.5,0,.75,.4), opacity .5s ease .1s; }
-/* invito a trascinare: la card accenna a partire di lato e torna */
-.dc.hint { animation: dc-hint 2.6s cubic-bezier(.4,0,.2,1) infinite; }
-@keyframes dc-hint {
-  0%, 45%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
-  15% { transform: translate(calc(-50% - 34px), calc(-50% + 4px)) rotate(-5deg); }
-  28% { transform: translate(calc(-50% + 6px), -50%) rotate(1deg); }
-}
-@media (prefers-reduced-motion: reduce) { .dc.hint { animation: none; } }
 /* testo sotto un titolo: un po' di respiro */
 .r-h2 + .r-body { margin-top: 16px; }
+
+/* v66: finale delicato — le card si dissolvono, restano i nomi delle aree attorno all'icona di CEnTRO */
+.dc { cursor: default; }
+.dc.out { z-index: 5; }
+.deck2.done .dc { opacity: 0; transform: translate(-50%, -50%) scale(.92); transition: opacity .9s ease, transform 1.1s cubic-bezier(.3,.7,.2,1); }
+.deck2 { --R: min(35vw, 140px, 30vh); }
+.dk-ring, .dk-core, .dk-l { position: absolute; left: 50%; top: 50%; pointer-events: none; opacity: 0; }
+/* cerchio */
+.dk-ring { width: calc(var(--R) * 2); height: calc(var(--R) * 2); border-radius: 50%; border: 1px solid color-mix(in srgb, var(--app-blue) 35%, transparent);
+  transform: translate(-50%, -50%) scale(.85); transition: opacity 1s ease .3s, transform 1.4s cubic-bezier(.2,.8,.2,1) .3s; }
+/* icona esattamente al centro; il nome sta sotto senza spostarla */
+.dk-core { width: 76px; height: 76px; transform: translate(-50%, -50%) scale(.8); transition: opacity .8s ease .25s, transform 1.1s cubic-bezier(.2,.9,.25,1) .25s; }
+.dk-icon { position: absolute; inset: 0; display: grid; place-items: center; background: #fff;
+  -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
+.dk-icon .brand-mark { width: 44px; height: 44px; background: #123F73; }
+.dk-core { filter: drop-shadow(0 10px 22px rgba(11,27,51,.18)); }
+.dk-core b { position: absolute; left: 50%; top: calc(100% + 10px); transform: translateX(-50%); font-weight: 700; letter-spacing: .1em; font-size: .9rem; color: var(--nd-ink); white-space: nowrap; }
+/* nomi delle aree in chip traslucide, appoggiate sul cerchio a distanze uguali */
+.dk-l { margin: 0; padding: 9px 15px; border-radius: 99px; white-space: nowrap; font: 600 .9rem/1 var(--f-body); color: var(--nd-ink);
+  background: color-mix(in srgb, var(--nd-bg) 62%, transparent); box-shadow: inset 0 0 0 1px var(--nd-line), 0 8px 20px rgba(11,27,51,.08);
+  -webkit-backdrop-filter: blur(12px) saturate(1.3); backdrop-filter: blur(12px) saturate(1.3);
+  transform: translate(-50%, -50%) rotate(var(--a)) translateX(calc(var(--R) * .82)) rotate(calc(-1 * var(--a)));
+  transition: opacity .8s ease var(--d), transform 1.1s cubic-bezier(.2,.8,.2,1) var(--d); }
+.deck2.done .dk-ring, .deck2.done .dk-core { opacity: 1; transform: translate(-50%, -50%); }
+.deck2.done .dk-l { opacity: 1; transform: translate(-50%, -50%) rotate(var(--a)) translateX(var(--R)) rotate(calc(-1 * var(--a))); }
+@media (prefers-reduced-motion: reduce) { .deck2 .dc, .dk-ring, .dk-core, .dk-l { transition: none; } }
+/* chip tutte uguali: la disposizione si legge simmetrica */
+.deck2 { --R: min(31vw, 132px, 28vh); }
+.dk-l { width: 128px; box-sizing: border-box; padding: 9px 8px; text-align: center; font-size: .8rem; }
+/* tema scuro: chip del cerchio con lo stesso traslucido dei pulsanti dei contatti */
+:root[data-theme="dark"] .dk-l { color: #fff; background: rgba(255,255,255,.14);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 10px 30px rgba(0,0,0,.25); }
