@@ -371,9 +371,10 @@
     var n = 0;
     deckTimer = setInterval(function () {
       deckNext();
-      if (++n >= deckCards.length) {
+      // arrivati all'ultima card (Spotted) si resta un attimo, poi il finale: niente ritorno alla prima
+      if (++n >= deckCards.length - 1) {
         clearInterval(deckTimer); deckTimer = null;
-        deckEnd = setTimeout(function () { deck.classList.add('done'); }, 700);
+        deckEnd = setTimeout(function () { deck.classList.add('done'); }, DECK_STEP);
       }
     }, DECK_STEP);
   }
