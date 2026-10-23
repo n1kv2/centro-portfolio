@@ -927,7 +927,6 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 
 /* ================= v58: le aree in una fila di card che scorre da sola ================= */
 
-@keyframes acar2 { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 6px)); } }
 
 /* le card entrano dal basso quando il momento si apre */
 
