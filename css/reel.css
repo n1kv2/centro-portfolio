@@ -924,16 +924,23 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .reel .nd-mark + .nd-mark::after { transition-delay: 1.3s; }
 .reel.on .nd-mark::after, html:not(.js) .reel .nd-mark::after { transform: scaleX(1); }
 @media (prefers-reduced-motion: reduce) { .reel .nd-mark::after { transition: none; transform: scaleX(1); } }
-/* Le aree in breve */
-.ai { list-style: none; margin: 22px 0 0; padding: 0; display: grid; gap: 8px; }
-.ai li { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); transition-delay: calc(.35s + var(--i) * .09s); }
-.r-overview.on .ai li { opacity: 1; transform: none; }
-.ai-i { width: 100%; display: grid; grid-template-columns: 52px minmax(0,1fr) 14px; align-items: center; gap: 12px; padding: 8px 14px 8px 8px; border: 0; border-radius: 18px;
-  background: var(--surface, #fff); box-shadow: 0 8px 22px rgba(11,27,51,.06), inset 0 0 0 1px var(--nd-line); color: var(--nd-ink); text-align: left; cursor: pointer; font: inherit; -webkit-tap-highlight-color: transparent; transition: transform .15s; }
-.ai-i:active { transform: scale(.98); }
-.ai-i img { width: 52px; height: 52px; border-radius: 14px; object-fit: cover; display: block; }
-.ai-i span { display: grid; gap: 2px; min-width: 0; }
-.ai-i b { font-size: .98rem; line-height: 1.2; }
-.ai-i small { font-size: .8rem; line-height: 1.3; color: var(--nd-ink2); }
-.ai-i i { width: 8px; height: 8px; border-right: 2px solid var(--app-blue); border-top: 2px solid var(--app-blue); transform: rotate(45deg); justify-self: center; }
-@media (prefers-reduced-motion: reduce) { .ai li { opacity: 1; transform: none; transition: none; } }
+
+
+/* ================= v58: le aree in una fila di card che scorre da sola ================= */
+.acar2 { position: relative; margin: 26px calc(50% - 50vw) 0; overflow: hidden;
+  -webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.acar2-track { display: flex; gap: 12px; width: max-content; padding: 4px 0 10px; animation: acar2 22s linear infinite; }
+@keyframes acar2 { from { transform: translateX(0); } to { transform: translateX(calc(-50% - 6px)); } }
+.ac { position: relative; flex: none; width: 150px; height: 200px; padding: 0; border: 0; border-radius: 24px; overflow: hidden; cursor: pointer; text-align: left;
+  box-shadow: 0 12px 28px rgba(11,27,51,.16); -webkit-tap-highlight-color: transparent; }
+.ac img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ac::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,12,26,0) 40%, rgba(5,12,26,.78)); }
+.ac span { position: absolute; left: 14px; right: 12px; bottom: 13px; z-index: 1; display: grid; gap: 3px; color: #fff; }
+.ac b { font-family: var(--nd-display); font-weight: 400; font-size: 1.2rem; line-height: 1.05; }
+.ac small { font-size: .76rem; line-height: 1.25; opacity: .85; }
+.ac:active { transform: scale(.97); }
+/* le card entrano dal basso quando il momento si apre */
+.r-overview .acar2 { opacity: 0; transform: translateY(16px); transition: opacity .6s ease .35s, transform .7s cubic-bezier(.2,.8,.2,1) .35s; }
+.r-overview.on .acar2 { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .acar2-track { animation: none; } .r-overview .acar2 { opacity: 1; transform: none; transition: none; } }
+.nd-label .cn { color: inherit; }
