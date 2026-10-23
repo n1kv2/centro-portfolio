@@ -346,11 +346,11 @@
   });
 
   // ---------- Le aree come un mazzo di card ----------
-  // Un solo giro automatico, lento; poi il mazzo si ferma sulla prima card, che accenna un movimento
-  // per invitare a trascinarla. Trascinando a destra o a sinistra la card viene scartata e avanza la successiva.
+  // Le card si sfogliano solo a mano: la prima accenna un movimento per invitare a trascinarla.
+  // Trascinando a destra o a sinistra la card viene scartata e avanza la successiva.
   var deck = document.getElementById('deck2');
   var deckCards = deck ? Array.prototype.slice.call(deck.querySelectorAll('.dc')) : [];
-  var deckTimer = null, deckHint = null, deckOrder = deckCards.slice(), DECK_STEP = 2500;
+  var deckTimer = null, deckHint = null, deckOrder = deckCards.slice();
   function deckLayout() { deckOrder.forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); c.classList.remove('out', 'out-r', 'back', 'hint'); c.style.transform = ''; c.style.transition = ''; }); }
   function deckNext(dir) {
     var top = deckOrder[0];
@@ -367,12 +367,8 @@
   function playDeck() {
     stopDeck();
     deckOrder = deckCards.slice(); deckLayout();
-    if (reduce) return;
-    var n = 0;
-    deckTimer = setInterval(function () {
-      deckNext('l');
-      if (++n >= deckCards.length) { clearInterval(deckTimer); deckTimer = null; deckHint = setTimeout(hintDeck, 900); }
-    }, DECK_STEP);
+    // Niente scorrimento automatico: la prima card accenna a partire per invitare a trascinarla
+    if (!reduce) deckHint = setTimeout(hintDeck, 1100);
   }
   if (deck) {
     deckLayout();

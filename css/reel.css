@@ -971,3 +971,5 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
   28% { transform: translate(calc(-50% + 6px), -50%) rotate(1deg); }
 }
 @media (prefers-reduced-motion: reduce) { .dc.hint { animation: none; } }
+/* testo sotto un titolo: un po' di respiro */
+.r-h2 + .r-body { margin-top: 16px; }
