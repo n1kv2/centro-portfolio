@@ -345,26 +345,68 @@
     });
   });
 
-  // ---------- Le aree come un mazzo di card: la prima viene scartata e avanza la successiva ----------
+  // ---------- Le aree come un mazzo di card ----------
+  // Un solo giro automatico, lento; poi il mazzo si ferma sulla prima card, che accenna un movimento
+  // per invitare a trascinarla. Trascinando a destra o a sinistra la card viene scartata e avanza la successiva.
   var deck = document.getElementById('deck2');
   var deckCards = deck ? Array.prototype.slice.call(deck.querySelectorAll('.dc')) : [];
-  var deckTimer = null, deckOrder = deckCards.slice();
-  function deckLayout() { deckOrder.forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); c.classList.remove('out', 'back'); }); }
-  function deckNext() {
+  var deckTimer = null, deckHint = null, deckOrder = deckCards.slice(), DECK_STEP = 2500;
+  function deckLayout() { deckOrder.forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); c.classList.remove('out', 'out-r', 'back', 'hint'); c.style.transform = ''; c.style.transition = ''; }); }
+  function deckNext(dir) {
     var top = deckOrder[0];
-    top.classList.add('out');
+    top.classList.remove('hint');
+    top.style.transform = ''; top.style.transition = '';
+    top.classList.add(dir === 'r' ? 'out-r' : 'out');
     deckOrder.push(deckOrder.shift());
     deckOrder.slice(0, -1).forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); });
     // finita l'uscita, la card scartata torna in fondo al mazzo senza farsi vedere
-    setTimeout(function () { top.classList.add('back'); top.classList.remove('out'); top.setAttribute('data-pos', 3); void top.offsetWidth; top.classList.remove('back'); }, 650);
+    setTimeout(function () { top.classList.add('back'); top.classList.remove('out', 'out-r'); top.setAttribute('data-pos', 3); void top.offsetWidth; top.classList.remove('back'); }, 650);
   }
-  function stopDeck() { clearInterval(deckTimer); deckTimer = null; }
+  function stopDeck() { clearInterval(deckTimer); clearTimeout(deckHint); deckTimer = null; }
+  function hintDeck() { deckOrder[0].classList.add('hint'); }
   function playDeck() {
     stopDeck();
     deckOrder = deckCards.slice(); deckLayout();
-    if (!reduce) deckTimer = setInterval(deckNext, 1700);
+    if (reduce) return;
+    var n = 0;
+    deckTimer = setInterval(function () {
+      deckNext('l');
+      if (++n >= deckCards.length) { clearInterval(deckTimer); deckTimer = null; deckHint = setTimeout(hintDeck, 900); }
+    }, DECK_STEP);
   }
-  if (deck) deckLayout();
+  if (deck) {
+    deckLayout();
+    // Trascinamento: segue il dito in orizzontale; oltre una certa distanza la card viene scartata
+    var drag = null;
+    deck.addEventListener('pointerdown', function (e) {
+      var top = deckOrder[0];
+      if (!top.contains(e.target)) return;
+      stopDeck();
+      top.classList.remove('hint');
+      drag = { x: e.clientX, y: e.clientY, dx: 0, id: e.pointerId, card: top, on: false };
+    });
+    deck.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.on) {
+        if (Math.abs(dx) < 6) return;
+        if (Math.abs(dy) > Math.abs(dx)) { drag = null; return; } // gesto verticale: è lo scorrimento tra i momenti
+        drag.on = true; drag.card.setPointerCapture(e.pointerId);
+      }
+      drag.dx = dx;
+      drag.card.style.transition = 'none';
+      drag.card.style.transform = 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + Math.abs(dx) * 0.06 + 'px)) rotate(' + dx / 18 + 'deg)';
+    });
+    var endDrag = function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var d = drag; drag = null;
+      if (!d.on) return;
+      if (Math.abs(d.dx) > 80) deckNext(d.dx < 0 ? 'l' : 'r');
+      else { d.card.style.transition = ''; d.card.style.transform = ''; }
+    };
+    deck.addEventListener('pointerup', endDrag);
+    deck.addEventListener('pointercancel', endDrag);
+  }
 
   // ---------- Strumenti per le aziende: le spunte si completano una dopo l'altra, ogni voce si apre ----------
   var tks = document.getElementById('tks');

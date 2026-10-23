@@ -957,3 +957,17 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-overview .deck2 { opacity: 0; transform: translateY(24px); transition: opacity .6s ease .3s, transform .8s cubic-bezier(.2,.8,.2,1) .3s; }
 .r-overview.on .deck2 { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .dc, .r-overview .deck2 { transition: none; } .r-overview .deck2 { opacity: 1; transform: none; } }
+/* v62: card non cliccabili ma trascinabili in orizzontale (lo scorrimento verticale resta quello dei momenti) */
+.deck2 { touch-action: pan-y; -webkit-user-select: none; user-select: none; }
+.dc { cursor: grab; -webkit-touch-callout: none; }
+.dc:active { cursor: grabbing; filter: none; }
+.dc img { pointer-events: none; }
+.dc.out-r { z-index: 5; transform: translate(calc(-50% + 125%), calc(-50% + 30px)) rotate(18deg); opacity: 0; transition: transform .6s cubic-bezier(.5,0,.75,.4), opacity .5s ease .1s; }
+/* invito a trascinare: la card accenna a partire di lato e torna */
+.dc.hint { animation: dc-hint 2.6s cubic-bezier(.4,0,.2,1) infinite; }
+@keyframes dc-hint {
+  0%, 45%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+  15% { transform: translate(calc(-50% - 34px), calc(-50% + 4px)) rotate(-5deg); }
+  28% { transform: translate(calc(-50% + 6px), -50%) rotate(1deg); }
+}
+@media (prefers-reduced-motion: reduce) { .dc.hint { animation: none; } }
