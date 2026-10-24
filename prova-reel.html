@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=112">
+<link rel="stylesheet" href="css/reel.css?v=113">
 </head>
 <body class="reel-page">
 
@@ -178,7 +178,7 @@
   <section class="reel r-light r-niamap" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Nia" data-desc="La mappa che avvicina ciò che ti somiglia">
     <div class="r-in r-top nm-top">
       <p class="nd-label">Nia, la tua mappa</p>
-      <h2 class="r-h2 small-h">Dimmi cosa cerchi. <em>Nia avvicina ciò che ti somiglia.</em></h2>
+      <h2 class="r-h2 small-h">Cosa vuoi fare? <em>Nia avvicina ciò che ti somiglia.</em></h2>
     </div>
     <div class="nm">
       <div class="nm-caprow" id="nmChips" aria-live="polite"></div>
@@ -360,11 +360,25 @@
   </section>
 
   <section class="reel r-dark r-try r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Provala" data-desc="Voglio provare l'app">
-    <img class="r-photo" src="img/ct-app.jpg" alt="Quattro amici guardano CEnTRO sull'App Store." loading="lazy">
+    <img class="r-photo" src="img/ct-app.jpg" alt="Quattro amici guardano CEnTRO sull'App Store." loading="lazy" style="object-position: 66% 40%">
     <div class="r-in r-bottom">
       <p class="nd-label">Il prossimo passo</p>
       <h2 class="r-h2 small-h">Tutto questo, <em>sul tuo telefono.</em></h2>
-      <button type="button" class="glass-btn" data-contact="app">Voglio provare l'app<i aria-hidden="true"></i></button>
+      <div class="sbox" data-sbox>
+        <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
+          <p class="cp-t">Provala per primo.</p>
+          <p class="cp-d">Lascia l'email: ti avvisiamo appena l'app è disponibile.</p>
+          <form class="ea" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="Accesso anticipato CEnTRO: nuova iscrizione" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="ea-row">
+              <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
+              <button type="submit" class="ea-btn">Avvisami</button>
+            </div>
+            <p class="ea-note" aria-live="polite">Una sola email quando è pronta. Puoi disiscriverti quando vuoi.</p>
+          </form>
+        </div></div></div>
+        <button type="button" class="glass-btn" data-sopen>Voglio provare l'app<i aria-hidden="true"></i></button>
+      </div>
     </div>
   </section>
 
@@ -494,7 +508,20 @@
       <p class="nd-label">Per chi investe</p>
       <h2 class="r-h2 small-h">Il resto <em>si racconta dal vivo.</em></h2>
       <p class="r-body">Numeri, piano e prossimi passi: ne parliamo di persona.</p>
-      <button type="button" class="glass-btn" data-contact="info">Fissiamo un incontro<i aria-hidden="true"></i></button>
+      <div class="sbox" data-sbox>
+        <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
+          <form class="rq" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="Richiesta di incontro da CEnTRO (investitore)" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <textarea name="richiesta" rows="3" placeholder="Chi sei e quando ti farebbe comodo sentirci" aria-label="La tua richiesta"></textarea>
+            <div class="ea-row">
+              <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email per la risposta">
+              <button type="submit" class="ea-btn">Invia</button>
+            </div>
+            <p class="ea-note" aria-live="polite">Ti rispondo personalmente.</p>
+          </form>
+        </div></div></div>
+        <button type="button" class="glass-btn" data-sopen>Fissiamo un incontro<i aria-hidden="true"></i></button>
+      </div>
     </div>
   </section>
 
@@ -555,6 +582,6 @@
 
 </main>
 
-<script src="js/reel.js?v=65"></script>
+<script src="js/reel.js?v=66"></script>
 </body>
 </html>

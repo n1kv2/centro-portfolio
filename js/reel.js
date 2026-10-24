@@ -97,15 +97,6 @@
   document.querySelectorAll('[data-go]').forEach(function (b) {
     b.addEventListener('click', function () { choose(b.getAttribute('data-go')); });
   });
-  // "Voglio provare l'app" e "Fissiamo un incontro": si va ai contatti con la scelta già aperta
-  document.querySelectorAll('[data-contact]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var c = document.querySelector('.r-contact'), t = b.getAttribute('data-contact');
-      go(c);
-      setTimeout(function () { contactTab(t); }, 750);
-    });
-  });
-
   // ---------- Reel attivo: le animazioni ripartono a ogni visita ----------
   function isLight(el) {
     // le foto che seguono il tema (apertura, problema, contatti) sono chiare nel tema chiaro
@@ -127,6 +118,7 @@
     if (r.querySelector('.sv')) resetShowcase(r);
     if (thesis && r.contains(thesis)) stopThesis();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
+    r.querySelectorAll('.sbox.open').forEach(function (b) { b.classList.remove('open'); });
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
   function activate(i) {
@@ -778,38 +770,39 @@
   }
   var FAIL = 'Il servizio non ha risposto. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
 
-  // Accesso anticipato: solo l'email
-  var eaForm = document.getElementById('eaForm');
-  if (eaForm) {
-    var eaInput = document.getElementById('eaInput'), eaSay = noteFor(eaForm, document.getElementById('eaNote'));
-    eaInput.addEventListener('input', function () { if (/\berr\b/.test(eaForm.className)) eaSay(null, ''); });
-    eaForm.addEventListener('submit', function (e) {
+  // Accesso anticipato (solo email) e richieste (testo ed email): stessi moduli nei contatti e nelle slide
+  document.querySelectorAll('form.ea[data-endpoint]').forEach(function (f) {
+    var inp = f.querySelector('input[type=email]'), say = noteFor(f, f.querySelector('.ea-note'));
+    inp.addEventListener('input', function () { if (/\berr\b/.test(f.className)) say(null, ''); });
+    f.addEventListener('submit', function (e) {
       e.preventDefault();
-      var v = eaInput.value.trim();
-      if (!EMAIL_RE.test(v)) { eaSay('Scrivi un’email valida.', 'err'); eaInput.focus(); return; }
-      eaSay('Invio in corso…', 'busy');
-      sendForm(eaForm, { email: v, _subject: 'Accesso anticipato CEnTRO: nuova iscrizione' })
-        .then(function () { eaInput.value = ''; eaSay('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok'); })
-        .catch(function () { eaSay(FAIL, 'err'); });
+      var v = inp.value.trim();
+      if (!EMAIL_RE.test(v)) { say('Scrivi un’email valida.', 'err'); inp.focus(); return; }
+      say('Invio in corso…', 'busy');
+      sendForm(f, { email: v, _subject: f.getAttribute('data-subject') || 'Accesso anticipato CEnTRO: nuova iscrizione' })
+        .then(function () { inp.value = ''; say('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok'); })
+        .catch(function () { say(FAIL, 'err'); });
     });
-  }
+  });
+  document.querySelectorAll('form.rq[data-endpoint]').forEach(function (f) {
+    var txt = f.querySelector('textarea'), mail = f.querySelector('input[type=email]'), say = noteFor(f, f.querySelector('.ea-note'));
+    [txt, mail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(f.className)) say(null, ''); }); });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var t = txt.value.trim(), m = mail.value.trim();
+      if (t.length < 5) { say('Scrivi la tua richiesta.', 'err'); txt.focus(); return; }
+      if (!EMAIL_RE.test(m)) { say('Scrivi un’email valida per la risposta.', 'err'); mail.focus(); return; }
+      say('Invio in corso…', 'busy');
+      sendForm(f, { richiesta: t, email: m, _replyto: m, _subject: f.getAttribute('data-subject') || 'Richiesta di informazioni da CEnTRO' })
+        .then(function () { txt.value = ''; mail.value = ''; say('Ricevuta! Ti rispondo al più presto.', 'ok'); })
+        .catch(function () { say(FAIL, 'err'); });
+    });
+  });
 
-  // Richiesta di informazioni: testo e email per la risposta
-  var rqForm = document.getElementById('rqForm');
-  if (rqForm) {
-    var rqText = document.getElementById('rqText'), rqEmail = document.getElementById('rqEmail'), rqSay = noteFor(rqForm, document.getElementById('rqNote'));
-    [rqText, rqEmail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(rqForm.className)) rqSay(null, ''); }); });
-    rqForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var t = rqText.value.trim(), m = rqEmail.value.trim();
-      if (t.length < 5) { rqSay('Scrivi la tua richiesta.', 'err'); rqText.focus(); return; }
-      if (!EMAIL_RE.test(m)) { rqSay('Scrivi un’email valida per la risposta.', 'err'); rqEmail.focus(); return; }
-      rqSay('Invio in corso…', 'busy');
-      sendForm(rqForm, { richiesta: t, email: m, _replyto: m, _subject: 'Richiesta di informazioni da CEnTRO' })
-        .then(function () { rqText.value = ''; rqEmail.value = ''; rqSay('Ricevuta! Ti rispondo al più presto.', 'ok'); })
-        .catch(function () { rqSay(FAIL, 'err'); });
-    });
-  }
+  // Moduli dentro le slide: il tasto apre il riquadro sul posto
+  document.querySelectorAll('[data-sbox]').forEach(function (b) {
+    b.querySelector('[data-sopen]').addEventListener('click', function () { b.classList.add('open'); });
+  });
 
   // ---------- CEnTRO con la n minuscola anche nelle scritte in maiuscolo ----------
   function keepBrand(root) {

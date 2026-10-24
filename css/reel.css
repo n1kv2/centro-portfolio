@@ -1238,3 +1238,15 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-value .nw { white-space: nowrap; }
 :root:not([data-theme="dark"]) .r-value .iv-a { color: #0B1B33; background: rgba(255,255,255,.7); box-shadow: inset 0 0 0 1px rgba(11,27,51,.12); }
 :root:not([data-theme="dark"]) .r-value .iv-core .brand-mark { background: #2F6FDE; }
+/* Moduli dentro le slide (provare l'app, incontro): si aprono sul posto, il tasto lascia il posto al riquadro */
+.sbox { display: grid; }
+.sbox-p { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s cubic-bezier(.3,.8,.2,1); }
+.sbox.open .sbox-p { grid-template-rows: 1fr; }
+.sbox-in { min-height: 0; overflow: hidden; }
+.sbox .cpanel-glass { display: block; margin-top: 16px; padding: 18px; border-radius: 24px; color: #fff; background: rgba(255,255,255,.16); -webkit-backdrop-filter: blur(22px) saturate(1.6); backdrop-filter: blur(22px) saturate(1.6); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4), 0 10px 30px rgba(0,0,0,.18); opacity: 0; transform: translateY(10px); transition: opacity .4s ease .1s, transform .6s cubic-bezier(.3,.8,.2,1); }
+.sbox.open .cpanel-glass { opacity: 1; transform: none; }
+.sbox .ea { margin-top: 14px; padding: 0; background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.sbox .rq { margin-top: 0; }
+.sbox .ea-row input, .sbox .rq textarea { background: rgba(255,255,255,.9); }
+.sbox [data-sopen] { justify-self: start; transition: opacity .25s ease, transform .3s ease; }
+.sbox.open [data-sopen] { display: none; }
