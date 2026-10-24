@@ -120,4 +120,92 @@
       state.textContent = 'Chiuso'; state.classList.add('closed'); until.textContent = 'Chiuso, apre domani alle ' + nextOpen;
     }
   }
+
+  // Animazione iniziale: un dito toglie e aggiunge widget, poi il profilo qui sotto è il risultato
+  document.querySelectorAll('.pt-demo').forEach(function (root) {
+    var stage = root.querySelector('.dm-stage'), sayEl = root.querySelector('.dm-say'), replay = root.querySelector('.dm-replay');
+    var tpl = stage.innerHTML, first = sayEl.textContent, moves = JSON.parse(stage.getAttribute('data-moves'));
+    var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var EASE = 'cubic-bezier(.45,0,.2,1)', hand, hx = 0, hy = 0;
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    function say(t) {
+      sayEl.classList.add('out');
+      return wait(220).then(function () { sayEl.textContent = t; sayEl.classList.remove('out'); });
+    }
+    function rel(el) {
+      var r = el.getBoundingClientRect(), s = stage.getBoundingClientRect();
+      return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height };
+    }
+    function handTo(x, y, ms) {
+      var a = hand.animate([{ transform: 'translate(' + hx + 'px,' + hy + 'px)' }, { transform: 'translate(' + x + 'px,' + y + 'px)' }], { duration: ms, easing: EASE, fill: 'forwards' });
+      hx = x; hy = y;
+      return a.finished;
+    }
+    function press(on) {
+      return hand.firstElementChild.animate([{ transform: 'scale(' + (on ? 1 : .86) + ')' }, { transform: 'scale(' + (on ? .86 : 1) + ')' }], { duration: 160, easing: 'ease-out', fill: 'forwards' }).finished;
+    }
+    function place(m) {
+      var src = stage.querySelector('[data-w="' + m.w + '"]'), list = stage.querySelector('[data-list="' + m.to + '"]');
+      var before = m.before ? list.querySelector('[data-w="' + m.before + '"]') : null;
+      var dst = src.cloneNode(true);
+      list.insertBefore(dst, before);
+      return { src: src, dst: dst };
+    }
+    function move(m) {
+      var src = stage.querySelector('[data-w="' + m.w + '"]'), r = rel(src), ghost, dst, H, gap;
+      return handTo(r.x + 22, r.y + r.h / 2, 750).then(function () { return press(true); }).then(function () {
+        ghost = src.cloneNode(true);
+        ghost.classList.add('dm-ghost');
+        ghost.style.cssText = 'left:' + r.x + 'px;top:' + r.y + 'px;width:' + r.w + 'px;';
+        stage.appendChild(ghost);
+        ghost.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }], { duration: 180, fill: 'forwards' });
+        src.classList.add('dm-gone');
+        var p = place(m); dst = p.dst; dst.classList.add('dm-gone');
+        H = src.offsetHeight; gap = parseFloat(getComputedStyle(src).marginBottom);
+        var o = { duration: 420, easing: EASE, fill: 'forwards' };
+        return Promise.all([
+          src.animate([{ height: H + 'px', marginBottom: gap + 'px' }, { height: '0px', marginBottom: '0px' }], o).finished,
+          dst.animate([{ height: '0px', marginBottom: '0px' }, { height: H + 'px', marginBottom: gap + 'px' }], o).finished
+        ]);
+      }).then(function () {
+        src.remove();
+        dst.getAnimations().forEach(function (a) { a.cancel(); });
+        var t = rel(dst);
+        ghost.animate([{ transform: 'translate(0,0) scale(1.06)', width: r.w + 'px' }, { transform: 'translate(' + (t.x - r.x) + 'px,' + (t.y - r.y) + 'px) scale(1.06)', width: t.w + 'px' }], { duration: 850, easing: EASE, fill: 'forwards' });
+        return handTo(t.x + 22, t.y + t.h / 2, 850);
+      }).then(function () { return press(false); }).then(function () {
+        dst.classList.remove('dm-gone');
+        dst.classList.add('dm-new');
+        ghost.remove();
+      });
+    }
+    function run() {
+      stage.innerHTML = tpl;
+      sayEl.textContent = first;
+      replay.hidden = true;
+      hand = stage.querySelector('.dm-hand');
+      if (still) {
+        moves.forEach(function (m) { var p = place(m); p.src.remove(); });
+        sayEl.textContent = root.getAttribute('data-end');
+        return;
+      }
+      hx = stage.clientWidth - 30; hy = stage.clientHeight + 10;
+      hand.animate([{ opacity: 0, transform: 'translate(' + hx + 'px,' + hy + 'px)' }, { opacity: 1, transform: 'translate(' + hx + 'px,' + hy + 'px)' }], { duration: 300, fill: 'forwards' });
+      var chain = wait(500);
+      moves.forEach(function (m) {
+        chain = chain.then(function () { return say(m.say); }).then(function () { return move(m); }).then(function () { return wait(450); });
+      });
+      chain.then(function () {
+        hand.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+        return say(root.getAttribute('data-end'));
+      }).then(function () { replay.hidden = false; });
+    }
+    replay.addEventListener('click', run);
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); setTimeout(run, 400); }
+      }, { threshold: .5 });
+      io.observe(stage);
+    } else run();
+  });
 })();
