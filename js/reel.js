@@ -115,6 +115,7 @@
     if (r.classList.contains('r-tools')) resetTools();
     if (r.classList.contains('r-overview') && deck) stopDeck();
     if (r.querySelector('.sv')) resetShowcase(r);
+    if (thesis && r.contains(thesis)) stopThesis();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
@@ -143,6 +144,7 @@
     if (r.classList.contains('r-tools')) playTools();
     if (r.classList.contains('r-overview') && deck) playDeck();
     if (r.querySelector('.sv')) playShowcase(r);
+    if (thesis && r.contains(thesis)) playThesis();
 
     if (navOpen) renderIndex();
   }
@@ -349,8 +351,28 @@
 
   // ---------- Vetrine dei profili: prima com'è un profilo social, poi resta solo ciò che conta ----------
   var svTimers = {};
-  function playShowcase(r) { clearTimeout(svTimers[r.dataset.title]); r.classList.remove('clean'); svTimers[r.dataset.title] = setTimeout(function () { r.classList.add('clean'); }, reduce ? 0 : 1900); }
-  function resetShowcase(r) { clearTimeout(svTimers[r.dataset.title]); r.classList.remove('clean'); }
+  // 1) titolo "social" e profilo pieno di numeri  2) uno scarabocchio cancella il titolo
+  // 3) arriva il titolo vero  4) i numeri si dissolvono e resta ciò che conta
+  function playShowcase(r) {
+    resetShowcase(r);
+    if (reduce) { r.classList.add('scrib', 'swap', 'clean'); return; }
+    var t = svTimers[r.dataset.title] = [];
+    t.push(setTimeout(function () { r.classList.add('scrib'); }, 2000));
+    t.push(setTimeout(function () { r.classList.add('swap'); }, 2800));
+    t.push(setTimeout(function () { r.classList.add('clean'); }, 3200));
+  }
+  function resetShowcase(r) { (svTimers[r.dataset.title] || []).forEach(clearTimeout); r.classList.remove('scrib', 'swap', 'clean'); }
+
+  // ---------- La tesi: sottolineature che passano da una parola all'altra ----------
+  var thesis = document.querySelector('.thesis'), tuTimer = null, tuStart = null;
+  function playThesis() {
+    var tus = thesis.querySelectorAll('.tu'), k = 0;
+    clearTimeout(tuStart); clearInterval(tuTimer);
+    var stepTu = function () { tus.forEach(function (u, i) { u.classList.toggle('lit', i === k); }); k = (k + 1) % (tus.length + 1); };
+    if (reduce) return;
+    tuStart = setTimeout(function () { stepTu(); tuTimer = setInterval(stepTu, 1400); }, 900);
+  }
+  function stopThesis() { clearTimeout(tuStart); clearInterval(tuTimer); thesis.querySelectorAll('.tu').forEach(function (u) { u.classList.remove('lit'); }); }
 
   // ---------- Le aree come un mazzo di card ----------
   // Un giro automatico: la card davanti viene scartata e avanza la successiva. Finito il giro le card

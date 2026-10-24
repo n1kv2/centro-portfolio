@@ -1140,3 +1140,25 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .clean .sv-ad { visibility: visible; max-height: 0; margin-bottom: -14px; transition: opacity .5s ease, max-height .6s ease .3s, margin .6s ease .3s; }
 :root[data-theme="dark"] .sv-ad { color: #F2F5FA; }
 .sv-foot { padding-top: 14px; }
+
+/* ================= v81: vetrine — titolo "social", scarabocchio, titolo vero ================= */
+.sv-title { position: relative; display: grid; }
+.sv-title > .r-h2 { grid-area: 1 / 1; transition: opacity .5s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+.sv-title .tt-b { opacity: 0; transform: translateY(10px); }
+.swap .sv-title .tt-a { opacity: 0; transform: translateY(-6px); transition-delay: .1s; }
+.swap .sv-title .tt-b { opacity: 1; transform: none; transition-delay: .25s; }
+.scribble { position: absolute; left: -4%; top: 4%; width: 108%; height: 92%; overflow: visible; pointer-events: none; }
+.scribble path { fill: none; stroke: #E8453C; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .75s cubic-bezier(.6,0,.3,1), opacity .4s ease; }
+.reel.scrib .scribble path { stroke-dashoffset: 0; }
+.reel.swap .scribble path { opacity: 0; transition: stroke-dashoffset .75s cubic-bezier(.6,0,.3,1), opacity .4s ease .1s; }
+.sv-logo { object-fit: cover; }
+@media (prefers-reduced-motion: reduce) { .sv-title > .r-h2, .scribble path { transition: none; } }
+
+/* ================= v81: tesi — sottolineature che passano di parola in parola ================= */
+.thesis .tu { position: relative; white-space: nowrap; }
+.thesis .tu::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.06em; height: .1em; border-radius: 99px;
+  background: linear-gradient(100deg, #F06139, #D43998 35%, #8B1EBA 65%, #1E42BA); transform: scaleX(0); transform-origin: left center;
+  transition: transform .55s cubic-bezier(.6,0,.2,1); }
+.thesis .tu.lit::after { transform: scaleX(1); }
+.thesis .tu:not(.lit)::after { transform-origin: right center; }
