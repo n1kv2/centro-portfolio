@@ -100,6 +100,8 @@
 
   // ---------- Reel attivo: le animazioni ripartono a ogni visita ----------
   function isLight(el) {
+    // le foto che seguono il tema (apertura, problema, contatti) sono chiare nel tema chiaro
+    if (el.classList.contains('r-themed')) return document.documentElement.getAttribute('data-theme') !== 'dark';
     if (el.classList.contains('r-hero') || el.classList.contains('r-shot')) return false;
     var m = getComputedStyle(el).backgroundColor.match(/\d+(\.\d+)?/g);
     if (!m) return false;
