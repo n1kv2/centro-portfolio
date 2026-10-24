@@ -1369,3 +1369,7 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-quest .r-h2 { font-size: clamp(2.6rem, 11vw, 4rem); line-height: 1.02; }
 .r-quest .r-body { max-width: 30ch; margin-inline: auto; }
 .r-quest .nd-label { justify-content: center; text-align: center; margin-inline: auto; }
+/* Un vero questionario: al centro in verticale, allineato a sinistra */
+.r-quest .r-in { text-align: left; }
+.r-quest .nd-label { justify-content: flex-start; text-align: left; margin-inline: 0; }
+.r-quest .r-body { margin-inline: 0; max-width: 32ch; }
