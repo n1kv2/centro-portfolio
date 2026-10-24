@@ -17,6 +17,8 @@
   var TRACKS = { utente: 'Per chi usa l\'app', azienda: 'Per le aziende', investitore: 'Per chi investe' };
   var NAMES = { utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' };
   var mode = 'all';
+  var menuTimer = null;
+  var firstMode = '';
   var visible = [], bits = [], chapters = [], current = -1;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ss = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
@@ -28,6 +30,8 @@
     all.forEach(function (r) {
       var t = r.getAttribute('data-track');
       if (t) r.hidden = mode !== 'all' && t !== mode;
+      // Le chiamate all'azione si vedono solo nel primo percorso scelto: scorrendo tutto resta solo il contatto finale
+      if (r.hasAttribute('data-cta')) r.hidden = mode === 'all' || t !== mode || t !== firstMode;
     });
     router.hidden = mode === 'all';
     if (mode !== 'all') {
@@ -75,7 +79,7 @@
   }
   var goRaf = 0;
 
-  function choose(track) { mode = track; applyMode(); go(firstOf(track)); }
+  function choose(track) { if (!firstMode) firstMode = track; mode = track; applyMode(); go(firstOf(track)); }
   function showAll(target) { mode = 'all'; applyMode(); if (target) go(target); }
 
   function buildRouter() {
@@ -97,7 +101,6 @@
   document.querySelectorAll('[data-go]').forEach(function (b) {
     b.addEventListener('click', function () { choose(b.getAttribute('data-go')); });
   });
-
   // ---------- Reel attivo: le animazioni ripartono a ogni visita ----------
   function isLight(el) {
     // le foto che seguono il tema (apertura, problema, contatti) sono chiare nel tema chiaro
@@ -119,6 +122,7 @@
     if (r.querySelector('.sv')) resetShowcase(r);
     if (thesis && r.contains(thesis)) stopThesis();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
+    r.querySelectorAll('.sbox.open').forEach(function (b) { b.classList.remove('open'); });
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
   function activate(i) {
@@ -128,6 +132,9 @@
     var r = visible[i];
     void r.offsetWidth;
     r.classList.add('on');
+    // Arrivati ai contatti, dopo un secondo si apre il menu delle sezioni
+    clearTimeout(menuTimer);
+    if (r.classList.contains('r-contact')) menuTimer = setTimeout(function () { if (visible[current] === r && !navOpen) setNav(true); }, 1000);
     // Ogni sezione si riempie man mano che scorri i suoi momenti
     var ci = 0, isRouter = r === router;
     chapters.forEach(function (c, k) { if (c.reels.indexOf(r) >= 0 || (isRouter && c.name === TRACKS[mode])) ci = k; });
@@ -589,7 +596,7 @@
       renderIndex();
       return;
     }
-    if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); return; }
+    if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current, first: firstMode })); return; }
     var it = e.target.closest('[data-c]');
     if (!it) return;
     var ch = navChaps[parseInt(it.getAttribute('data-c'), 10)];
@@ -609,7 +616,7 @@
 
   // ---------- Pagine separate: al ritorno si riparte dallo stesso reel ----------
   document.querySelectorAll('[data-keep]').forEach(function (a) {
-    a.addEventListener('click', function () { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); });
+    a.addEventListener('click', function () { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current, first: firstMode })); });
   });
 
   // ---------- Titoli parola per parola ----------
@@ -708,8 +715,6 @@
     var from = switching ? cglass.offsetHeight : 0;
     cbox.setAttribute('data-tab', t);
     var rc = cbox.closest('.r-contact'); if (rc) rc.setAttribute('data-tab', t);
-    // La foto cambia con la scelta: chi esce e raggiunge il gruppo, l'app sull'App Store, la stretta di mano
-    document.querySelectorAll('.cph').forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-ph') === t); });
     cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
     if (t) {
       document.getElementById('paneApp').hidden = t !== 'app';
@@ -772,38 +777,39 @@
   }
   var FAIL = 'Il servizio non ha risposto. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
 
-  // Accesso anticipato: solo l'email
-  var eaForm = document.getElementById('eaForm');
-  if (eaForm) {
-    var eaInput = document.getElementById('eaInput'), eaSay = noteFor(eaForm, document.getElementById('eaNote'));
-    eaInput.addEventListener('input', function () { if (/\berr\b/.test(eaForm.className)) eaSay(null, ''); });
-    eaForm.addEventListener('submit', function (e) {
+  // Accesso anticipato (solo email) e richieste (testo ed email): stessi moduli nei contatti e nelle slide
+  document.querySelectorAll('form.ea[data-endpoint]').forEach(function (f) {
+    var inp = f.querySelector('input[type=email]'), say = noteFor(f, f.querySelector('.ea-note'));
+    inp.addEventListener('input', function () { if (/\berr\b/.test(f.className)) say(null, ''); });
+    f.addEventListener('submit', function (e) {
       e.preventDefault();
-      var v = eaInput.value.trim();
-      if (!EMAIL_RE.test(v)) { eaSay('Scrivi un’email valida.', 'err'); eaInput.focus(); return; }
-      eaSay('Invio in corso…', 'busy');
-      sendForm(eaForm, { email: v, _subject: 'Accesso anticipato CEnTRO: nuova iscrizione' })
-        .then(function () { eaInput.value = ''; eaSay('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok'); })
-        .catch(function () { eaSay(FAIL, 'err'); });
+      var v = inp.value.trim();
+      if (!EMAIL_RE.test(v)) { say('Scrivi un’email valida.', 'err'); inp.focus(); return; }
+      say('Invio in corso…', 'busy');
+      sendForm(f, { email: v, _subject: f.getAttribute('data-subject') || 'Accesso anticipato CEnTRO: nuova iscrizione' })
+        .then(function () { inp.value = ''; say('Fatto! Ti scriviamo appena l’app è disponibile.', 'ok'); })
+        .catch(function () { say(FAIL, 'err'); });
     });
-  }
+  });
+  document.querySelectorAll('form.rq[data-endpoint]').forEach(function (f) {
+    var txt = f.querySelector('textarea'), mail = f.querySelector('input[type=email]'), say = noteFor(f, f.querySelector('.ea-note'));
+    [txt, mail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(f.className)) say(null, ''); }); });
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var t = txt.value.trim(), m = mail.value.trim();
+      if (t.length < 5) { say('Scrivi la tua richiesta.', 'err'); txt.focus(); return; }
+      if (!EMAIL_RE.test(m)) { say('Scrivi un’email valida per la risposta.', 'err'); mail.focus(); return; }
+      say('Invio in corso…', 'busy');
+      sendForm(f, { richiesta: t, email: m, _replyto: m, _subject: f.getAttribute('data-subject') || 'Richiesta di informazioni da CEnTRO' })
+        .then(function () { txt.value = ''; mail.value = ''; say('Ricevuta! Ti rispondo al più presto.', 'ok'); })
+        .catch(function () { say(FAIL, 'err'); });
+    });
+  });
 
-  // Richiesta di informazioni: testo e email per la risposta
-  var rqForm = document.getElementById('rqForm');
-  if (rqForm) {
-    var rqText = document.getElementById('rqText'), rqEmail = document.getElementById('rqEmail'), rqSay = noteFor(rqForm, document.getElementById('rqNote'));
-    [rqText, rqEmail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(rqForm.className)) rqSay(null, ''); }); });
-    rqForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var t = rqText.value.trim(), m = rqEmail.value.trim();
-      if (t.length < 5) { rqSay('Scrivi la tua richiesta.', 'err'); rqText.focus(); return; }
-      if (!EMAIL_RE.test(m)) { rqSay('Scrivi un’email valida per la risposta.', 'err'); rqEmail.focus(); return; }
-      rqSay('Invio in corso…', 'busy');
-      sendForm(rqForm, { richiesta: t, email: m, _replyto: m, _subject: 'Richiesta di informazioni da CEnTRO' })
-        .then(function () { rqText.value = ''; rqEmail.value = ''; rqSay('Ricevuta! Ti rispondo al più presto.', 'ok'); })
-        .catch(function () { rqSay(FAIL, 'err'); });
-    });
-  }
+  // Moduli dentro le slide: il tasto apre il riquadro sul posto
+  document.querySelectorAll('[data-sbox]').forEach(function (b) {
+    b.querySelector('[data-sopen]').addEventListener('click', function () { b.classList.add('open'); });
+  });
 
   // ---------- CEnTRO con la n minuscola anche nelle scritte in maiuscolo ----------
   function keepBrand(root) {
@@ -828,6 +834,7 @@
   ss.del('reel-pos');
   if (saved && (saved.mode === 'all' || TRACKS[saved.mode])) {
     mode = saved.mode;
+    firstMode = saved.first || (saved.mode !== 'all' ? saved.mode : '');
     applyMode(true);
     var target = visible[Math.min(saved.i, visible.length - 1)] || visible[0];
     scroller.scrollTop = target.offsetTop;

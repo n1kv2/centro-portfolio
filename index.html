@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=110">
+<link rel="stylesheet" href="css/reel.css?v=113">
 </head>
 <body class="reel-page">
 
@@ -120,7 +120,7 @@
       <p class="nd-label">Scegli il tuo percorso</p>
       <h2 class="r-h2">Chi sei?</h2>
       <div class="paths">
-        <button type="button" class="path" data-go="utente"><b>Utente</b><span>Voglio scoprire cosa fare in città, e con chi.</span></button>
+        <button type="button" class="path" data-go="utente"><b>Utente</b><span>Voglio scoprire cosa fare in città e con chi.</span></button>
         <button type="button" class="path" data-go="azienda"><b>Azienda</b><span>Voglio raggiungere le persone giuste e capire la città.</span></button>
         <button type="button" class="path" data-go="investitore"><b>Investitore</b><span>Voglio capire il valore e il modello di CEnTRO.</span></button>
       </div>
@@ -178,7 +178,7 @@
   <section class="reel r-light r-niamap" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Nia" data-desc="La mappa che avvicina ciò che ti somiglia">
     <div class="r-in r-top nm-top">
       <p class="nd-label">Nia, la tua mappa</p>
-      <h2 class="r-h2 small-h">Dimmi cosa cerchi. <em>Nia avvicina ciò che ti somiglia.</em></h2>
+      <h2 class="r-h2 small-h">Cosa vuoi fare? <em>Nia avvicina ciò che ti somiglia.</em></h2>
     </div>
     <div class="nm">
       <div class="nm-caprow" id="nmChips" aria-live="polite"></div>
@@ -272,7 +272,7 @@
       <div class="ap-in feat">
         <p class="nd-label">Community</p>
         <h3 class="ap-title">Attività create dalle persone.</h3>
-        <p class="ap-text">Una partita, un aperitivo in lingua, una suonata al parco. Nia aiuta a scrivere descrizione e date, e le richieste di partecipazione arrivano ordinate per affinità con il gruppo.</p>
+        <p class="ap-text">Una partita, un aperitivo in lingua, una suonata al parco. Nia aiuta a scrivere descrizione e date e le richieste di partecipazione arrivano ordinate per affinità con il gruppo.</p>
         <div class="viz viz-group" aria-hidden="true">
                 <span class="vg-core">Serata giochi</span>
                 <span class="vg-p p1"></span><span class="vg-p p2"></span><span class="vg-p p3"></span><span class="vg-p p4"></span><span class="vg-p p5"></span>
@@ -355,6 +355,29 @@
               </div>
         <dl class="gain"><div><dt>Per te</dt><dd>Una casa e persone giuste con cui viverla.</dd></div><div><dt>Per le agenzie</dt><dd>Meno contatti a vuoto.</dd></div></dl>
         <p class="ap-hint">Tocca per chiudere</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="reel r-dark r-try r-shot" data-reel data-track="utente" data-cta data-chapter="Le aree dell'app" data-title="Provala" data-desc="Voglio provare l'app">
+    <img class="r-photo" src="img/ct-app.jpg" alt="Quattro amici guardano CEnTRO sull'App Store." loading="lazy" style="object-position: 66% 40%">
+    <div class="r-in r-bottom">
+      <p class="nd-label">Il prossimo passo</p>
+      <h2 class="r-h2 small-h">Tutto questo, <em>sul tuo telefono.</em></h2>
+      <div class="sbox" data-sbox>
+        <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
+          <p class="cp-t">Provala per primo.</p>
+          <p class="cp-d">Lascia l'email: ti avvisiamo appena l'app è disponibile.</p>
+          <form class="ea" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="Accesso anticipato CEnTRO: nuova iscrizione" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="ea-row">
+              <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
+              <button type="submit" class="ea-btn">Avvisami</button>
+            </div>
+            <p class="ea-note" aria-live="polite">Una sola email quando è pronta. Puoi disiscriverti quando vuoi.</p>
+          </form>
+        </div></div></div>
+        <button type="button" class="glass-btn" data-sopen>Voglio provare l'app<i aria-hidden="true"></i></button>
       </div>
     </div>
   </section>
@@ -443,10 +466,51 @@
     </div>
   </section>
 
-  <section class="reel r-dark r-thesis" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="La tesi" data-desc="Perché le aziende pagano">
-    <div class="r-in r-center">
+  <section class="reel r-dark r-try r-biz r-shot" data-reel data-track="azienda" data-cta data-chapter="Per le aziende" data-title="Porta la tua azienda" data-desc="Voglio provare l'app">
+    <img class="r-photo" src="img/az-cta.jpg" alt="In un negozio, la titolare mostra CEnTRO sull'App Store a due clienti." loading="lazy" style="object-position: 62% 40%">
+    <div class="r-in r-bottom">
+      <p class="nd-label">Il prossimo passo</p>
+      <h2 class="r-h2 small-h">La tua azienda, <em>sul loro telefono.</em></h2>
+      <div class="sbox" data-sbox>
+        <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
+          <p class="cp-t">Entra tra le prime aziende.</p>
+          <p class="cp-d">Lascia l'email: ti contatto per creare il profilo della tua azienda.</p>
+          <form class="ea" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="CEnTRO: un'azienda vuole entrare" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="ea-row">
+              <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
+              <button type="submit" class="ea-btn">Contattami</button>
+            </div>
+            <p class="ea-note" aria-live="polite">Ti scrivo personalmente, niente newsletter.</p>
+          </form>
+        </div></div></div>
+        <button type="button" class="glass-btn" data-sopen>Voglio provare l'app<i aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="reel r-dark r-value" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Il valore" data-desc="Sapere chi sei apre ogni possibilità">
+    <div class="r-in r-top">
       <p class="nd-label">Per chi investe</p>
-      <p class="r-big thesis">Le persone la usano per <span class="nw"><span class="tu">conoscere</span>,</span> <span class="nw"><span class="tu">vivere le passioni</span></span> e <span class="nw"><span class="tu">trovare casa</span>.</span> <em>Le aziende pagano per raggiungerle e capirle.</em></p>
+      <h2 class="r-h2 small-h on-dark">Il valore di <span class="nw"><span class="cn">CEnTRO</span>?</span> <em>Sapere chi sei.</em></h2>
+    </div>
+    <div class="iv" aria-hidden="true">
+      <span class="iv-a" style="--x:-24;--y:-36;--d:.2s">Ama la musica dal vivo</span>
+      <span class="iv-a" style="--x:22;--y:-24;--d:.45s">Timido, ma curioso</span>
+      <span class="iv-a" style="--x:-22;--y:26;--d:.7s">Esce il venerdì sera</span>
+      <span class="iv-a" style="--x:24;--y:36;--d:.95s">Cerca casa in centro</span>
+      <span class="iv-core"><span class="brand-mark"></span></span>
+      <span class="iv-o" style="--x:0;--y:-41;--d:3.0s">Eventi</span>
+      <span class="iv-o" style="--x:29;--y:-29;--d:3.1s">Persone</span>
+      <span class="iv-o" style="--x:36;--y:0;--d:3.2s">Casa</span>
+      <span class="iv-o" style="--x:29;--y:29;--d:3.3s">Lavoro</span>
+      <span class="iv-o" style="--x:0;--y:41;--d:3.4s">Corsi</span>
+      <span class="iv-o" style="--x:-29;--y:29;--d:3.5s">Locali</span>
+      <span class="iv-o" style="--x:-36;--y:0;--d:3.6s">Viaggi</span>
+      <span class="iv-o" style="--x:-29;--y:-29;--d:3.7s">Offerte</span>
+    </div>
+    <div class="r-in r-bottom">
+      <p class="r-body on-dark">Un questionario porta personalità, gusti e abitudini dentro l'algoritmo. Da lì ogni proposta calza alla perfezione e le possibilità diventano infinite.</p>
     </div>
   </section>
 
@@ -461,38 +525,26 @@
     </div>
   </section>
 
-  <section class="reel r-dark r-grow" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Perché può crescere" data-desc="Un circolo che si rinforza">
-    <div class="r-in r-top">
-      <p class="nd-label">Perché può crescere</p>
-    </div>
-    <div class="cyc" aria-hidden="true">
-      <svg viewBox="0 0 300 300"><circle cx="150" cy="150" r="104"/><circle class="cyc-run" cx="150" cy="150" r="104" pathLength="1"/></svg>
-      <span class="cy c1">Più persone</span><span class="cy c2">Più proposte</span><span class="cy c3">Suggerimenti migliori</span>
-    </div>
+  <section class="reel r-dark r-meet r-shot" data-reel data-track="investitore" data-cta data-chapter="Per chi investe" data-title="Parliamone" data-desc="Il resto si racconta dal vivo">
+    <img class="r-photo" src="img/stretta-di-mano.jpg" alt="Due persone si stringono la mano in uno studio." loading="lazy">
     <div class="r-in r-bottom">
-      <p class="r-body on-dark"><span class="r-body-h">Un dato che altri non hanno:</span> ciò che le persone dicono e ciò che fanno, insieme.</p>
-    </div>
-  </section>
-
-  <section class="reel r-light r-proof" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Cosa dimostreremo" data-desc="Le prove dell'MVP e a che punto siamo">
-    <div class="r-in r-top">
-      <p class="nd-label">Cosa dimostreremo</p>
-      <h2 class="r-h2 small-h">Quattro prove, <em>con numeri veri.</em></h2>
-      <div class="pv">
-        <div class="pv-c" style="--d:.1s"><span class="pv-i"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z"/></svg></span><b>Il questionario prevede ciò che piace</b><span>Affinità prevista e scelte reali</span></div>
-        <div class="pv-c" style="--d:.2s"><span class="pv-i"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.5"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6M14.5 14.6c2.6-.3 5 1 5.8 4.4"/></svg></span><b>Le persone partecipano davvero</b><span>Presenze a ciò che Nia propone</span></div>
-        <div class="pv-c" style="--d:.3s"><span class="pv-i"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6M20 12a8 8 0 0 1-13.7 5.6"/><path d="M18 3v4h-4M6 21v-4h4"/></svg></span><b>Gli utenti tornano</b><span>Chi usa l'app ogni settimana</span></div>
-        <div class="pv-c" style="--d:.4s"><span class="pv-i"><svg viewBox="0 0 24 24"><path d="M4 19h16"/><path d="M5 15l4.5-4.5 3.5 3L19 7.5"/><path d="M14.5 7.5H19V12"/></svg></span><b>Le aziende ottengono risultati</b><span>Contatti e clienti portati da CEnTRO</span></div>
+      <p class="nd-label">Per chi investe</p>
+      <h2 class="r-h2 small-h">Il resto <em>si racconta dal vivo.</em></h2>
+      <p class="r-body">Numeri, piano e prossimi passi: ne parliamo di persona.</p>
+      <div class="sbox" data-sbox>
+        <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
+          <form class="rq" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="Richiesta di incontro da CEnTRO (investitore)" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <textarea name="richiesta" rows="3" placeholder="Chi sei e quando ti farebbe comodo sentirci" aria-label="La tua richiesta"></textarea>
+            <div class="ea-row">
+              <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email per la risposta">
+              <button type="submit" class="ea-btn">Invia</button>
+            </div>
+            <p class="ea-note" aria-live="polite">Ti rispondo personalmente.</p>
+          </form>
+        </div></div></div>
+        <button type="button" class="glass-btn" data-sopen>Fissiamo un incontro<i aria-hidden="true"></i></button>
       </div>
-    </div>
-    <div class="r-in r-bottom">
-      <p class="pv-k">A che punto siamo</p>
-      <ol class="road">
-        <li class="done"><i></i><span>Questionario</span></li>
-        <li class="done"><i></i><span>Prototipo</span></li>
-        <li class="now"><i></i><span>MVP</span><em>Siamo qui</em></li>
-        <li><i></i><span>Test a L'Aquila</span></li>
-      </ol>
     </div>
   </section>
 
@@ -507,8 +559,6 @@
   <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Contatti" data-title="Il prossimo passo" data-desc="Provare l'app o chiedere informazioni">
     <div class="cphotos" aria-hidden="true">
       <img class="cph on" data-ph="" src="img/ct-intro.jpg" alt="" loading="lazy" style="--pos:52% 40%">
-      <img class="cph" data-ph="app" src="img/ct-app.jpg" alt="" loading="lazy" style="--pos:64% 45%">
-      <img class="cph" data-ph="info" src="img/stretta-di-mano.jpg" alt="" loading="lazy" style="--pos:45% 35%">
     </div>
     <div class="r-in r-bottom">
       <p class="nd-label">Contatti</p>
@@ -555,6 +605,6 @@
 
 </main>
 
-<script src="js/reel.js?v=64"></script>
+<script src="js/reel.js?v=69"></script>
 </body>
 </html>

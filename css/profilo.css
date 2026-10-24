@@ -527,3 +527,11 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-stack { position: relative; transition: min-height .45s cubic-bezier(.22,1,.36,1); }
 .pt-stack > .pt-info { position: absolute; top: 0; left: 0; right: 0; }
 .pt-k20 { font-size: 17px; line-height: 22px; font-weight: 600; color: var(--pt-ink); }
+/* I widget: sotto il profilo, con titolo e breve spiegazione */
+.pt-wid { margin-top: clamp(48px, 12vw, 72px); }
+.pt-wid-t { margin: 0 4px; font: 400 clamp(1.7rem, 7vw, 2.2rem)/1.1 var(--nd-display); color: var(--pt-ink); text-align: center; }
+.pt-wid-t em { display: block; margin-top: 4px; font-family: var(--f-body); font-style: italic; font-weight: 600; color: var(--pt-blue); letter-spacing: -.01em; }
+.pt-wid-p { margin: 14px auto 22px; max-width: 34ch; text-align: center; font-size: 16px; line-height: 23px; color: var(--pt-ink2); }
+/* "Rivedi" compare con una dissolvenza */
+.dm-replay { display: flex; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .5s ease, transform .6s cubic-bezier(.22,1,.36,1); }
+.dm-replay.on { opacity: 1; transform: none; pointer-events: auto; }
