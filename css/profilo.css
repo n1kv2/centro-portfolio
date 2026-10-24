@@ -485,3 +485,24 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-spot { border: 0; background: var(--pt-soft); }
 .pt-spot .msg { background: var(--pt-card); }
 .pt-spot footer .tag { background: var(--pt-blue-soft); color: var(--pt-blue); }
+/* icone dentro le sezioni: senza cerchio attorno */
+.pt-ri { flex: none; width: 26px; display: grid; place-items: center; color: var(--pt-blue); }
+.pt-ri svg.ic.so { width: 24px; height: 24px; }
+.pt-row { gap: 14px; }
+.pt-act i { width: auto; height: auto; margin-bottom: 10px; background: none; display: block; color: var(--pt-blue); }
+.pt-act i svg.ic.so { width: 26px; height: 26px; }
+.pt-tip i { width: auto; height: auto; background: none; padding: 0 2px 0 4px; }
+.pt-tip i svg.ic.so { width: 26px; height: 26px; }
+.pt-tip { color: var(--pt-navy); }
+.pt-tip > i { color: #6ABD3D; }
+.pt-tip.calm > i { color: #7B6CF6; }
+.pt-bal > div span svg.ic.so { width: 22px; height: 22px; }
+/* biglietti: bordo interno, non tagliato ai lati */
+.pt-ticket { box-shadow: none; border: 1px solid var(--pt-line); }
+/* bio: link senza emoji */
+.pt-link { display: inline-flex; align-items: center; gap: 6px; margin-top: -6px; font-size: 17px; color: var(--pt-blue); text-decoration: none; justify-self: start; }
+.pt-link svg.ic.so { width: 20px; height: 20px; }
+/* note libere come le altre sezioni */
+.pt-note { background: var(--pt-soft); }
+.pt-note small { color: var(--pt-gray); }
+.pt-note footer i { background: var(--pt-card); color: var(--pt-blue); }
