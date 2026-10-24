@@ -407,3 +407,64 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-act b { font-size: 16px; }
 .pt-act em { font-style: normal; font-size: 13px; color: var(--pt-gray); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (prefers-reduced-motion: reduce) { .pt-map-pin::before { animation: none; } }
+
+/* Saluto dell'area privata: sopra la foto, con una sfumatura che lo rende leggibile */
+.pt-hello { position: relative; padding: 6px 4px 8px; }
+.pt-hello::before { content: ""; position: absolute; z-index: -1; inset: -46px -16px -6px; background: linear-gradient(to bottom, color-mix(in srgb, var(--pt-bg) 0%, transparent), color-mix(in srgb, var(--pt-bg) 82%, transparent) 42%, var(--pt-bg) 72%); pointer-events: none; }
+.pt-hello h2 { color: var(--pt-ink); text-shadow: 0 1px 12px color-mix(in srgb, var(--pt-bg) 70%, transparent); }
+.pt-hello p { color: var(--pt-ink2); }
+
+/* Icone: una sola famiglia, neutre dentro le sezioni */
+.pt-row .pt-ico, .pt-act i, .pt-tip i, .pt-note footer i, .pt-card2 .slot i { color: var(--pt-ink) !important; }
+.pt-row .pt-ico { background: var(--pt-soft); box-shadow: none; }
+.pt-bal > div span svg.ic, .pt-bal > div:first-child svg.ic, .pt-bal > div:nth-child(2) svg.ic { color: var(--pt-ink); }
+.pt-tip, .pt-tip.calm { background: var(--pt-soft); color: var(--pt-ink); }
+:root[data-theme="dark"] .pt-tip, :root[data-theme="dark"] .pt-tip.calm { background: var(--pt-soft); color: var(--pt-ink); }
+.pt-split { background: color-mix(in srgb, var(--pt-ink) 14%, transparent); }
+.pt-split i { background: var(--pt-ink); opacity: .75; }
+.dm-list li svg.ic, .dm-ghost svg.ic { color: var(--pt-ink); }
+.pt-addr-go { background: var(--pt-ink); color: var(--pt-card); }
+.pt-card2 .slot i svg { width: 16px; height: 16px; }
+.pt-row .go { background: var(--pt-soft); color: var(--pt-ink); }
+/* chevron, info e chiusura */
+.pt-chev { width: 22px; height: 22px; margin-top: -11px; right: 4px; }
+.pt-chev svg.ic { width: 22px; height: 22px; stroke-width: 2; }
+.pt-info-btn i { position: relative; width: 26px; height: 26px; background: none; color: var(--pt-ink); font: inherit; }
+.pt-info-btn i svg.ic { position: absolute; inset: 0; width: 22px; height: 22px; margin: auto; transition: opacity .3s ease, transform .45s var(--pt-ease); }
+.pt-info-btn i svg.ic + svg.ic { opacity: 0; transform: rotate(-90deg); }
+.pt-info-btn i::after { content: none !important; }
+.pt-sec.info .pt-info-btn i svg.ic:first-child { opacity: 0; transform: rotate(90deg); }
+.pt-sec.info .pt-info-btn i svg.ic + svg.ic { opacity: 1; transform: none; }
+.pt-sec.info .pt-info-btn { background: var(--pt-soft); color: var(--pt-ink); }
+.pt-sec.info .pt-info-btn i { transform: none; color: var(--pt-ink); }
+.pt-lb-x { display: grid; place-items: center; }
+.pt-lb-x svg.ic { width: 22px; height: 22px; stroke: #fff; }
+/* stelle */
+.pt-stars { display: inline-flex; gap: 2px; letter-spacing: 0; }
+.pt-stars svg { width: 16px; height: 16px; fill: var(--pt-ink); stroke: none; }
+.pt-stars svg.off { fill: color-mix(in srgb, var(--pt-ink) 18%, transparent); }
+.pt-rev header .pt-stars svg { width: 13px; height: 13px; }
+.pt-crit div i::before { background: var(--pt-ink); opacity: .8; }
+
+/* Atmosfera: riepilogo scritto da Nia, oppure il box dove descriverla */
+.pt-atm-sum { display: grid; gap: 10px; }
+.pt-atm-sum p { margin: 0; font-size: 16px; line-height: 23px; color: var(--pt-ink2); }
+.pt-atm-sum p b { color: var(--pt-ink); }
+.pt-atm-t { font-size: 17px !important; font-weight: 700; color: var(--pt-ink) !important; }
+.pt-atm-sum .pt-wide, .pt-atm-go { display: inline-flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+.pt-atm-sum .pt-wide { margin-top: 6px; }
+.pt-atm-sum .pt-wide svg.ic, .pt-atm-go svg.ic { width: 18px; height: 18px; }
+.pt-atm-in { display: grid; gap: 12px; }
+.pt-atm-in[hidden], .pt-atm-sum[hidden] { display: none; }
+.pt-atm-k { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 15px; font-weight: 700; }
+.pt-atm-k img { width: 22px; height: 22px; border-radius: 50%; }
+.pt-atm-box { min-height: 120px; padding: 14px 16px; border-radius: 22px; background: var(--pt-soft); font-size: 16px; line-height: 23px; color: var(--pt-ink); outline: none; box-shadow: inset 0 0 0 1px var(--pt-line); transition: box-shadow .2s ease; }
+.pt-atm-box:focus { box-shadow: inset 0 0 0 2px var(--pt-ink); }
+.pt-atm-box:empty::before { content: attr(data-ph); color: var(--pt-gray); }
+.pt-atm-go { height: 46px; border: 0; border-radius: 99px; background: var(--pt-ink); color: var(--pt-card) !important; font-size: 16px; font-weight: 700; }
+.pt-atm-go.busy { opacity: .6; pointer-events: none; }
+.pt-score .pt-stars, .pt-rev header .pt-stars { display: inline-flex; flex-direction: row; gap: 2px; }
+/* meno blu: colori neutri per etichette e dettagli */
+.pt-card2 small, .pt-sort b, .pt-feat .tag { color: var(--pt-ink); }
+.pt-card2 small { color: var(--pt-gray); font-weight: 600; }
+.pt-rev header i { background: var(--pt-card); color: var(--pt-ink); box-shadow: 0 0 0 1px var(--pt-line); }

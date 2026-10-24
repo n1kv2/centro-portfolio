@@ -103,6 +103,17 @@
     });
   });
 
+  // Atmosfera: "Modifica" apre il box dove descriverla, "Descrivi a Nia" torna al riepilogo
+  document.querySelectorAll('[data-atm]').forEach(function (box) {
+    var sum = box.querySelector('.pt-atm-sum'), inp = box.querySelector('.pt-atm-in'), go = box.querySelector('[data-atm-go]'), area = box.querySelector('.pt-atm-box');
+    box.querySelector('[data-atm-edit]').addEventListener('click', function () { sum.hidden = true; inp.hidden = false; area.focus(); });
+    go.addEventListener('click', function () {
+      go.classList.add('busy');
+      go.lastChild.textContent = 'Nia sta scrivendo…';
+      setTimeout(function () { go.classList.remove('busy'); go.lastChild.textContent = 'Descrivi a Nia'; inp.hidden = true; sum.hidden = false; }, 1200);
+    });
+  });
+
   // Orari: stato e giorno di oggi calcolati sull'ora reale
   var hours = document.querySelector('[data-hours]');
   if (hours) {
