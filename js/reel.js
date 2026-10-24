@@ -17,6 +17,7 @@
   var TRACKS = { utente: 'Per chi usa l\'app', azienda: 'Per le aziende', investitore: 'Per chi investe' };
   var NAMES = { utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' };
   var mode = 'all';
+  var menuTimer = null;
   var visible = [], bits = [], chapters = [], current = -1;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ss = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
@@ -128,6 +129,9 @@
     var r = visible[i];
     void r.offsetWidth;
     r.classList.add('on');
+    // Arrivati ai contatti, dopo un secondo si apre il menu delle sezioni
+    clearTimeout(menuTimer);
+    if (r.classList.contains('r-contact')) menuTimer = setTimeout(function () { if (visible[current] === r && !navOpen) setNav(true); }, 1000);
     // Ogni sezione si riempie man mano che scorri i suoi momenti
     var ci = 0, isRouter = r === router;
     chapters.forEach(function (c, k) { if (c.reels.indexOf(r) >= 0 || (isRouter && c.name === TRACKS[mode])) ci = k; });
