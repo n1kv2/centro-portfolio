@@ -1189,3 +1189,8 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root:not([data-theme="dark"]) .r-contact .ea.err .ea-note, :root:not([data-theme="dark"]) .r-contact .rq.err .ea-note { color: #FFC2B3; }
 :root:not([data-theme="dark"]) .r-contact .ea.ok .ea-note, :root:not([data-theme="dark"]) .r-contact .rq.ok .ea-note { color: #A6E3B8; }
 :root:not([data-theme="dark"]) .r-copy { color: rgba(255,255,255,.75); }
+/* Il problema: sempre scuro, anche nel tema chiaro */
+:root:not([data-theme="dark"]) .r-problem { background: #0B1424 !important; color: #fff !important; }
+:root:not([data-theme="dark"]) .r-problem::before { background: linear-gradient(180deg, rgba(7,16,34,.55) 0%, rgba(7,16,34,.25) 35%, rgba(7,16,34,.85) 100%) !important; }
+:root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label, :root:not([data-theme="dark"]) .r-problem .nd-label span { color: #fff !important; text-shadow: none !important; }
+:root:not([data-theme="dark"]) .r-problem .r-h2 em { color: rgba(255,255,255,.7) !important; }
