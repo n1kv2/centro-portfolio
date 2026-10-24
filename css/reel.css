@@ -1194,3 +1194,6 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root:not([data-theme="dark"]) .r-problem::before { background: linear-gradient(180deg, rgba(7,16,34,.55) 0%, rgba(7,16,34,.25) 35%, rgba(7,16,34,.85) 100%) !important; }
 :root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label, :root:not([data-theme="dark"]) .r-problem .nd-label span { color: #fff !important; text-shadow: none !important; }
 :root:not([data-theme="dark"]) .r-problem .r-h2 em { color: rgba(255,255,255,.7) !important; }
+/* Il problema, tema chiaro: velo blu più tenue, come nei contatti */
+:root:not([data-theme="dark"]) .r-problem::before { background: linear-gradient(180deg, rgba(7,16,34,.25) 0%, rgba(7,16,34,0) 28%, rgba(7,16,34,.08) 50%, rgba(7,16,34,.62) 100%) !important; }
+:root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label { text-shadow: 0 1px 18px rgba(0,0,0,.35) !important; }
