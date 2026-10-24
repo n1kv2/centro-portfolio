@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=84">
+<link rel="stylesheet" href="css/reel.css?v=86">
 </head>
 <body class="reel-page">
 
@@ -506,7 +506,11 @@
   </section>
 
   <section class="reel r-dark r-contact r-shot" data-reel data-chapter="Contatti" data-title="Il prossimo passo" data-desc="Provare l'app o chiedere informazioni">
-    <img class="r-photo" src="img/stretta-di-mano.jpg" alt="Due persone si stringono la mano." loading="lazy">
+    <div class="cphotos" aria-hidden="true">
+      <img class="cph on" data-ph="" src="img/ct-intro.jpg" alt="" loading="lazy" style="--pos:50% 32%">
+      <img class="cph" data-ph="app" src="img/ct-app.jpg" alt="" loading="lazy" style="--pos:62% 42%">
+      <img class="cph" data-ph="info" src="img/stretta-di-mano.jpg" alt="" loading="lazy" style="--pos:50% 50%">
+    </div>
     <div class="r-in r-bottom">
       <p class="nd-label">Contatti</p>
       <h2 class="r-h2 on-dark small-h">Basta scorrere. <em>Il prossimo passo è vivere.</em></h2>
@@ -551,6 +555,6 @@
 
 </main>
 
-<script src="js/reel.js?v=59"></script>
+<script src="js/reel.js?v=60"></script>
 </body>
 </html>

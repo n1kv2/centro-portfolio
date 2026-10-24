@@ -1114,3 +1114,23 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root[data-theme="dark"] .thesis .tu::before, .r-dark.r-shot .thesis .tu::before { background: rgba(72,157,254,.45); }
 .thesis .nw { white-space: nowrap; }
 .thesis em { display: block; margin-top: .55em; }
+
+/* Contatti: tre foto nello stesso spazio, si cambiano in dissolvenza */
+.r-contact::before { background: linear-gradient(180deg, rgba(7,16,34,.35) 0%, rgba(7,16,34,.12) 38%, rgba(7,16,34,.7) 68%, rgba(7,16,34,.92) 100%); }
+.cphotos { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: #0B1424; }
+.cph { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: var(--pos, 50% 40%); opacity: 0; transition: opacity 1s cubic-bezier(.4,0,.2,1); }
+.cph.on { opacity: 1; }
+/* Schermi verticali: la foto mantiene le sue proporzioni in alto, senza tagliare volti o telefono, e sfuma nello sfondo */
+@media (max-aspect-ratio: 4/5) {
+  .cphotos { bottom: auto; height: min(125vw, 74%); }
+  .cphotos::after { content: ""; position: absolute; inset: auto 0 0; height: 34%; background: linear-gradient(to bottom, rgba(11,20,36,0), #0B1424); }
+  .r-contact::before { background: linear-gradient(180deg, rgba(7,16,34,.3) 0%, rgba(7,16,34,0) 22%, rgba(7,16,34,0) 45%, rgba(7,16,34,.75) 72%, rgba(7,16,34,.9) 100%); }
+}
+/* Schermi larghi: foto a destra a tutta altezza, testo e modulo a sinistra */
+@media (min-aspect-ratio: 1/1) {
+  .cphotos { left: auto; width: min(50%, 80vh); }
+  .cphotos::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 30%; background: linear-gradient(to right, #0B1424, rgba(11,20,36,0)); }
+  .r-contact::before { background: linear-gradient(90deg, rgba(7,16,34,.6) 0%, rgba(7,16,34,.2) 55%, rgba(7,16,34,0) 70%); }
+  .r-contact .r-in { margin-left: max(6vw, 40px); margin-right: auto; max-width: min(560px, 46vw); }
+}
+@media (prefers-reduced-motion: reduce) { .cph { transition: none; } }

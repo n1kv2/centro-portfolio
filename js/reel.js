@@ -705,6 +705,8 @@
     var switching = prev && t && prev !== t && !reduce;
     var from = switching ? cglass.offsetHeight : 0;
     cbox.setAttribute('data-tab', t);
+    // La foto cambia con la scelta: chi esce e raggiunge il gruppo, l'app sull'App Store, la stretta di mano
+    document.querySelectorAll('.cph').forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-ph') === t); });
     cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
     if (t) {
       document.getElementById('paneApp').hidden = t !== 'app';
