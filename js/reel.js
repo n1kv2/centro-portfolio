@@ -97,6 +97,14 @@
   document.querySelectorAll('[data-go]').forEach(function (b) {
     b.addEventListener('click', function () { choose(b.getAttribute('data-go')); });
   });
+  // "Voglio provare l'app" e "Fissiamo un incontro": si va ai contatti con la scelta già aperta
+  document.querySelectorAll('[data-contact]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var c = document.querySelector('.r-contact'), t = b.getAttribute('data-contact');
+      go(c);
+      setTimeout(function () { contactTab(t); }, 750);
+    });
+  });
 
   // ---------- Reel attivo: le animazioni ripartono a ogni visita ----------
   function isLight(el) {
@@ -708,8 +716,6 @@
     var from = switching ? cglass.offsetHeight : 0;
     cbox.setAttribute('data-tab', t);
     var rc = cbox.closest('.r-contact'); if (rc) rc.setAttribute('data-tab', t);
-    // La foto cambia con la scelta: chi esce e raggiunge il gruppo, l'app sull'App Store, la stretta di mano
-    document.querySelectorAll('.cph').forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-ph') === t); });
     cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
     if (t) {
       document.getElementById('paneApp').hidden = t !== 'app';

@@ -222,7 +222,7 @@
     }
     function run() {
       stage.innerHTML = tpl;
-      replay.hidden = true;
+      replay.classList.remove('on');
       hand = stage.querySelector('.dm-hand');
       if (still) {
         moves.forEach(function (m) { var p = place(m); p.src.remove(); });
@@ -237,7 +237,7 @@
       // una sola dimostrazione, poi "Rivedi"
       chain.then(function () {
         hand.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-        replay.hidden = false;
+        setTimeout(function () { replay.classList.add('on'); }, 350);
       });
     }
     replay.addEventListener('click', run);
