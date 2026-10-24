@@ -1197,3 +1197,5 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 /* Il problema, tema chiaro: velo blu più tenue, come nei contatti */
 :root:not([data-theme="dark"]) .r-problem::before { background: linear-gradient(180deg, rgba(7,16,34,.25) 0%, rgba(7,16,34,0) 28%, rgba(7,16,34,.08) 50%, rgba(7,16,34,.62) 100%) !important; }
 :root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label { text-shadow: 0 1px 18px rgba(0,0,0,.35) !important; }
+/* Apertura, tema chiaro: velo blu più tenue, come nei contatti */
+:root:not([data-theme="dark"]) .r-hero::before { background: linear-gradient(180deg, rgba(7,16,34,.28) 0%, rgba(7,16,34,0) 22%, rgba(7,16,34,0) 50%, rgba(7,16,34,.55) 100%) !important; }
