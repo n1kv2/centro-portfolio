@@ -1162,3 +1162,4 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .thesis .tu.lit::before { transform: scaleX(1); }
 :root[data-theme="dark"] .thesis .tu::before, .r-dark.r-shot .thesis .tu::before { background: rgba(72,157,254,.45); }
 .thesis .nw { white-space: nowrap; }
+.thesis em { display: block; margin-top: .55em; }
