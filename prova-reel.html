@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=76">
+<link rel="stylesheet" href="css/reel.css?v=80">
 </head>
 <body class="reel-page">
 
@@ -147,26 +147,32 @@
       </div>
     </div>
   </section>
-  <section class="reel r-light r-uprof" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Il tuo profilo" data-desc="La tua identità digitale, fuori dai social">
+  <section class="reel r-light r-uprof" data-reel data-track="utente" data-chapter="Per chi usa l'app" data-title="Il tuo profilo" data-desc="Un profilo per chi sei, non per quanti ti seguono">
     <div class="r-in r-top">
       <p class="nd-label">Il tuo profilo</p>
-      <h2 class="r-h2 small-h">La tua identità digitale, <em>fuori dai social.</em></h2>
+      <h2 class="r-h2 small-h">Un profilo per chi sei, <em>non per quanti ti seguono.</em></h2>
     </div>
-    <div class="pp" aria-hidden="true">
-      <div class="pp-cover"><img src="img/pf-costa.jpg" alt=""></div>
-      <div class="pp-box wg" style="--i:0">
-        <div class="pp-id"><span class="pp-av"><img src="img/pf-ritratto.jpg" alt=""><i class="pp-ok"></i></span><div><b>Lorenzo Nardini</b><span>Fotografo</span></div></div>
-        <p class="pp-bio">Racconto la città con la fotografia. Nuovi progetti in arrivo.</p>
-        <div class="pp-btns"><span>Messaggio</span><span class="pri">Segui</span></div>
-      </div>
-      <div class="pp-grid">
-        <div class="wg pp-album" style="--i:1"><img src="img/pf-caffe.jpg" alt=""><img src="img/pf-scrivania.jpg" alt=""><img src="img/pf-costa.jpg" alt=""><span>Album</span></div>
-        <div class="wg pp-proj" style="--i:2"><img src="img/pf-scrivania.jpg" alt=""><span><small>2 MAR 2026</small><b>Luce sul progetto</b></span></div>
-        <div class="wg pp-sec" style="--i:3"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3.5 12.5h17"/></svg></i><b>Lavoro</b><span>Servizi fotografici</span></div>
+    <div class="sv" aria-hidden="true">
+      <div class="sv-card">
+        <div class="sv-head"><img class="sv-av" src="img/pf-ritratto.jpg" alt=""><div><b>Lorenzo Nardini</b><span class="sv-swap"><i class="a">@lorenzo.nardini</i><i class="b">Fotografo · L'Aquila</i></span></div></div>
+        <div class="sv-mid">
+          <div class="sv-noise sv-stats"><p><b>1.284</b><span>follower</span></p><p><b>312</b><span>seguiti</span></p><p><b>86</b><span>post</span></p></div>
+          <div class="sv-real sv-pass"><span>Fotografia</span><span>Sentieri e mare</span><span>Caffè in centro</span></div>
+        </div>
+        <div class="sv-photos">
+          <figure><img src="img/pf-costa.jpg" alt=""><i class="sv-noise"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>2.341</i></figure>
+          <figure><img src="img/pf-caffe.jpg" alt=""><i class="sv-noise"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>987</i></figure>
+          <figure><img src="img/pf-scrivania.jpg" alt=""><i class="sv-noise"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>1.502</i></figure>
+        </div>
+        <div class="sv-mid">
+          <div class="sv-noise sv-btnrow"><span class="pri">Segui</span><span>Messaggio</span></div>
+          <p class="sv-real sv-line">Cerca compagni per uscite in natura e collaborazioni fotografiche.</p>
+        </div>
       </div>
     </div>
-    <div class="r-in r-bottom pp-foot">
-      <p class="r-body">Un profilo a widget per farti conoscere, per lavoro o per amicizia. Senza follower né like.</p>
+    <div class="r-in r-bottom sv-foot">
+      <p class="r-body">Niente gara di like: il tuo profilo racconta chi sei e cosa ami.</p>
+      <a class="glass-btn" href="prova-profilo.html" data-keep>Scopri il profilo<i aria-hidden="true"></i></a>
     </div>
   </section>
 
@@ -363,26 +369,29 @@
     <div class="crowd" aria-hidden="true" id="crowd"></div>
   </section>
 
-  <section class="reel r-light r-bprof" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="Il profilo aziendale" data-desc="Tutto della tua attività, in un solo profilo">
+  <section class="reel r-light r-bprof" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="Il profilo aziendale" data-desc="La tua attività com'è davvero, non una scheda tra tante">
     <div class="r-in r-top">
       <p class="nd-label">Il profilo aziendale</p>
-      <h2 class="r-h2 small-h">Tutto della tua attività, <em>in un solo profilo.</em></h2>
+      <h2 class="r-h2 small-h">Non una scheda tra tante, <em>la tua attività com'è davvero.</em></h2>
     </div>
-    <div class="pp" aria-hidden="true">
-      <div class="pp-cover"><img src="img/piazza.jpg" alt=""></div>
-      <div class="pp-box wg" style="--i:0">
-        <div class="pp-id"><span class="pp-logo">CP</span><div><b>Caffè dei Portici</b><span>Bar e caffetteria · aperto ora</span></div><em class="pp-disc">Discover</em></div>
-        <p class="pp-bio">Colazioni, aperitivi e musica dal vivo il venerdì, sotto i portici del centro.</p>
-      </div>
-      <div class="pp-grid">
-        <div class="wg pp-sec" style="--i:1"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.4 5 5.4.6-4 3.7 1.1 5.4L12 15.5l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/></svg></i><b>Recensioni</b><span>4,8 · 126 opinioni</span></div>
-        <div class="wg pp-sec" style="--i:2"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h13A1.5 1.5 0 0 1 20 8.5V10a2 2 0 0 0 0 4v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5V14a2 2 0 0 0 0-4z"/></svg></i><b>Eventi</b><span>Jazz al tramonto, venerdì</span></div>
-        <div class="wg pp-sec" style="--i:3"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9c2.5-2 5-2 7.5 0s5 2 7.5 0M3.5 15c2.5-2 5-2 7.5 0s5 2 7.5 0"/></svg></i><b>Atmosfera</b><span>Tranquilla, studenti, musica bassa</span></div>
-        <div class="wg pp-sec" style="--i:4"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/></svg></i><b>Contatti</b><span>Orari, menu, come arrivare</span></div>
+    <div class="sv" aria-hidden="true">
+      <div class="sv-card sv-biz">
+        <div class="sv-noise sv-ad">Sponsorizzato</div>
+        <div class="sv-cover"><img src="img/piazza.jpg" alt=""><img src="img/lingue.jpg" alt=""><img src="img/inaugurazione.jpg" alt=""></div>
+        <div class="sv-head"><span class="sv-logo">CP</span><div><b>Caffè dei Portici</b><span class="sv-swap"><i class="a">4,2 ★★★★☆ (312) · Bar · €€</i><i class="b">Bar e caffetteria · centro storico</i></span></div></div>
+        <div class="sv-mid">
+          <div class="sv-noise sv-gbtns"><span>Indicazioni</span><span>Chiama</span><span>Sito</span><span>Salva</span></div>
+          <div class="sv-real sv-pass"><span>Atmosfera tranquilla</span><span>Studenti</span><span>Jazz il venerdì</span></div>
+        </div>
+        <div class="sv-mid">
+          <div class="sv-noise sv-also"><b>Le persone cercano anche</b><span>Bar Centrale · Caffè Italia · Pasticceria Duomo</span></div>
+          <p class="sv-real sv-line"><em>Discover</em> Nia la suggerisce a chi è più affine, non a chi paga di più.</p>
+        </div>
       </div>
     </div>
-    <div class="r-in r-bottom pp-foot">
-      <p class="r-body">Con Discover ti trova chi ti cerca, e Nia ti suggerisce a chi è più adatto a te, non a chi paga di più.</p>
+    <div class="r-in r-bottom sv-foot">
+      <p class="r-body">Tutte le informazioni che contano, nel posto dove le persone scelgono cosa fare.</p>
+      <a class="glass-btn" href="prova-profilo-azienda.html" data-keep>Scopri il profilo aziendale<i aria-hidden="true"></i></a>
     </div>
   </section>
   <section class="reel r-dark r-discover" data-reel data-track="azienda" data-chapter="Per le aziende" data-title="Discover" data-desc="Quando qualcuno chiede a Nia, Nia propone te">
@@ -542,6 +551,6 @@
 
 </main>
 
-<script src="js/reel.js?v=56"></script>
+<script src="js/reel.js?v=57"></script>
 </body>
 </html>

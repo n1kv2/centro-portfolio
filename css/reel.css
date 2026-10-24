@@ -489,7 +489,7 @@ html.reel-root, html.reel-root body { height: 100%; overflow: hidden; }
 @media (prefers-reduced-motion: reduce) { .mt > span { animation: none; }  }
 
 /* ================= v9: squircle iOS (smussamento 60%) e movimento leggero ================= */
-.reel-page { --squircle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cpath%20d%3D%27M%2060%200%20c%2014.001%200%2021.002%200%2026.35%202.725%20a%2025%2025%200%200%201%2010.925%2010.925%20c%202.725%205.348%202.725%2012.348%202.725%2026.35%20L%20100%2060%20c%200%2014.001%200%2021.002%20-2.725%2026.35%20a%2025%2025%200%200%201%20-10.925%2010.925%20c%20-5.348%202.725%20-12.348%202.725%20-26.35%202.725%20L%2040%20100%20c%20-14.001%200%20-21.002%200%20-26.35%20-2.725%20a%2025%2025%200%200%201%20-10.925%20-10.925%20c%20-2.725%20-5.348%20-2.725%20-12.348%20-2.725%20-26.35%20L%200%2040%20c%200%20-14.001%200%20-21.002%202.725%20-26.35%20a%2025%2025%200%200%201%2010.925%20-10.925%20c%205.348%20-2.725%2012.348%20-2.725%2026.35%20-2.725%20Z%27/%3E%3C/svg%3E"); }
+.reel-page, .pg { --squircle: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20100%20100%27%3E%3Cpath%20d%3D%27M%2060%200%20c%2014.001%200%2021.002%200%2026.35%202.725%20a%2025%2025%200%200%201%2010.925%2010.925%20c%202.725%205.348%202.725%2012.348%202.725%2026.35%20L%20100%2060%20c%200%2014.001%200%2021.002%20-2.725%2026.35%20a%2025%2025%200%200%201%20-10.925%2010.925%20c%20-5.348%202.725%20-12.348%202.725%20-26.35%202.725%20L%2040%20100%20c%20-14.001%200%20-21.002%200%20-26.35%20-2.725%20a%2025%2025%200%200%201%20-10.925%20-10.925%20c%20-2.725%20-5.348%20-2.725%20-12.348%20-2.725%20-26.35%20L%200%2040%20c%200%20-14.001%200%20-21.002%202.725%20-26.35%20a%2025%2025%200%200%201%2010.925%20-10.925%20c%205.348%20-2.725%2012.348%20-2.725%2026.35%20-2.725%20Z%27/%3E%3C/svg%3E"); }
 .merge-icon, .mt i { border-radius: 0; -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
 .mt i { box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
 /* Le app ondeggiano appena, ognuna con il suo ritmo */
@@ -1075,3 +1075,68 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .pp-album span { grid-column: auto; grid-row: 1; order: -1; padding: 0 8px 0 6px; writing-mode: horizontal-tb; }
 .pp-proj { min-height: 96px; }
 .pp-sec { padding: 11px 12px; }
+
+/* ================= v77: vetrine dei profili — il "social" si dissolve e resta ciò che conta ================= */
+.sv { position: relative; z-index: 1; flex: none; width: calc(100% - 48px); max-width: 360px; margin: 18px auto 0; }
+.sv-card { display: grid; grid-template-columns: minmax(0,1fr); gap: 14px; padding: 16px; border-radius: 26px; background: var(--surface, #fff);
+  box-shadow: 0 0 10px rgba(102,173,255,.14), 0 14px 34px rgba(11,27,51,.08); color: var(--nd-ink); }
+.sv-head { display: flex; align-items: center; gap: 12px; }
+.sv-head > div { min-width: 0; display: grid; gap: 3px; }
+.sv-head b { font-size: 1.02rem; }
+.sv-av { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; flex: none; }
+.sv-logo { flex: none; width: 52px; height: 52px; display: grid; place-items: center; background: linear-gradient(145deg, #C4553A, #EB9B85); color: #fff; font: 700 1.05rem var(--f-body);
+  -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
+/* testi che si scambiano nello stesso posto */
+.sv-swap { display: grid; font-size: .8rem; color: var(--nd-ink2); }
+.sv-swap i { grid-area: 1 / 1; font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .6s ease, transform .6s ease; }
+.sv-swap .b { opacity: 0; transform: translateY(6px); }
+/* zone con un elemento "social" e uno "vero" sovrapposti */
+.sv-mid { display: grid; }
+.sv-mid > * { grid-area: 1 / 1; }
+.sv-noise { transition: opacity .7s ease, filter .7s ease, transform .7s ease; }
+.sv-real { opacity: 0; transform: translateY(8px); transition: opacity .7s ease .35s, transform .7s cubic-bezier(.2,.8,.2,1) .35s; }
+.sv-stats { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; }
+.sv-stats p { margin: 0; display: grid; gap: 1px; }
+.sv-stats b { font-size: 1.08rem; }
+.sv-stats span { font-size: .7rem; color: var(--nd-ink2); }
+.sv-pass { display: flex; flex-wrap: wrap; gap: 6px; align-content: center; }
+.sv-pass span { padding: 7px 11px; border-radius: 99px; background: rgba(72,157,254,.12); color: #2F6FDE; font: 600 .76rem/1 var(--f-body); }
+.sv-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+.sv-photos figure { position: relative; margin: 0; }
+.sv-photos img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 12px; display: block; }
+.sv-photos i { position: absolute; left: 6px; bottom: 6px; display: inline-flex; align-items: center; gap: 3px; padding: 3px 6px; border-radius: 99px; background: rgba(0,0,0,.45); color: #fff; font: 600 .62rem/1 var(--f-body); font-style: normal; }
+.sv-photos i svg { width: 11px; height: 11px; fill: #FF5A7A; }
+.sv-btnrow, .sv-gbtns { display: grid; gap: 6px; }
+.sv-btnrow { grid-template-columns: 1fr 1fr; }
+.sv-gbtns { grid-template-columns: repeat(4, 1fr); }
+.sv-btnrow span, .sv-gbtns span { height: 32px; display: grid; place-items: center; border-radius: 99px; background: var(--nd-bg); font: 600 .74rem var(--f-body); box-shadow: inset 0 0 0 1px var(--nd-line); }
+.sv-btnrow .pri { background: #2F6FDE; color: #fff; box-shadow: none; }
+.sv-line { margin: 0; font-size: .84rem; line-height: 1.4; color: var(--nd-ink2); align-self: center; }
+.sv-line em { margin-right: 4px; padding: 3px 7px; border-radius: 99px; background: rgba(72,157,254,.14); color: #2F6FDE; font: 500 .58rem/1 var(--nd-mono); letter-spacing: .1em; text-transform: uppercase; font-style: normal; vertical-align: 2px; }
+/* azienda: scheda "da motore di ricerca" */
+.sv-biz { padding-top: 12px; }
+.sv-cover { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4px; height: 92px; border-radius: 16px; overflow: hidden; }
+.sv-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sv-ad { justify-self: start; margin-bottom: -6px; padding: 3px 7px; border-radius: 6px; background: var(--nd-bg); font: 700 .62rem var(--f-body); color: var(--nd-ink2); box-shadow: inset 0 0 0 1px var(--nd-line); }
+.sv-also { display: grid; gap: 3px; font-size: .74rem; color: var(--nd-ink2); }
+.sv-also b { color: var(--nd-ink); font-size: .78rem; }
+/* il passaggio */
+.clean .sv-noise { opacity: 0; filter: blur(6px); transform: scale(.97); pointer-events: none; }
+.clean .sv-real { opacity: 1; transform: none; }
+.clean .sv-swap .a { opacity: 0; transform: translateY(-6px); }
+.clean .sv-swap .b { opacity: 1; transform: none; }
+.clean .sv-ad { visibility: hidden; transition: opacity .7s ease, visibility 0s linear .7s; }
+.sv-foot { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+.sv-foot .glass-btn { margin-top: 16px; }
+@media (prefers-reduced-motion: reduce) { .sv-noise, .sv-real, .sv-swap i { transition: none; } }
+:root:not([data-theme="dark"]) .r-light .glass-btn { color: #0B1B33; background: #fff; box-shadow: 0 8px 24px rgba(11,27,51,.1), inset 0 0 0 1px #E2E8F0; }
+:root:not([data-theme="dark"]) .r-light .glass-btn i { background: #0B1B33; }
+:root:not([data-theme="dark"]) .r-light .glass-btn i::before { border-color: #fff; }
+/* pagine dei profili: i widget sono sempre visibili */
+.pg .wg { opacity: 1; transform: none; }
+.pg .pp { flex: none; width: 100%; max-width: 380px; margin: 28px auto 0; }
+.pg .pp-cover { left: 0; right: 0; }
+.sv-ad { margin: 0 0 -8px; padding: 0; background: none; box-shadow: none; color: #0B1B33; font: 700 .72rem/1.2 var(--f-body); max-height: 20px; overflow: hidden; }
+.clean .sv-ad { visibility: visible; max-height: 0; margin-bottom: -14px; transition: opacity .5s ease, max-height .6s ease .3s, margin .6s ease .3s; }
+:root[data-theme="dark"] .sv-ad { color: #F2F5FA; }
+.sv-foot { padding-top: 14px; }

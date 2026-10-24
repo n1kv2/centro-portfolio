@@ -114,6 +114,7 @@
     if (r.classList.contains('r-niamap')) resetMap();
     if (r.classList.contains('r-tools')) resetTools();
     if (r.classList.contains('r-overview') && deck) stopDeck();
+    if (r.querySelector('.sv')) resetShowcase(r);
     if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
@@ -141,6 +142,7 @@
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
     if (r.classList.contains('r-overview') && deck) playDeck();
+    if (r.querySelector('.sv')) playShowcase(r);
 
     if (navOpen) renderIndex();
   }
@@ -344,6 +346,11 @@
       if (r.hidden) showAll(r); else go(r);
     });
   });
+
+  // ---------- Vetrine dei profili: prima com'è un profilo social, poi resta solo ciò che conta ----------
+  var svTimers = {};
+  function playShowcase(r) { clearTimeout(svTimers[r.dataset.title]); r.classList.remove('clean'); svTimers[r.dataset.title] = setTimeout(function () { r.classList.add('clean'); }, reduce ? 0 : 1900); }
+  function resetShowcase(r) { clearTimeout(svTimers[r.dataset.title]); r.classList.remove('clean'); }
 
   // ---------- Le aree come un mazzo di card ----------
   // Un giro automatico: la card davanti viene scartata e avanza la successiva. Finito il giro le card
