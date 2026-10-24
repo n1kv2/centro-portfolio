@@ -454,7 +454,7 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-stars svg.off { fill: color-mix(in srgb, #FFB731 25%, transparent); }
 /* Icone Phosphor (tratto spesso): sono forme piene, non linee */
 .proto svg.ic.ph { fill: currentColor; stroke: none; }
-.pt-ico svg.ic.ph { width: 24px; height: 24px; }
+.pt-ico svg.ic.ph { width: 25px; height: 25px; }
 .pt-row .pt-ico svg.ic.ph, .pt-act i svg.ic.ph { width: 22px; height: 22px; }
 .pt-sec-h > .pt-ico { background: #F5F5F5; }
 .pt-sec.open .pt-sec-h > .pt-ico { background: #E4F1FF; color: var(--pt-blue); }
