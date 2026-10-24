@@ -502,7 +502,24 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 /* bio: link senza emoji */
 .pt-link { display: inline-flex; align-items: center; gap: 6px; margin-top: -6px; font-size: 17px; color: var(--pt-blue); text-decoration: none; justify-self: start; }
 .pt-link svg.ic.so { width: 20px; height: 20px; }
-/* note libere come le altre sezioni */
-.pt-note { background: var(--pt-soft); }
-.pt-note small { color: var(--pt-gray); }
-.pt-note footer i { background: var(--pt-card); color: var(--pt-blue); }
+
+/* sezioni tutte alte uguali: titolo e descrizione su una riga */
+.pt-sec-h b, .pt-sec-h small { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pt-sec-h { min-height: 46px; }
+.pt-note footer i svg.ic.so { width: 22px; height: 22px; }
+/* Sponsorizza: una campagna in corso */
+.pt-camp { display: grid; gap: 14px; padding: 16px; border-radius: 25px; background: var(--pt-soft); }
+.pt-camp-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pt-camp-on { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; background: rgba(52,168,83,.14); color: #1E7A3C; font-size: 13px; font-weight: 700; }
+.pt-camp-on::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #34A853; }
+.pt-camp-h small { font-size: 13px; color: var(--pt-gray); }
+.pt-camp > b { font-size: 18px; line-height: 23px; font-weight: 600; }
+.pt-camp .pt-rows .pt-row + .pt-row { border-top-color: color-mix(in srgb, var(--pt-ink) 8%, transparent); }
+.pt-camp-r { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: baseline; font-size: 15px; color: var(--pt-ink2); }
+.pt-camp-r b { font-size: 17px; color: var(--pt-ink); }
+.pt-camp-r b small { font-size: 13px; font-weight: 400; color: var(--pt-gray); }
+.pt-camp-r .pt-prog { grid-column: 1 / -1; margin: 0; background: rgba(72,157,254,.18); }
+.pt-camp-r .pt-prog i { background: var(--pt-blue); }
+/* Atmosfera: solo il tasto nero di Nia */
+.pt-atm-go { width: 100%; }
+.pt-atm-go[hidden], .pt-atm-sum[hidden] { display: none; }

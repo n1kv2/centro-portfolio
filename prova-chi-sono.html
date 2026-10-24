@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=81">
-<link rel="stylesheet" href="css/page.css?v=17">
+<link rel="stylesheet" href="css/reel.css?v=90">
+<link rel="stylesheet" href="css/page.css?v=19">
 </head>
 <body class="pg">
 <header class="pg-bar">
@@ -61,11 +61,21 @@
     <div class="pg-contact" data-pg>
       <p class="k">Parliamone</p>
       <p class="t">Per una demo, una collaborazione o un incontro.</p>
-      <p class="m">hello.centro26@gmail.com</p>
-      <a href="mailto:hello.centro26@gmail.com?subject=CEnTRO">Scrivimi</a>
+      <button type="button" class="pg-write" data-write aria-expanded="false" aria-controls="wrBox">Scrivimi</button>
+      <div class="pg-wbox" id="wrBox"><div class="pg-wbox-in">
+        <form class="rq pg-wform" id="wrForm" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" novalidate>
+          <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <textarea id="wrText" name="richiesta" rows="3" placeholder="Scrivi la tua richiesta" aria-label="La tua richiesta"></textarea>
+          <div class="ea-row">
+            <input id="wrEmail" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email per la risposta">
+            <button type="submit" class="ea-btn">Invia</button>
+          </div>
+          <p class="ea-note" id="wrNote" aria-live="polite">Ti ricontatto io.</p>
+        </form>
+      </div></div>
     </div>
   </section>
 </main>
-<script src="js/page.js?v=3"></script>
+<script src="js/page.js?v=4"></script>
 </body>
 </html>

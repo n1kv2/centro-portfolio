@@ -58,6 +58,11 @@
     var head = sec.querySelector('.pt-sec-h'), info = sec.querySelector('.pt-info'), content = sec.querySelector('.pt-content');
     head.addEventListener('click', function () {
       var open = !sec.classList.contains('open');
+      if (open) sec.parentNode.querySelectorAll('.pt-sec.open').forEach(function (o) {
+        if (o === sec) return;
+        o.classList.remove('open', 'info');
+        o.querySelector('.pt-sec-h').setAttribute('aria-expanded', 'false');
+      });
       sec.classList.toggle('open', open);
       head.setAttribute('aria-expanded', open);
       if (!open) setTimeout(function () { setInfo(false); }, 450);
@@ -104,14 +109,28 @@
     });
   });
 
-  // Atmosfera: "Modifica" apre il box dove descriverla, "Descrivi a Nia" torna al riepilogo
+  // Atmosfera: "Crea con Nia" scrive il riepilogo, poi il tasto sparisce
   document.querySelectorAll('[data-atm]').forEach(function (box) {
-    var sum = box.querySelector('.pt-atm-sum'), inp = box.querySelector('.pt-atm-in'), go = box.querySelector('[data-atm-go]'), area = box.querySelector('.pt-atm-box');
-    box.querySelector('[data-atm-edit]').addEventListener('click', function () { sum.hidden = true; inp.hidden = false; area.focus(); });
+    var go = box.querySelector('[data-atm-go]'), sum = box.querySelector('.pt-atm-sum');
+    var parts = [].slice.call(sum.querySelectorAll('[data-type]')).map(function (p) { var h = p.innerHTML; p.innerHTML = ''; return { el: p, html: h }; });
     go.addEventListener('click', function () {
       go.classList.add('busy');
-      go.lastChild.textContent = 'Nia sta scrivendo…';
-      setTimeout(function () { go.classList.remove('busy'); go.lastChild.textContent = 'Descrivi a Nia'; inp.hidden = true; sum.hidden = false; }, 1200);
+      go.querySelector('span').textContent = 'Nia sta scrivendo…';
+      setTimeout(function () {
+        go.hidden = true; sum.hidden = false;
+        var k = 0;
+        (function next() {
+          if (k >= parts.length) return;
+          var p = parts[k++], tmp = document.createElement('div'); tmp.innerHTML = p.html;
+          var text = tmp.textContent, n = 0, lead = p.html.indexOf('<b>') === 0 ? tmp.querySelector('b').textContent : '';
+          var tick = setInterval(function () {
+            n += 3;
+            var shown = text.slice(0, n);
+            p.el.innerHTML = lead && shown.length > lead.length ? '<b>' + lead + '</b>' + shown.slice(lead.length) : (lead ? '<b>' + shown + '</b>' : shown);
+            if (n >= text.length) { clearInterval(tick); p.el.innerHTML = p.html; setTimeout(next, 250); }
+          }, 18);
+        })();
+      }, 900);
     });
   });
 
@@ -145,15 +164,12 @@
 
   // Animazione iniziale: un dito toglie e aggiunge widget, poi il profilo qui sotto è il risultato
   document.querySelectorAll('.pt-demo').forEach(function (root) {
-    var stage = root.querySelector('.dm-stage'), sayEl = root.querySelector('.dm-say'), replay = root.querySelector('.dm-replay');
-    var tpl = stage.innerHTML, first = sayEl.textContent, moves = JSON.parse(stage.getAttribute('data-moves'));
+    var stage = root.querySelector('.dm-stage');
+    var tpl = stage.innerHTML, moves = JSON.parse(stage.getAttribute('data-moves'));
     var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var EASE = 'cubic-bezier(.45,0,.2,1)', hand, hx = 0, hy = 0;
     var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-    function say(t) {
-      sayEl.classList.add('out');
-      return wait(220).then(function () { sayEl.textContent = t; sayEl.classList.remove('out'); });
-    }
+
     function rel(el) {
       var r = el.getBoundingClientRect(), s = stage.getBoundingClientRect();
       return { x: r.left - s.left, y: r.top - s.top, w: r.width, h: r.height };
@@ -203,26 +219,22 @@
     }
     function run() {
       stage.innerHTML = tpl;
-      sayEl.textContent = first;
-      replay.hidden = true;
       hand = stage.querySelector('.dm-hand');
       if (still) {
         moves.forEach(function (m) { var p = place(m); p.src.remove(); });
-        sayEl.textContent = root.getAttribute('data-end');
         return;
       }
       hx = stage.clientWidth - 30; hy = stage.clientHeight + 10;
       hand.animate([{ opacity: 0, transform: 'translate(' + hx + 'px,' + hy + 'px)' }, { opacity: 1, transform: 'translate(' + hx + 'px,' + hy + 'px)' }], { duration: 300, fill: 'forwards' });
       var chain = wait(500);
       moves.forEach(function (m) {
-        chain = chain.then(function () { return say(m.say); }).then(function () { return move(m); }).then(function () { return wait(450); });
+        chain = chain.then(function () { return move(m); }).then(function () { return wait(450); });
       });
       chain.then(function () {
         hand.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-        return say(root.getAttribute('data-end'));
-      }).then(function () { replay.hidden = false; });
+        return wait(2600);
+      }).then(run);
     }
-    replay.addEventListener('click', run);
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { io.disconnect(); setTimeout(run, 400); }
