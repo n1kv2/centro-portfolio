@@ -167,7 +167,7 @@
 
   // Animazione iniziale: un dito toglie e aggiunge widget, poi il profilo qui sotto è il risultato
   document.querySelectorAll('.pt-demo').forEach(function (root) {
-    var stage = root.querySelector('.dm-stage');
+    var stage = root.querySelector('.dm-stage'), replay = root.querySelector('.dm-replay');
     var tpl = stage.innerHTML, moves = JSON.parse(stage.getAttribute('data-moves'));
     var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var EASE = 'cubic-bezier(.45,0,.2,1)', hand, hx = 0, hy = 0;
@@ -222,6 +222,7 @@
     }
     function run() {
       stage.innerHTML = tpl;
+      replay.hidden = true;
       hand = stage.querySelector('.dm-hand');
       if (still) {
         moves.forEach(function (m) { var p = place(m); p.src.remove(); });
@@ -233,11 +234,13 @@
       moves.forEach(function (m) {
         chain = chain.then(function () { return move(m); }).then(function () { return wait(450); });
       });
+      // una sola dimostrazione, poi "Rivedi"
       chain.then(function () {
         hand.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
-        return wait(2600);
-      }).then(run);
+        replay.hidden = false;
+      });
     }
+    replay.addEventListener('click', run);
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { io.disconnect(); setTimeout(run, 400); }
