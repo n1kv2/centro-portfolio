@@ -100,6 +100,8 @@
 
   // ---------- Reel attivo: le animazioni ripartono a ogni visita ----------
   function isLight(el) {
+    // le foto che seguono il tema (apertura, problema, contatti) sono chiare nel tema chiaro
+    if (el.classList.contains('r-themed')) return document.documentElement.getAttribute('data-theme') !== 'dark';
     if (el.classList.contains('r-hero') || el.classList.contains('r-shot')) return false;
     var m = getComputedStyle(el).backgroundColor.match(/\d+(\.\d+)?/g);
     if (!m) return false;
@@ -705,6 +707,7 @@
     var switching = prev && t && prev !== t && !reduce;
     var from = switching ? cglass.offsetHeight : 0;
     cbox.setAttribute('data-tab', t);
+    var rc = cbox.closest('.r-contact'); if (rc) rc.setAttribute('data-tab', t);
     // La foto cambia con la scelta: chi esce e raggiunge il gruppo, l'app sull'App Store, la stretta di mano
     document.querySelectorAll('.cph').forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-ph') === t); });
     cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });
