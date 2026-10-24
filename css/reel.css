@@ -1327,3 +1327,37 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
   .r-value .iq, .r-value .ig, .r-value .ip-t { display: none; }
   .r-value .ip, .r-value .ip-card, .r-value .ip-o { opacity: 1 !important; animation: none !important; }
 }
+/* risultati: un unico scorrimento continuo, come uno scroll verso il basso */
+.ig { -webkit-mask-image: linear-gradient(transparent, #000 10%, #000 88%, transparent); mask-image: linear-gradient(transparent, #000 10%, #000 88%, transparent); }
+.ig-roll { padding: 18px 0 30px; }
+.ig-p { height: auto; padding: 8px 20px 18px; display: block; }
+.ig-p .rd { height: 210px; }
+.ig-p .dn { padding: 4px 0 6px; }
+.r-value.on .ig-roll { animation: ig-scroll 5.6s cubic-bezier(.45,.05,.55,.95) 6.7s both; }
+@keyframes ig-scroll { from { transform: translateY(0); } to { transform: translateY(calc(-100% + 100cqh)); } }
+.r-value.on .dn-s { animation-delay: calc(8.2s + var(--k) * .22s); }
+.r-value.on .ig-r i::before { animation-delay: calc(9.9s + var(--k) * .15s); }
+/* box del profilo senza bordo blu (resta solo attorno alla foto) */
+.ip-card::after { content: none; }
+/* titoletto sopra al testo */
+.iv-k { margin: 0 0 6px; font: 600 1.05rem/1.3 var(--f-body); color: inherit; }
+.r-value .r-body { margin-top: 0; }
+/* soft skill: quattro indicatori circolari che si riempiono */
+.gks { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; padding: 4px 0; }
+.gk { position: relative; display: grid; justify-items: center; gap: 6px; text-align: center; }
+.gk svg { width: 64px; height: 64px; transform: rotate(-90deg); }
+.gk-b { fill: none; stroke: var(--iv-dot); stroke-width: 4.5; }
+.gk-v { fill: none; stroke: var(--app-blue); stroke-width: 4.5; stroke-linecap: round; stroke-dasharray: 0 100; }
+.gk b { position: absolute; top: 21px; left: 0; right: 0; font-size: .95rem; font-variant-numeric: tabular-nums; }
+.gk span { font-size: .76rem; color: var(--iv-ink2); }
+.r-value.on .gk-v { animation: gk-fill 1s cubic-bezier(.22,1,.36,1) calc(8.3s + var(--k) * .18s) both; }
+@keyframes gk-fill { to { stroke-dasharray: var(--v) calc(100 - var(--v)); } }
+/* più contenuto da scorrere: tempi allungati */
+.r-value.on .ig-roll { animation: ig-scroll 7s cubic-bezier(.45,.05,.55,.95) 6.7s both; }
+.r-value.on .dn-s { animation-delay: calc(9.8s + var(--k) * .22s); }
+.r-value.on .ig-r i::before { animation-delay: calc(11.6s + var(--k) * .15s); }
+.r-value.on .ig { animation: iv-fade-in .4s ease 6.5s both, iv-fade-out .4s ease 14s forwards; }
+.r-value.on .ip { animation: iv-fade-in .5s ease 14.3s both; }
+.r-value.on .ip-card { animation: ip-pop .6s cubic-bezier(.22,1.3,.36,1) 14.3s both, ip-glow 1s ease 16.6s; }
+.r-value.on .ip-t { animation: ip-t-in .5s cubic-bezier(.22,1.3,.36,1) calc(14.8s + var(--k) * .3s) both, ip-t-merge .6s cubic-bezier(.6,0,.4,1) calc(16.1s + var(--k) * .08s) forwards; }
+.r-value.on .ip-o { animation: iv-out .8s cubic-bezier(.22,1.3,.36,1) calc(17.1s + var(--k) * .09s) both, iv-float 5s ease-in-out calc(18.2s + var(--k) * .2s) infinite; }

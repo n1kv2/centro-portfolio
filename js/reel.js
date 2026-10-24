@@ -374,7 +374,7 @@
     var e = now - rdStart, s = Math.min(1, Math.max(0, (e - 6800) / 1100));
     s = 1 - Math.pow(1 - s, 3);
     rdDraw(s, e);
-    if (e < 12500) rdRaf = requestAnimationFrame(rdLoop);
+    if (e < 14000) rdRaf = requestAnimationFrame(rdLoop);
   }
   function playRadar() { if (!rdPoly) return; cancelAnimationFrame(rdRaf); rdStart = performance.now(); rdDraw(0, 0); if (!reduce) rdRaf = requestAnimationFrame(rdLoop); else rdDraw(1, 0); }
   function stopRadar() { if (rdPoly) { cancelAnimationFrame(rdRaf); rdDraw(0, 0); } }
