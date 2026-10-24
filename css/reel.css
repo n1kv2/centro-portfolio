@@ -1149,9 +1149,9 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
   .r-contact { --ct-veil: linear-gradient(90deg, rgba(7,16,34,.6) 0%, rgba(7,16,34,.3) 55%, rgba(7,16,34,.25) 100%); }
 }
 /* Tema chiaro */
-:root:not([data-theme="dark"]) .r-contact { --ct-bg: #E9EEF5; --ct-tint: rgba(233,238,245,.38); --ct-veil: linear-gradient(180deg, rgba(233,238,245,.5) 0%, rgba(233,238,245,.15) 35%, rgba(233,238,245,.9) 100%); background: #E9EEF5 !important; color: #0B1B33 !important; }
+:root:not([data-theme="dark"]) .r-contact { --ct-bg: #E9EEF5; --ct-tint: rgba(233,238,245,.12); --ct-veil: linear-gradient(180deg, rgba(233,238,245,.22) 0%, rgba(233,238,245,0) 30%, rgba(233,238,245,0) 50%, rgba(233,238,245,.88) 100%); background: #E9EEF5 !important; color: #0B1B33 !important; }
 @media (min-aspect-ratio: 1/1) {
-  :root:not([data-theme="dark"]) .r-contact { --ct-veil: linear-gradient(90deg, rgba(233,238,245,.7) 0%, rgba(233,238,245,.3) 55%, rgba(233,238,245,.2) 100%); }
+  :root:not([data-theme="dark"]) .r-contact { --ct-veil: linear-gradient(90deg, rgba(233,238,245,.6) 0%, rgba(233,238,245,.1) 55%, rgba(233,238,245,0) 100%); }
 }
 :root:not([data-theme="dark"]) .r-contact .r-h2, :root:not([data-theme="dark"]) .r-contact .nd-label, :root:not([data-theme="dark"]) .r-contact .nd-label span { color: #0B1B33; }
 :root:not([data-theme="dark"]) .r-contact .r-h2 em { color: #46536A; }
