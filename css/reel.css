@@ -1250,50 +1250,80 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .sbox .ea-row input, .sbox .rq textarea { background: rgba(255,255,255,.9); }
 .sbox [data-sopen] { justify-self: start; transition: opacity .25s ease, transform .3s ease; }
 .sbox.open [data-sopen] { display: none; }
-/* Per chi investe: domande che si compilano, valori che scorrono, poi la persona e tutto ciò che può fare */
+/* Per chi investe: domande che si compilano, risultati in grafici, la persona che si arricchisce e il ventaglio di possibilità */
 .r-value { --iv-card: rgba(255,255,255,.08); --iv-line: rgba(255,255,255,.16); --iv-ink: #fff; --iv-ink2: rgba(255,255,255,.7); --iv-dot: rgba(255,255,255,.18); }
 :root:not([data-theme="dark"]) .r-value { --iv-card: #fff; --iv-line: rgba(11,27,51,.08); --iv-ink: #0B1B33; --iv-ink2: #5B6B84; --iv-dot: #E3E9F2; }
 .iv2 { position: relative; z-index: 1; width: min(calc(100% - 48px), 360px); height: min(330px, 46svh); margin: 10px auto 0; container-type: size; }
 .iv-ph { position: absolute; inset: 0; opacity: 0; }
-.r-value.on .iq { animation: iv-fade-in .35s ease .1s both, iv-fade-out .4s ease 3.9s forwards; }
-.r-value.on .ig { animation: iv-fade-in .4s ease 4.1s both, iv-fade-out .4s ease 7.8s forwards; }
-.r-value.on .ip { animation: iv-fade-in .5s ease 8s both; }
+.r-value.on .iq { animation: iv-fade-in .35s ease .1s both, iv-fade-out .4s ease 6.3s forwards; }
+.r-value.on .ig { animation: iv-fade-in .4s ease 6.5s both, iv-fade-out .4s ease 12.6s forwards; }
+.r-value.on .ip { animation: iv-fade-in .5s ease 12.9s both; }
 @keyframes iv-fade-in { from { opacity: 0; } to { opacity: 1; } }
 @keyframes iv-fade-out { from { opacity: 1; } to { opacity: 0; } }
-/* 1. il questionario, una domanda dopo l'altra */
-.iq-c { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -50%; display: grid; gap: 14px; padding: 22px 20px; border-radius: 26px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.12); color: var(--iv-ink); opacity: 0; }
+.iv-box { border-radius: 26px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.12); color: var(--iv-ink); }
+
+/* 1. il questionario: una domanda alla volta, la risposta si seleziona */
+.iq-c { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -50%; display: grid; gap: 14px; padding: 22px 20px 18px; border-radius: 26px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.12); color: var(--iv-ink); opacity: 0; }
 .iq-c small { font: 500 .66rem/1 var(--nd-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--app-blue); }
 .iq-c b { font: 400 1.35rem/1.2 var(--nd-display); }
-.iq-s { display: flex; justify-content: space-between; gap: 8px; }
+.iq-s { display: flex; gap: 8px; }
 .iq-s i { flex: 1; height: 34px; border-radius: 12px; background: var(--iv-dot); }
-.r-value.on .iq-c { animation: iq-show .9s ease calc(.25s + var(--k) * .9s) both; }
-.r-value.on .iq-s i.iq-y { animation: iq-pick .25s ease calc(.45s + var(--k) * .9s) both; }
-@keyframes iq-show { 0% { opacity: 0; transform: translateY(14px); } 18%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-14px); } }
-@keyframes iq-pick { from { background: var(--iv-dot); transform: scale(1); } 60% { transform: scale(1.12); } to { background: var(--app-blue); transform: scale(1); } }
-/* 2. i valori di personalità, gusti e interessi, che scorrono */
-.ig { overflow: hidden; border-radius: 26px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.12); -webkit-mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(transparent, #000 12%, #000 88%, transparent); }
-.ig-roll { padding: 26px 20px; color: var(--iv-ink); }
-.r-value.on .ig-roll { animation: ig-roll 3.4s cubic-bezier(.45,0,.4,1) 4.3s both; }
-@keyframes ig-roll { from { transform: translateY(0); } to { transform: translateY(calc(-100% + 100cqh)); } }
-.ig-h { margin: 14px 0 8px; font: 500 .66rem/1 var(--nd-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--app-blue); }
-.ig-h:first-child { margin-top: 0; }
-.ig-r { display: grid; grid-template-columns: 1fr 1.3fr; align-items: center; gap: 12px; padding: 7px 0; font-size: .86rem; }
+.iq-l { display: flex; justify-content: space-between; margin-top: -6px; font-size: .72rem; color: var(--iv-ink2); }
+.iq-l em { font-style: normal; }
+.r-value.on .iq-c { animation: iq-show 1.5s ease calc(.3s + var(--k) * 1.5s) both; }
+.r-value.on .iq-s i.iq-y { animation: iq-pick .35s ease calc(.95s + var(--k) * 1.5s) both; }
+@keyframes iq-show { 0% { opacity: 0; transform: translateY(14px); } 12%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-14px); } }
+@keyframes iq-pick { from { background: var(--iv-dot); transform: scale(1); } 60% { transform: scale(1.14); } to { background: var(--app-blue); transform: scale(1); } }
+
+/* 2. i risultati: tre grafici che scorrono uno dopo l'altro */
+.ig { overflow: hidden; border-radius: 26px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.12); color: var(--iv-ink); }
+.ig-p { height: 100cqh; box-sizing: border-box; padding: 20px 20px 16px; display: grid; grid-template-rows: auto 1fr; }
+.ig-h { margin: 0 0 6px; font: 500 .66rem/1 var(--nd-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--app-blue); }
+.r-value.on .ig-roll { animation: ig-roll 6s cubic-bezier(.65,0,.35,1) 6.6s both; }
+@keyframes ig-roll { 0%, 30% { transform: translateY(0); } 40%, 66% { transform: translateY(-100cqh); } 76%, 100% { transform: translateY(-200cqh); } }
+/* radar dei tratti, che si apre e poi respira */
+.rd { width: 100%; height: 100%; overflow: visible; }
+.rd-g { fill: none; stroke: var(--iv-dot); stroke-width: 1; }
+.rd-v { fill: rgba(72,157,254,.28); stroke: var(--app-blue); stroke-width: 2; stroke-linejoin: round; }
+.rd-t { font: 600 9px var(--f-body); fill: var(--iv-ink2); }
+/* ciambella dei gusti */
+.dn { display: grid; grid-template-columns: 46% 1fr; align-items: center; gap: 14px; }
+.dn svg { width: 100%; transform: rotate(-90deg); }
+.dn-bg { fill: none; stroke: var(--iv-dot); stroke-width: 6; }
+.dn-s { fill: none; stroke-width: 6; stroke-dasharray: 0 100; stroke-dashoffset: var(--o); }
+.r-value.on .dn-s { animation: dn-grow .8s cubic-bezier(.22,1,.36,1) calc(9.2s + var(--k) * .25s) both; }
+@keyframes dn-grow { to { stroke-dasharray: var(--v) calc(100 - var(--v)); } }
+.dn-l { display: grid; gap: 9px; font-size: .78rem; }
+.dn-l span { display: grid; grid-template-columns: 10px 1fr auto; align-items: center; gap: 8px; }
+.dn-l i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+/* barre degli interessi */
+.ig-bars { display: grid; align-content: center; gap: 4px; }
+.ig-r { display: grid; grid-template-columns: 5.5em 1fr 2em; align-items: center; gap: 10px; padding: 6px 0; font-size: .84rem; }
+.ig-r b { text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
 .ig-r i { height: 8px; border-radius: 99px; background: var(--iv-dot); overflow: hidden; position: relative; }
 .ig-r i::before { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--v); border-radius: inherit; background: linear-gradient(90deg, #8FC2FF, var(--app-blue)); transform-origin: left; transform: scaleX(0); }
-.r-value.on .ig-r i::before { animation: ig-bar .7s cubic-bezier(.22,1,.36,1) calc(4.3s + var(--k) * .28s) both; }
+.r-value.on .ig-r i::before { animation: ig-bar .8s cubic-bezier(.22,1,.36,1) calc(11.2s + var(--k) * .15s) both; }
 @keyframes ig-bar { to { transform: scaleX(1); } }
-/* 3. la persona al centro, poi il ventaglio di possibilità */
-.ip-card { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 46cqw; display: grid; justify-items: center; gap: 6px; padding: 14px 10px 12px; border-radius: 24px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.14); color: var(--iv-ink); }
-.ip-card img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px var(--app-blue); }
-.ip-card b { font-size: .95rem; }
-.ip-t { font-size: .72rem; line-height: 1.25; text-align: center; color: var(--iv-ink2); opacity: 0; }
-.r-value.on .ip-card { animation: ip-pop .6s cubic-bezier(.22,1.3,.36,1) 8s both; }
-.r-value.on .ip-t { animation: iv-fade-in .4s ease calc(8.4s + var(--k) * .25s) both; }
+
+/* 3. la persona: i suoi tratti le girano attorno, ci entrano dentro, poi intorno compaiono le possibilità */
+.ip-card { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 40cqw; display: grid; justify-items: center; gap: 4px; padding: 16px 10px 14px; border-radius: 24px; background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 16px 40px rgba(11,27,51,.14); color: var(--iv-ink); }
+.ip-card img { width: 68px; height: 68px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 3px var(--app-blue); margin-bottom: 4px; }
+.ip-card b { font-size: .98rem; }
+.ip-card small { font-size: .72rem; color: var(--iv-ink2); }
+.ip-card::after { content: ""; position: absolute; inset: -2px; border-radius: inherit; box-shadow: 0 0 0 2px var(--app-blue); opacity: 0; }
+.r-value.on .ip-card { animation: ip-pop .6s cubic-bezier(.22,1.3,.36,1) 12.9s both, ip-glow 1s ease 15.2s; }
+.r-value.on .ip-card::after { animation: ip-ring 1.1s ease-out 15.2s both; }
 @keyframes ip-pop { from { transform: scale(.8); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes ip-glow { 40% { transform: scale(1.06); } }
+@keyframes ip-ring { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.35); } }
+.ip-t { position: absolute; left: 50%; top: 50%; white-space: nowrap; padding: 7px 12px; border-radius: 99px; font: 600 .76rem/1 var(--f-body); color: var(--iv-ink); background: var(--iv-card); box-shadow: inset 0 0 0 1px var(--iv-line), 0 8px 20px rgba(11,27,51,.12); opacity: 0; transform: translate(-50%, -50%) translate(calc(var(--x) * 1cqw), calc(var(--y) * 1cqh)); }
+.r-value.on .ip-t { animation: ip-t-in .5s cubic-bezier(.22,1.3,.36,1) calc(13.4s + var(--k) * .3s) both, ip-t-merge .6s cubic-bezier(.6,0,.4,1) calc(14.7s + var(--k) * .08s) forwards; }
+@keyframes ip-t-in { from { opacity: 0; transform: translate(-50%, -50%) translate(calc(var(--x) * 1.2cqw), calc(var(--y) * 1.2cqh)) scale(.8); } to { opacity: 1; transform: translate(-50%, -50%) translate(calc(var(--x) * 1cqw), calc(var(--y) * 1cqh)); } }
+@keyframes ip-t-merge { from { opacity: 1; transform: translate(-50%, -50%) translate(calc(var(--x) * 1cqw), calc(var(--y) * 1cqh)); } to { opacity: 0; transform: translate(-50%, -50%) translate(0, -8cqh) scale(.25); } }
 .ip-o { position: absolute; left: 50%; top: 50%; white-space: nowrap; padding: 7px 12px; border-radius: 99px; font: 600 .78rem/1 var(--f-body); color: #0B1B33; background: #fff; box-shadow: 0 8px 20px rgba(72,157,254,.25); transform: translate(-50%, -50%) translate(calc(var(--x) * 1cqw), calc(var(--y) * 1cqh)); opacity: 0; }
 :root:not([data-theme="dark"]) .r-value .ip-o { background: var(--app-blue); color: #fff; }
-.r-value.on .ip-o { animation: iv-out .8s cubic-bezier(.22,1.3,.36,1) calc(9.4s + var(--k) * .09s) both, iv-float 5s ease-in-out calc(10.4s + var(--k) * .2s) infinite; }
+.r-value.on .ip-o { animation: iv-out .8s cubic-bezier(.22,1.3,.36,1) calc(15.7s + var(--k) * .09s) both, iv-float 5s ease-in-out calc(16.8s + var(--k) * .2s) infinite; }
 @media (prefers-reduced-motion: reduce) {
-  .r-value .iq, .r-value .ig { display: none; }
-  .r-value .ip, .r-value .ip-card, .r-value .ip-t, .r-value .ip-o { opacity: 1 !important; animation: none !important; }
+  .r-value .iq, .r-value .ig, .r-value .ip-t { display: none; }
+  .r-value .ip, .r-value .ip-card, .r-value .ip-o { opacity: 1 !important; animation: none !important; }
 }

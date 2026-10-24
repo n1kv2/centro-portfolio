@@ -121,6 +121,7 @@
     if (r.classList.contains('r-overview') && deck) stopDeck();
     if (r.querySelector('.sv')) resetShowcase(r);
     if (thesis && r.contains(thesis)) stopThesis();
+    if (r.classList.contains('r-value')) stopRadar();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.sbox.open').forEach(function (b) { b.classList.remove('open'); });
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
@@ -154,6 +155,7 @@
     if (r.classList.contains('r-overview') && deck) playDeck();
     if (r.querySelector('.sv')) playShowcase(r);
     if (thesis && r.contains(thesis)) playThesis();
+    if (r.classList.contains('r-value')) playRadar();
 
     if (navOpen) renderIndex();
   }
@@ -357,6 +359,25 @@
       if (r.hidden) showAll(r); else go(r);
     });
   });
+
+  // ---------- Per chi investe: il radar dei tratti si apre e poi "respira" ----------
+  var rdPoly = document.querySelector('.rd-v'), rdStart = null, rdRaf = null;
+  function rdDraw(scale, t) {
+    var v = rdPoly.getAttribute('data-rd').split(',').map(Number), pts = [];
+    for (var k = 0; k < 5; k++) {
+      var a = -Math.PI / 2 + k * 2 * Math.PI / 5, r = 66 * v[k] * scale * (1 + 0.06 * Math.sin(t / 650 + k * 1.7));
+      pts.push((100 + r * Math.cos(a)).toFixed(1) + ',' + (100 + r * Math.sin(a)).toFixed(1));
+    }
+    rdPoly.setAttribute('points', pts.join(' '));
+  }
+  function rdLoop(now) {
+    var e = now - rdStart, s = Math.min(1, Math.max(0, (e - 6800) / 1100));
+    s = 1 - Math.pow(1 - s, 3);
+    rdDraw(s, e);
+    if (e < 12500) rdRaf = requestAnimationFrame(rdLoop);
+  }
+  function playRadar() { if (!rdPoly) return; cancelAnimationFrame(rdRaf); rdStart = performance.now(); rdDraw(0, 0); if (!reduce) rdRaf = requestAnimationFrame(rdLoop); else rdDraw(1, 0); }
+  function stopRadar() { if (rdPoly) { cancelAnimationFrame(rdRaf); rdDraw(0, 0); } }
 
   // ---------- Vetrine dei profili: prima com'è un profilo social, poi resta solo ciò che conta ----------
   var svTimers = {};
