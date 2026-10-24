@@ -27,7 +27,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=69">
+<link rel="stylesheet" href="css/reel.css?v=71">
 </head>
 <body class="reel-page">
 
@@ -81,24 +81,49 @@
     </div>
   </section>
 
-<section class="reel r-light r-overview" data-reel data-chapter="Introduzione" data-title="Le aree" data-desc="Tutto quello che ti serve, in una sola app">
+<section class="reel r-dark r-profile" data-reel data-chapter="Introduzione" data-title="Il tuo profilo" data-desc="Un profilo che parla di te, non di quanto piaci">
+    <div class="r-in r-top">
+      <p class="nd-label">Il tuo profilo</p>
+      <h2 class="r-h2 on-dark small-h">Un profilo che parla di te, <em>non di quanto piaci.</em></h2>
+    </div>
+    <div class="pf" aria-hidden="true">
+      <div class="pf-card">
+        <div class="pf-head"><span class="pf-av">G</span><div><b>Giulia, 24</b><span class="pf-tag"><i class="t1">Profilo social</i><i class="t2">Profilo CEnTRO</i></span></div></div>
+        <div class="pf-social">
+          <div class="pf-stats"><p><b>1.248</b><span>follower</span></p><p><b>3.902</b><span>mi piace</span></p><p><b>86</b><span>post</span></p></div>
+          <div class="pf-grid"><img src="img/inaugurazione.jpg" alt=""><img src="img/discoteca.jpg" alt=""><img src="img/trekking.jpg" alt=""></div>
+        </div>
+        <div class="pf-centro">
+          <p style="--w:88%;--d:.0s"><span>Ama i piccoli gruppi</span><i></i></p>
+          <p style="--w:76%;--d:.12s"><span>Attività all'aperto</span><i></i></p>
+          <p style="--w:64%;--d:.24s"><span>Serate tranquille</span><i></i></p>
+          <p style="--w:58%;--d:.36s"><span>Curiosa di arte</span><i></i></p>
+        </div>
+      </div>
+    </div>
+    <div class="r-in r-bottom pf-foot">
+      <p class="r-body on-dark">Niente follower, niente like: il tuo profilo nasce da chi sei ed è solo tuo.</p>
+    </div>
+  </section>
+  <section class="reel r-light r-overview" data-reel data-chapter="Introduzione" data-title="Le aree" data-desc="Tutto quello che ti serve, in una sola app">
     <div class="r-in r-top">
       <p class="nd-label">Dentro CEnTRO</p>
       <h2 class="r-h2 small-h">Tutto quello che ti serve, <em>in una sola app.</em></h2>
     </div>
-    <div class="deck2" id="deck2" aria-label="Le aree di CEnTRO: Casa, Eventi e attività, Community, Esplora, Spotted">
+    <div class="deck2" id="deck2" aria-label="Le aree di CEnTRO: Casa, Eventi, Attività, Community, Esplora, Spotted">
       <div class="dc" data-pos="0"><img src="img/area-casa.jpg" alt="" draggable="false"><span><b>Casa</b><small>Casa e coinquilini</small></span></div>
-      <div class="dc" data-pos="1"><img src="img/area-evento.jpg" alt="" draggable="false"><span><b>Eventi e attività</b><small>Cosa fare stasera</small></span></div>
-      <div class="dc" data-pos="2"><img src="img/area-community.jpg" alt="" draggable="false"><span><b>Community</b><small>Crea o unisciti</small></span></div>
+      <div class="dc" data-pos="1"><img src="img/area-evento.jpg" alt="" draggable="false"><span><b>Eventi</b><small>Cosa fare stasera</small></span></div>
+      <div class="dc" data-pos="2"><img src="img/ceramica.jpg" alt="" draggable="false"><span><b>Attività</b><small>Corsi e laboratori</small></span></div>
+      <div class="dc" data-pos="3"><img src="img/area-community.jpg" alt="" draggable="false"><span><b>Community</b><small>Crea o unisciti</small></span></div>
       <div class="dc" data-pos="3"><img src="img/area-esplora.jpg" alt="" draggable="false"><span><b>Esplora</b><small>Bandi e opportunità</small></span></div>
       <div class="dc" data-pos="3"><img src="img/area-spot.jpg" alt="" draggable="false"><span><b>Spotted</b><small>Chiedi una mano</small></span></div>
-      <div class="dk-ring" aria-hidden="true"></div>
+      <div class="dk-app" style="--c1:#3BAF9C;--c2:#93DCCF;--gx:-1;--gy:-1;--d:0.00s"><i><svg viewBox="0 0 24 24"><path d="M4 11.5L12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M10 19v-5h4v5"/></svg></i><span>Casa</span></div>
+      <div class="dk-app" style="--c1:#F06139;--c2:#F7A15E;--gx:0;--gy:-1;--d:0.07s"><i><svg viewBox="0 0 24 24"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h13A1.5 1.5 0 0 1 20 8.5V10a2 2 0 0 0 0 4v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5V14a2 2 0 0 0 0-4z"/><path d="M14 7v10" stroke-dasharray="2 2"/></svg></i><span>Eventi</span></div>
+      <div class="dk-app" style="--c1:#E0A82E;--c2:#F5D27A;--gx:1;--gy:-1;--d:0.14s"><i><svg viewBox="0 0 24 24"><path d="M12 3.5l2.4 5 5.4.6-4 3.7 1.1 5.4L12 15.5l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/></svg></i><span>Attività</span></div>
+      <div class="dk-app" style="--c1:#2E86DE;--c2:#86CDF2;--gx:-1;--gy:1;--d:0.21s"><i><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="16.5" cy="10" r="2.5"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6M14.5 14.8c2.6-.3 5 1 5.8 4.2"/></svg></i><span>Community</span></div>
+      <div class="dk-app" style="--c1:#8B1EBA;--c2:#C774E6;--gx:0;--gy:1;--d:0.28s"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg></i><span>Esplora</span></div>
+      <div class="dk-app" style="--c1:#D43998;--c2:#F27BC0;--gx:1;--gy:1;--d:0.35s"><i><svg viewBox="0 0 24 24"><path d="M5 6.5h14a1.5 1.5 0 0 1 1.5 1.5v7a1.5 1.5 0 0 1-1.5 1.5h-7l-4 3v-3H5A1.5 1.5 0 0 1 3.5 15V8A1.5 1.5 0 0 1 5 6.5z"/></svg></i><span>Spotted</span></div>
       <div class="dk-core" aria-hidden="true"><span class="dk-icon"><span class="brand-mark"></span></span><b>CEnTRO</b></div>
-      <p class="dk-l" style="--a:-90deg;--d:0.60s">Casa</p>
-      <p class="dk-l" style="--a:-18deg;--d:0.74s">Eventi e attività</p>
-      <p class="dk-l" style="--a:54deg;--d:0.88s">Community</p>
-      <p class="dk-l" style="--a:126deg;--d:1.02s">Esplora</p>
-      <p class="dk-l" style="--a:198deg;--d:1.16s">Spotted</p>
     </div>
   </section>
   <!-- Momento "Tante app, una sola" (collasso delle app): nascosto. Per rimetterlo togli l'attributo hidden qui sotto. -->
@@ -497,6 +522,6 @@
 
 </main>
 
-<script src="js/reel.js?v=54"></script>
+<script src="js/reel.js?v=55"></script>
 </body>
 </html>

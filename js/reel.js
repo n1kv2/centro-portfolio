@@ -114,6 +114,7 @@
     if (r.classList.contains('r-niamap')) resetMap();
     if (r.classList.contains('r-tools')) resetTools();
     if (r.classList.contains('r-overview') && deck) stopDeck();
+    if (r === profReel) resetProfile();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
@@ -141,6 +142,7 @@
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
     if (r.classList.contains('r-overview') && deck) playDeck();
+    if (r === profReel) playProfile();
 
     if (navOpen) renderIndex();
   }
@@ -345,14 +347,21 @@
     });
   });
 
+  // ---------- Il tuo profilo: la vetrina social lascia il posto al profilo CEnTRO ----------
+  var profReel = document.querySelector('.r-profile'), profTimer = null;
+  function playProfile() { clearTimeout(profTimer); profReel.classList.remove('swap'); profTimer = setTimeout(function () { profReel.classList.add('swap'); }, reduce ? 0 : 1700); }
+  function resetProfile() { clearTimeout(profTimer); profReel.classList.remove('swap'); }
+
   // ---------- Le aree come un mazzo di card ----------
   // Un giro automatico: la card davanti viene scartata e avanza la successiva. Finito il giro le card
-  // si dissolvono e restano i nomi delle aree, disposti con calma attorno all'icona di CEnTRO.
+  // diventano icone di app che fluttuano un attimo, poi collassano al centro e ne emerge il logo di CEnTRO.
   var deck = document.getElementById('deck2');
   var deckCards = deck ? Array.prototype.slice.call(deck.querySelectorAll('.dc')) : [];
   var deckTimer = null, deckEnd = null, deckOrder = deckCards.slice(), DECK_STEP = 2100;
+  var deckSteps = [];
   function deckLayout() {
-    deck.classList.remove('done');
+    deckSteps.forEach(clearTimeout); deckSteps = [];
+    deck.classList.remove('apps', 'merge', 'logo');
     deckOrder.forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); c.classList.remove('out', 'back'); });
   }
   function deckNext() {
@@ -363,18 +372,22 @@
     // finita l'uscita, la card scartata torna in fondo al mazzo senza farsi vedere
     setTimeout(function () { top.classList.add('back'); top.classList.remove('out'); top.setAttribute('data-pos', 3); void top.offsetWidth; top.classList.remove('back'); }, 650);
   }
-  function stopDeck() { clearInterval(deckTimer); clearTimeout(deckEnd); deckTimer = null; }
+  function stopDeck() { clearInterval(deckTimer); clearTimeout(deckEnd); deckSteps.forEach(clearTimeout); deckSteps = []; deckTimer = null; }
   function playDeck() {
     stopDeck();
     deckOrder = deckCards.slice(); deckLayout();
-    if (reduce) { deck.classList.add('done'); return; }
+    if (reduce) { deck.classList.add('apps', 'merge', 'logo'); return; }
     var n = 0;
     deckTimer = setInterval(function () {
       deckNext();
       // arrivati all'ultima card (Spotted) si resta un attimo, poi il finale: niente ritorno alla prima
       if (++n >= deckCards.length - 1) {
         clearInterval(deckTimer); deckTimer = null;
-        deckEnd = setTimeout(function () { deck.classList.add('done'); }, DECK_STEP);
+        deckEnd = setTimeout(function () {
+          deck.classList.add('apps');                                                     // le card diventano app
+          deckSteps.push(setTimeout(function () { deck.classList.add('merge'); }, 2200)); // dopo un attimo collassano
+          deckSteps.push(setTimeout(function () { deck.classList.add('logo'); }, 2900));  // ed emerge il logo
+        }, DECK_STEP);
       }
     }, DECK_STEP);
   }

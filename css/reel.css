@@ -927,7 +927,6 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 
 /* ================= v58: le aree in una fila di card che scorre da sola ================= */
 
-
 /* le card entrano dal basso quando il momento si apre */
 
 .nd-label .cn { color: inherit; }
@@ -965,10 +964,9 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .dc.out { z-index: 5; }
 .deck2.done .dc { opacity: 0; transform: translate(-50%, -50%) scale(.92); transition: opacity .9s ease, transform 1.1s cubic-bezier(.3,.7,.2,1); }
 .deck2 { --R: min(35vw, 140px, 30vh); }
-.dk-ring, .dk-core, .dk-l { position: absolute; left: 50%; top: 50%; pointer-events: none; opacity: 0; }
+ .dk-core{ position: absolute; left: 50%; top: 50%; pointer-events: none; opacity: 0; }
 /* cerchio */
-.dk-ring { width: calc(var(--R) * 2); height: calc(var(--R) * 2); border-radius: 50%; border: 1px solid color-mix(in srgb, var(--app-blue) 35%, transparent);
-  transform: translate(-50%, -50%) scale(.85); transition: opacity 1s ease .3s, transform 1.4s cubic-bezier(.2,.8,.2,1) .3s; }
+
 /* icona esattamente al centro; il nome sta sotto senza spostarla */
 .dk-core { width: 76px; height: 76px; transform: translate(-50%, -50%) scale(.8); transition: opacity .8s ease .25s, transform 1.1s cubic-bezier(.2,.9,.25,1) .25s; }
 .dk-icon { position: absolute; inset: 0; display: grid; place-items: center; background: #fff;
@@ -977,18 +975,68 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .dk-core { filter: drop-shadow(0 10px 22px rgba(11,27,51,.18)); }
 .dk-core b { position: absolute; left: 50%; top: calc(100% + 10px); transform: translateX(-50%); font-weight: 700; letter-spacing: .1em; font-size: .9rem; color: var(--nd-ink); white-space: nowrap; }
 /* nomi delle aree in chip traslucide, appoggiate sul cerchio a distanze uguali */
-.dk-l { margin: 0; padding: 9px 15px; border-radius: 99px; white-space: nowrap; font: 600 .9rem/1 var(--f-body); color: var(--nd-ink);
-  background: color-mix(in srgb, var(--nd-bg) 62%, transparent); box-shadow: inset 0 0 0 1px var(--nd-line), 0 8px 20px rgba(11,27,51,.08);
-  -webkit-backdrop-filter: blur(12px) saturate(1.3); backdrop-filter: blur(12px) saturate(1.3);
-  transform: translate(-50%, -50%) rotate(var(--a)) translateX(calc(var(--R) * .82)) rotate(calc(-1 * var(--a)));
-  transition: opacity .8s ease var(--d), transform 1.1s cubic-bezier(.2,.8,.2,1) var(--d); }
-.deck2.done .dk-ring, .deck2.done .dk-core { opacity: 1; transform: translate(-50%, -50%); }
-.deck2.done .dk-l { opacity: 1; transform: translate(-50%, -50%) rotate(var(--a)) translateX(var(--R)) rotate(calc(-1 * var(--a))); }
-@media (prefers-reduced-motion: reduce) { .deck2 .dc, .dk-ring, .dk-core, .dk-l { transition: none; } }
+
+ .deck2.done .dk-core { opacity: 1; transform: translate(-50%, -50%); }
+
+@media (prefers-reduced-motion: reduce) { .deck2 .dc, .dk-core{ transition: none; } }
 /* chip tutte uguali: la disposizione si legge simmetrica */
 .deck2 { --R: min(31vw, 132px, 28vh); }
-.dk-l { width: 128px; box-sizing: border-box; padding: 9px 8px; text-align: center; font-size: .8rem; }
+
 /* tema scuro: chip del cerchio con lo stesso traslucido dei pulsanti dei contatti */
-:root[data-theme="dark"] .dk-l { color: #fff; background: rgba(255,255,255,.14);
-  -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 10px 30px rgba(0,0,0,.25); }
+
+/* ================= v70: Il tuo profilo — dalla vetrina social al profilo CEnTRO ================= */
+.pf { position: relative; z-index: 1; flex: 1; min-height: 0; display: grid; place-items: center; padding: 18px 24px 0; }
+.pf-card { width: min(100%, 340px); padding: 18px; border-radius: 26px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); display: grid; grid-template-columns: minmax(0,1fr); }
+.pf-head { display: flex; align-items: center; gap: 12px; }
+.pf-av { width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #F06139, #D43998); color: #fff; font: 700 1.2rem var(--f-body); }
+.pf-head b { display: block; font-size: 1.05rem; }
+.pf-tag { position: relative; display: block; height: 18px; margin-top: 3px; font: 500 .64rem/18px var(--nd-mono); letter-spacing: .12em; text-transform: uppercase; }
+.pf-tag i { position: absolute; left: 0; top: 0; font-style: normal; white-space: nowrap; transition: opacity .5s ease, transform .5s ease; }
+.pf-tag .t1 { opacity: .7; }
+.pf-tag .t2 { opacity: 0; transform: translateY(6px); color: #8EC2FF; }
+/* le due facce del profilo stanno nello stesso spazio */
+.pf-social, .pf-centro { grid-row: 2; grid-column: 1; margin-top: 16px; transition: opacity .7s ease, filter .7s ease, transform .7s ease; }
+.pf-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+.pf-stats p { margin: 0; display: grid; gap: 2px; }
+.pf-stats b { font-size: 1.15rem; }
+.pf-stats span { font-size: .7rem; opacity: .7; }
+.pf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 12px; }
+.pf-grid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; display: block; }
+.pf-centro { display: grid; gap: 12px; align-content: center; opacity: 0; transform: translateY(10px); }
+.pf-centro p { margin: 0; display: grid; gap: 6px; font-size: .9rem; font-weight: 600; }
+.pf-centro i { display: block; height: 6px; border-radius: 6px; background: rgba(255,255,255,.14); position: relative; overflow: hidden; }
+.pf-centro i::before { content: ""; position: absolute; inset: 0; width: var(--w); border-radius: 6px; background: var(--app-blue); transform-origin: left; transform: scaleX(0);
+  transition: transform .9s cubic-bezier(.2,.8,.2,1) calc(.45s + var(--d)); }
+/* il passaggio */
+.r-profile.swap .pf-social { opacity: 0; filter: blur(8px); transform: scale(.97); }
+.r-profile.swap .pf-centro { opacity: 1; transform: none; transition-delay: .3s; }
+.r-profile.swap .pf-centro i::before { transform: scaleX(1); }
+.r-profile.swap .pf-tag .t1 { opacity: 0; transform: translateY(-6px); }
+.r-profile.swap .pf-tag .t2 { opacity: 1; transform: none; }
+.pf-foot { padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+@media (prefers-reduced-motion: reduce) { .pf-social, .pf-centro, .pf-centro i::before, .pf-tag i { transition: none; } }
+
+/* ================= v70: Aree — le card diventano app, fluttuano, collassano nel logo ================= */
+.deck2 { --gap-x: min(27vw, 108px); --gap-y: 64px; }
+.dk-app, .dk-core { position: absolute; left: 50%; top: 50%; pointer-events: none; }
+.dk-app { display: grid; justify-items: center; gap: 8px; opacity: 0;
+  transform: translate(calc(-50% + var(--gx) * var(--gap-x) * .4), calc(-50% + var(--gy) * var(--gap-y) * .4)) scale(.5);
+  transition: opacity .55s ease var(--d), transform .8s cubic-bezier(.2,1.1,.3,1) var(--d); }
+.dk-app i { width: 64px; height: 64px; display: grid; place-items: center; background: linear-gradient(145deg, var(--c1), var(--c2));
+  -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
+.dk-app svg { width: 30px; height: 30px; fill: none; stroke: #fff; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dk-app span { font: 600 .78rem/1 var(--f-body); color: var(--nd-ink); white-space: nowrap; }
+/* le card escono rimpicciolendosi mentre compaiono le app */
+.deck2.apps .dc { opacity: 0; transform: translate(-50%, -50%) scale(.35); transition: opacity .5s ease, transform .7s cubic-bezier(.5,0,.3,1); }
+.deck2.apps .dk-app { opacity: 1; transform: translate(calc(-50% + var(--gx) * var(--gap-x)), calc(-50% + var(--gy) * var(--gap-y))); }
+.deck2.apps .dk-app i { animation: app-float 2.4s ease-in-out infinite alternate; animation-delay: calc(var(--d) * -6); }
+@keyframes app-float { from { translate: 0 -3px; } to { translate: 0 4px; } }
+/* collasso verso il centro */
+.deck2.merge .dk-app { opacity: 0; transform: translate(-50%, -50%) scale(.2); transition: opacity .45s ease calc(var(--d) + .25s), transform .7s cubic-bezier(.7,0,.25,1) var(--d); }
+.deck2.merge .dk-app span { opacity: 0; transition: opacity .2s; }
+/* il logo emerge */
+.dk-core { width: 84px; height: 84px; opacity: 0; transform: translate(-50%, -50%) scale(.6); transition: opacity .6s ease, transform .9s cubic-bezier(.2,1.4,.4,1); }
+.deck2.logo .dk-core { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.dk-core .dk-icon .brand-mark { width: 48px; height: 48px; }
+@media (prefers-reduced-motion: reduce) { .dk-app, .dk-core, .deck2.apps .dc { transition: none; } .deck2.apps .dk-app i { animation: none; } }
