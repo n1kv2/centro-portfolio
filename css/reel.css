@@ -1199,3 +1199,6 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label { text-shadow: 0 1px 18px rgba(0,0,0,.35) !important; }
 /* Apertura, tema chiaro: velo blu più tenue, come nei contatti */
 :root:not([data-theme="dark"]) .r-hero::before { background: linear-gradient(180deg, rgba(7,16,34,.28) 0%, rgba(7,16,34,0) 22%, rgba(7,16,34,0) 50%, rgba(7,16,34,.55) 100%) !important; }
+/* profili nei reel: spazio sempre presente tra titolo, scheda e testo in basso */
+.r-uprof > .r-top, .r-bprof > .r-top { padding-bottom: 28px; }
+.r-uprof .sv-foot, .r-bprof .sv-foot { padding-top: 28px; }
