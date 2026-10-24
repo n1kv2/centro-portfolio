@@ -28,13 +28,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
 <link rel="stylesheet" href="css/reel.css?v=81">
-<link rel="stylesheet" href="css/page.css?v=14">
+<link rel="stylesheet" href="css/page.css?v=17">
 </head>
 <body class="pg proto">
-<div class="pt-top">
-  <a class="pt-gl" href="prova-reel.html" aria-label="Torna ai momenti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></a>
-  <span class="pt-gl-grp"><span class="pt-gl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.4-1.5 1.2-1.5 2.2v.6"/><circle cx="12" cy="18" r=".9" fill="currentColor" stroke="none"/></svg></span><span class="pt-gl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M6 12v6.5A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5V12"/></svg></span></span>
-</div>
+<header class="pg-bar">
+  <div class="pg-box">
+    <a class="pg-logo" href="prova-reel.html"><span class="brand-mark" aria-hidden="true"></span>CEnTRO</a>
+    <a class="pg-back" href="prova-reel.html">← Torna ai momenti</a>
+  </div>
+</header>
 <main class="proto-wrap">
   <div class="pt-cover"><img src="img/pf-costa.jpg" alt="Lorenzo sul sentiero sopra il mare"></div>
   <section class="pt-w pt-box">
@@ -67,14 +69,6 @@
       </div></div>
     </section>
     <section class="pt-w pt-sec">
-      <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14" rx="2.5"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/></svg></i><span><b>Attività del mese</b><small>4 uscite in città</small></span><em class="pt-chev" aria-hidden="true"></em></button>
-      <div class="pt-sec-b"><div class="pt-sec-in">
-        <div class="pt-body"><ul class="pt-list"><li><b>Sab 4</b><span>Escursione all'alba</span></li><li><b>Gio 9</b><span>Mostra fotografica</span></li><li><b>Dom 19</b><span>Mercato in piazza</span></li></ul></div>
-        <div class="pt-info" hidden><p>Il diario delle uscite a cui partecipi. Lo mostri solo se vuoi.</p></div>
-        <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
-      </div></div>
-    </section>
-    <section class="pt-w pt-sec">
       <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-4 9 4-9 4z"/><path d="M7 11v4.5c1.5 1.3 3.2 2 5 2s3.5-.7 5-2V11"/></svg></i><span><b>Esperienze</b><small>Studi e corsi</small></span><em class="pt-chev" aria-hidden="true"></em></button>
       <div class="pt-sec-b"><div class="pt-sec-in">
         <div class="pt-body"><ul class="pt-list"><li><b>2025</b><span>Corso di fotografia di reportage</span></li><li><b>2023</b><span>Laurea in Beni culturali</span></li></ul></div>
@@ -82,9 +76,7 @@
         <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
       </div></div>
     </section>
-  <p class="proto-note">Profilo d'esempio · le foto grigie arriveranno a breve</p>
 </main>
-<nav class="pt-nav" aria-hidden="true"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5L12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/></svg></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/></svg></span><span class="pt-nia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17c2-8 4-11 6-6s4 2 6-6" stroke="url(#ng)" stroke-width="2.4" fill="none" stroke-linecap="round"/><defs><linearGradient id="ng" x1="0" x2="1"><stop offset="0" stop-color="#F06139"/><stop offset=".5" stop-color="#D43998"/><stop offset="1" stop-color="#1E42BA"/></linearGradient></defs></svg></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4L3.5 11l6.5 2.5L12.5 20z"/><path d="M10 13.5L20 4"/></svg></span><span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="10" r="3"/><path d="M6.8 17.8c1.2-2 3-3 5.2-3s4 1 5.2 3"/></svg></span></nav>
 <div class="pt-lb" id="ptLb" hidden>
   <div class="pt-lb-in"><div class="pt-lb-img" id="ptLbImg"></div>
     <div class="pt-lb-bar"><p id="ptLbCap"></p><button type="button" class="pt-save" id="ptSave" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z"/></svg><span>Salva</span></button></div>

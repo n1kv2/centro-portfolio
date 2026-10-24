@@ -135,13 +135,8 @@ html.js [data-pg].in { opacity: 1; transform: none; }
 /* ===== Profili d'esempio: facsimile interattivo del profilo dell'app ===== */
 .proto { --pt-bg: #F5F5F7; --pt-card: #fff; --pt-shadow: 0 0 8px rgba(102,173,255,.12); background: var(--pt-bg); }
 :root[data-theme="dark"] .proto { --pt-bg: #0A1322; --pt-card: #132038; --pt-shadow: 0 0 0 1px rgba(127,140,162,.18); }
-.pt-top { position: fixed; z-index: 30; left: 0; right: 0; top: calc(14px + env(safe-area-inset-top, 0px)); max-width: 430px; margin: 0 auto; padding: 0 16px; display: flex; justify-content: space-between; pointer-events: none; }
-.pt-gl, .pt-gl-grp { pointer-events: auto; display: inline-flex; align-items: center; justify-content: center; height: 46px; border-radius: 99px; color: #0B1B33;
-  background: rgba(255,255,255,.62); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); box-shadow: 0 6px 18px rgba(11,27,51,.1); }
-.pt-gl { min-width: 46px; padding: 0 14px; }
-.pt-gl-grp { gap: 0; padding: 0 4px; }
-.pt-gl-grp .pt-gl { background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; min-width: 42px; padding: 0 9px; }
-.pt-top svg, .pt-sec-h i svg, .pt-q svg, .pt-bell svg, .pt-nav svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+ .pt-sec-h i svg, .pt-q svg{ width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .proto-wrap { max-width: 430px; margin: 0 auto; padding: 0 16px 130px; display: grid; gap: 12px; }
 .pt-cover { position: relative; margin: 0 -16px -120px; height: 410px; }
 .pt-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -158,7 +153,7 @@ html.js [data-pg].in { opacity: 1; transform: none; }
 .pt-ok { position: absolute; right: -2px; bottom: 0; width: 26px; height: 26px; border-radius: 50%; background: rgba(0,0,0,.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.5 12.5l3.6 3.6 7.4-8' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 14px no-repeat;
   -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); box-shadow: inset 0 0 0 30px rgba(72,157,254,.85); }
 .pt-logo { flex: none; width: 76px; height: 76px; border-radius: 22px; object-fit: cover; }
-.pt-bell { flex: none; align-self: start; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--pt-bg); }
+
 .pt-bio { margin: 0; font-size: .95rem; line-height: 1.45; }
 .pt-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .pt-btns button { height: 44px; border: 0; border-radius: 99px; font: 600 .92rem var(--f-body); cursor: pointer; -webkit-tap-highlight-color: transparent; }
@@ -232,14 +227,14 @@ html.js [data-pg].in { opacity: 1; transform: none; }
 .pt-save[aria-pressed="true"] svg { fill: currentColor; }
 .pt-lb-x { position: absolute; top: calc(14px + env(safe-area-inset-top, 0px)); right: 16px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-size: 1.6rem; line-height: 1; cursor: pointer; }
 /* barra di navigazione dell'app (decorativa) */
-.pt-nav { position: fixed; z-index: 25; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); translate: -50% 0; width: min(calc(100% - 32px), 398px); height: 62px; display: grid; grid-template-columns: repeat(5, 1fr); place-items: center;
-  border-radius: 99px; background: rgba(255,255,255,.66); color: #0B1B33; -webkit-backdrop-filter: blur(18px) saturate(1.6); backdrop-filter: blur(18px) saturate(1.6); box-shadow: 0 10px 30px rgba(11,27,51,.12); }
-.pt-nav svg { width: 24px; height: 24px; }
-.pt-nav .on { color: var(--app-blue); }
-.proto-note { margin: 18px 0 0; text-align: center; font: 500 .62rem/1.4 var(--nd-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--nd-muted); }
-:root[data-theme="dark"] .pt-gl, :root[data-theme="dark"] .pt-gl-grp, :root[data-theme="dark"] .pt-nav { background: rgba(20,32,56,.66); color: #F2F5FA; }
+
 @media (prefers-reduced-motion: reduce) { .pt-sec-b, .pt-follow span, .pt-lb, .pt-lb-in, .pt-body, .pt-info { transition: none; } }
 .pt-follow { place-items: center; }
-.pt-nav .pt-nia svg { width: 26px; height: 26px; }
+
 .pt-sec.info .pt-info-btn::before { font: 600 .95rem/17px var(--f-body); }
 .pt-ok { background-color: var(--app-blue); box-shadow: 0 0 0 3px var(--pt-card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* profili d'esempio: stesse proporzioni delle altre pagine, copertina che si adatta allo schermo */
+.proto-wrap { max-width: 560px; padding: 8px max(20px, env(safe-area-inset-right, 0px)) 64px max(20px, env(safe-area-inset-left, 0px)); }
+.pt-cover { margin: 0 0 calc(-1 * clamp(56px, 16vw, 96px)); height: auto; aspect-ratio: 4 / 3; border-radius: 30px; overflow: hidden; }
+.pt-cover::after { height: 40%; }
+.proto .pg-bar { position: sticky; }
