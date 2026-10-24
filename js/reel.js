@@ -365,12 +365,20 @@
 
   // ---------- La tesi: sottolineature che passano da una parola all'altra ----------
   var thesis = document.querySelector('.thesis'), tuTimer = null, tuStart = null;
+  // Un solo passaggio: l'evidenziatore passa su ogni parola, poi restano evidenziate tutte e tre
   function playThesis() {
     var tus = thesis.querySelectorAll('.tu'), k = 0;
     clearTimeout(tuStart); clearInterval(tuTimer);
-    var stepTu = function () { tus.forEach(function (u, i) { u.classList.toggle('lit', i === k); }); k = (k + 1) % (tus.length + 1); };
-    if (reduce) return;
-    tuStart = setTimeout(function () { stepTu(); tuTimer = setInterval(stepTu, 1400); }, 900);
+    var mark = function (i) { tus.forEach(function (u, j) { u.classList.toggle('lit', i === -1 || i === j); }); };
+    if (reduce) { mark(-1); return; }
+    tuStart = setTimeout(function () {
+      mark(0);
+      tuTimer = setInterval(function () {
+        k++;
+        if (k < tus.length) { mark(k); return; }
+        clearInterval(tuTimer); mark(-1);
+      }, 1300);
+    }, 900);
   }
   function stopThesis() { clearTimeout(tuStart); clearInterval(tuTimer); thesis.querySelectorAll('.tu').forEach(function (u) { u.classList.remove('lit'); }); }
 

@@ -1155,10 +1155,10 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .sv-logo { object-fit: cover; }
 @media (prefers-reduced-motion: reduce) { .sv-title > .r-h2, .scribble path { transition: none; } }
 
-/* ================= v81: tesi — sottolineature che passano di parola in parola ================= */
-.thesis .tu { position: relative; white-space: nowrap; }
-.thesis .tu::after { content: ""; position: absolute; left: 0; right: 0; bottom: -.06em; height: .1em; border-radius: 99px;
-  background: linear-gradient(100deg, #F06139, #D43998 35%, #8B1EBA 65%, #1E42BA); transform: scaleX(0); transform-origin: left center;
-  transition: transform .55s cubic-bezier(.6,0,.2,1); }
-.thesis .tu.lit::after { transform: scaleX(1); }
-.thesis .tu:not(.lit)::after { transform-origin: right center; }
+/* ================= v82: tesi — evidenziatore che passa di parola in parola ================= */
+.thesis .tu { position: relative; white-space: nowrap; z-index: 0; }
+.thesis .tu::before { content: ""; position: absolute; z-index: -1; left: -.12em; right: -.12em; top: .5em; bottom: .02em; border-radius: .14em;
+  background: rgba(72,157,254,.38); transform: scaleX(0); transform-origin: left center; transition: transform .6s cubic-bezier(.6,0,.2,1); }
+.thesis .tu.lit::before { transform: scaleX(1); }
+:root[data-theme="dark"] .thesis .tu::before, .r-dark.r-shot .thesis .tu::before { background: rgba(72,157,254,.45); }
+.thesis .nw { white-space: nowrap; }
