@@ -353,25 +353,13 @@
   var svTimers = {};
   // 1) titolo "social" e profilo pieno di numeri  2) uno scarabocchio cancella il titolo
   // 3) arriva il titolo vero  4) i numeri si dissolvono e resta ciò che conta
-  // Lo scarabocchio copre solo il testo del titolo "social", non tutta la larghezza
-  function fitScribble(r) {
-    var box = r.querySelector('.sv-title'), h = r.querySelector('.tt-a'), sv = r.querySelector('.scribble');
-    if (!box || !h || !sv) return;
-    var rg = document.createRange(); rg.selectNodeContents(h);
-    var rs = rg.getClientRects(), b = box.getBoundingClientRect(), l = Infinity, rt = -Infinity, tp = Infinity, bt = -Infinity;
-    for (var i = 0; i < rs.length; i++) { l = Math.min(l, rs[i].left); rt = Math.max(rt, rs[i].right); tp = Math.min(tp, rs[i].top); bt = Math.max(bt, rs[i].bottom); }
-    if (!isFinite(l)) return;
-    sv.style.left = (l - b.left - 6) + 'px'; sv.style.width = (rt - l + 12) + 'px';
-    sv.style.top = (tp - b.top - 2) + 'px'; sv.style.height = (bt - tp + 4) + 'px';
-  }
   function playShowcase(r) {
     resetShowcase(r);
-    fitScribble(r);
     if (reduce) { r.classList.add('scrib', 'swap', 'clean'); return; }
     var t = svTimers[r.dataset.title] = [];
     t.push(setTimeout(function () { r.classList.add('scrib'); }, 2000));
-    t.push(setTimeout(function () { r.classList.add('swap'); }, 3500));
-    t.push(setTimeout(function () { r.classList.add('clean'); }, 3900));
+    t.push(setTimeout(function () { r.classList.add('swap'); }, 2800));
+    t.push(setTimeout(function () { r.classList.add('clean'); }, 3200));
   }
   function resetShowcase(r) { (svTimers[r.dataset.title] || []).forEach(clearTimeout); r.classList.remove('scrib', 'swap', 'clean'); }
 
@@ -717,6 +705,7 @@
     var switching = prev && t && prev !== t && !reduce;
     var from = switching ? cglass.offsetHeight : 0;
     cbox.setAttribute('data-tab', t);
+    var rc = cbox.closest('.r-contact'); if (rc) rc.setAttribute('data-tab', t);
     // La foto cambia con la scelta: chi esce e raggiunge il gruppo, l'app sull'App Store, la stretta di mano
     document.querySelectorAll('.cph').forEach(function (im) { im.classList.toggle('on', im.getAttribute('data-ph') === t); });
     cbox.querySelectorAll('.cchip').forEach(function (b) { b.setAttribute('aria-expanded', b.getAttribute('data-tab') === t); });

@@ -67,7 +67,10 @@
       head.setAttribute('aria-expanded', open);
       if (!open) setTimeout(function () { setInfo(false); }, 450);
     });
+    var stack = sec.querySelector('.pt-stack');
     function setInfo(on) {
+      // la spiegazione prende lo spazio del contenuto; la sezione cresce solo se il testo non ci sta
+      stack.style.minHeight = on ? Math.max(content.offsetHeight, info.scrollHeight) + 'px' : '';
       sec.classList.toggle('info', on);
       info.setAttribute('aria-hidden', !on);
       content.setAttribute('aria-hidden', on);

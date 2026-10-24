@@ -23,6 +23,7 @@
     wr.addEventListener('click', function () {
       var open = box.classList.toggle('open');
       wr.setAttribute('aria-expanded', open);
+      wr.hidden = open;
       if (open) setTimeout(function () { document.getElementById('wrText').focus({ preventScroll: true }); }, 450);
     });
     form.addEventListener('submit', function (e) {

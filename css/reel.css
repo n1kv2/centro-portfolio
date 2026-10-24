@@ -1142,6 +1142,12 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 /* Profilo utente nel reel: il tag con la chiocciola resta, sotto il mestiere */
 .sv-tag, .sv-sub { display: block; font-size: .8rem; line-height: 1.3; color: var(--nd-ink2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sv-tag { color: var(--app-blue); font-weight: 600; }
-/* scarabocchio fatto a mano: tratto più sottile e veloce */
-.scribble path { stroke-width: 2.6; }
-.reel.scrib .scribble path { transition-duration: 1.1s, .4s; transition-timing-function: cubic-bezier(.45,.05,.55,.95), ease; }
+/* Contatti: aperta una scelta, il titolo si toglie e lascia vedere la foto */
+.r-contact .r-in > .nd-label, .r-contact .r-in > .r-h2 { transition: opacity .4s ease, visibility 0s; }
+.r-contact[data-tab="app"] .r-in > .nd-label, .r-contact[data-tab="app"] .r-in > .r-h2,
+.r-contact[data-tab="info"] .r-in > .nd-label, .r-contact[data-tab="info"] .r-in > .r-h2 { opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility 0s .3s; }
+/* stretta di mano: sugli schermi verticali sale un po', così le mani restano sopra al riquadro */
+.cph[data-ph="info"] { transform-origin: 50% 0; transition: opacity 1s cubic-bezier(.4,0,.2,1), transform .9s cubic-bezier(.22,1,.36,1); }
+@media (max-aspect-ratio: 4/5) {
+  .r-contact[data-tab="info"] .cph[data-ph="info"] { transform: translateY(-11%) scale(1.12); }
+}

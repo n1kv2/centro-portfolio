@@ -151,3 +151,5 @@ html.js [data-pg].in { opacity: 1; transform: none; }
 .pg-wform.err .ea-note { color: #FFC2B3; opacity: 1; }
 .pg-wform.ok .ea-note { color: #A6E3B8; opacity: 1; font-weight: 600; }
 .pg-for span { color: var(--nd-ink2); }
+.pg-write[hidden] { display: none; }
+.pg-wform { padding: 0; background: none; box-shadow: none; margin-top: 4px; }

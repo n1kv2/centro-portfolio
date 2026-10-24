@@ -523,3 +523,7 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 /* Atmosfera: solo il tasto nero di Nia */
 .pt-atm-go { width: 100%; }
 .pt-atm-go[hidden], .pt-atm-sum[hidden] { display: none; }
+/* la spiegazione non occupa spazio finché non si apre: niente buchi bianchi */
+.pt-stack { position: relative; transition: min-height .45s cubic-bezier(.22,1,.36,1); }
+.pt-stack > .pt-info { position: absolute; top: 0; left: 0; right: 0; }
+.pt-k20 { font-size: 17px; line-height: 22px; font-weight: 600; color: var(--pt-ink); }
