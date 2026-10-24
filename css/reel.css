@@ -1134,3 +1134,31 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
   .r-contact .r-in { margin-left: max(6vw, 40px); margin-right: auto; max-width: min(560px, 46vw); }
 }
 @media (prefers-reduced-motion: reduce) { .cph { transition: none; } }
+/* Contatti: stesso velo delle altre foto, con uno strato di colore che segue il tema */
+.r-contact { --ct-bg: #0B1424; --ct-tint: rgba(11,27,51,.42); --ct-veil: linear-gradient(180deg, rgba(7,16,34,.55) 0%, rgba(7,16,34,.25) 35%, rgba(7,16,34,.85) 100%); }
+.cphotos { background: var(--ct-bg); }
+.cph { filter: saturate(.82); }
+.cphotos::before { content: ""; position: absolute; inset: 0; z-index: 1; background: var(--ct-tint); pointer-events: none; }
+.cphotos::after { z-index: 2; }
+.r-contact::before { background: var(--ct-veil) !important; }
+@media (max-aspect-ratio: 4/5) {
+  .cphotos::after { background: linear-gradient(to bottom, transparent, var(--ct-bg)); }
+}
+@media (min-aspect-ratio: 1/1) {
+  .cphotos::after { background: linear-gradient(to right, var(--ct-bg), transparent); }
+  .r-contact { --ct-veil: linear-gradient(90deg, rgba(7,16,34,.6) 0%, rgba(7,16,34,.3) 55%, rgba(7,16,34,.25) 100%); }
+}
+/* Tema chiaro */
+:root:not([data-theme="dark"]) .r-contact { --ct-bg: #E9EEF5; --ct-tint: rgba(233,238,245,.38); --ct-veil: linear-gradient(180deg, rgba(233,238,245,.5) 0%, rgba(233,238,245,.15) 35%, rgba(233,238,245,.9) 100%); background: #E9EEF5 !important; color: #0B1B33 !important; }
+@media (min-aspect-ratio: 1/1) {
+  :root:not([data-theme="dark"]) .r-contact { --ct-veil: linear-gradient(90deg, rgba(233,238,245,.7) 0%, rgba(233,238,245,.3) 55%, rgba(233,238,245,.2) 100%); }
+}
+:root:not([data-theme="dark"]) .r-contact .r-h2, :root:not([data-theme="dark"]) .r-contact .nd-label, :root:not([data-theme="dark"]) .r-contact .nd-label span { color: #0B1B33; }
+:root:not([data-theme="dark"]) .r-contact .r-h2 em { color: #46536A; }
+:root:not([data-theme="dark"]) .r-contact .cchip { color: #0B1B33; background: rgba(255,255,255,.62); box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 10px 30px rgba(11,27,51,.12); }
+:root:not([data-theme="dark"]) .r-contact .cchip[aria-expanded="true"] { background: #0B1B33; color: #fff; box-shadow: 0 10px 30px rgba(11,27,51,.25); }
+:root:not([data-theme="dark"]) .r-contact .cpanel-glass { color: #0B1B33; background: rgba(255,255,255,.62); box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 10px 30px rgba(11,27,51,.12); }
+:root:not([data-theme="dark"]) .r-contact .ea-row input, :root:not([data-theme="dark"]) .r-contact .rq textarea { box-shadow: inset 0 0 0 1px #D5DDE8; }
+:root:not([data-theme="dark"]) .r-contact .ea-row input:focus, :root:not([data-theme="dark"]) .r-contact .rq textarea:focus { box-shadow: inset 0 0 0 2px var(--app-blue); }
+:root:not([data-theme="dark"]) .r-contact .ea.err .ea-note, :root:not([data-theme="dark"]) .r-contact .rq.err .ea-note { color: #C2361F; }
+:root:not([data-theme="dark"]) .r-contact .ea.ok .ea-note, :root:not([data-theme="dark"]) .r-contact .rq.ok .ea-note { color: #1E7A3C; }
