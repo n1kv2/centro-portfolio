@@ -114,6 +114,8 @@
     if (r.classList.contains('r-niamap')) resetMap();
     if (r.classList.contains('r-tools')) resetTools();
     if (r.classList.contains('r-overview') && deck) stopDeck();
+    if (r.querySelector('.sv')) resetShowcase(r);
+    if (thesis && r.contains(thesis)) stopThesis();
     if (r.classList.contains('r-contact') && cbox) contactTab('');
     r.querySelectorAll('.feat.in').forEach(function (f) { f.classList.remove('in'); });
   }
@@ -141,6 +143,8 @@
     if (r.classList.contains('r-niamap')) demoMap();
     if (r.classList.contains('r-tools')) playTools();
     if (r.classList.contains('r-overview') && deck) playDeck();
+    if (r.querySelector('.sv')) playShowcase(r);
+    if (thesis && r.contains(thesis)) playThesis();
 
     if (navOpen) renderIndex();
   }
@@ -345,14 +349,49 @@
     });
   });
 
+  // ---------- Vetrine dei profili: prima com'è un profilo social, poi resta solo ciò che conta ----------
+  var svTimers = {};
+  // 1) titolo "social" e profilo pieno di numeri  2) uno scarabocchio cancella il titolo
+  // 3) arriva il titolo vero  4) i numeri si dissolvono e resta ciò che conta
+  function playShowcase(r) {
+    resetShowcase(r);
+    if (reduce) { r.classList.add('scrib', 'swap', 'clean'); return; }
+    var t = svTimers[r.dataset.title] = [];
+    t.push(setTimeout(function () { r.classList.add('scrib'); }, 2000));
+    t.push(setTimeout(function () { r.classList.add('swap'); }, 2800));
+    t.push(setTimeout(function () { r.classList.add('clean'); }, 3200));
+  }
+  function resetShowcase(r) { (svTimers[r.dataset.title] || []).forEach(clearTimeout); r.classList.remove('scrib', 'swap', 'clean'); }
+
+  // ---------- La tesi: sottolineature che passano da una parola all'altra ----------
+  var thesis = document.querySelector('.thesis'), tuTimer = null, tuStart = null;
+  // Un solo passaggio: l'evidenziatore passa su ogni parola, poi restano evidenziate tutte e tre
+  function playThesis() {
+    var tus = thesis.querySelectorAll('.tu'), k = 0;
+    clearTimeout(tuStart); clearInterval(tuTimer);
+    var mark = function (i) { tus.forEach(function (u, j) { u.classList.toggle('lit', i === -1 || i === j); }); };
+    if (reduce) { mark(-1); return; }
+    tuStart = setTimeout(function () {
+      mark(0);
+      tuTimer = setInterval(function () {
+        k++;
+        if (k < tus.length) { mark(k); return; }
+        clearInterval(tuTimer); mark(-1);
+      }, 1300);
+    }, 900);
+  }
+  function stopThesis() { clearTimeout(tuStart); clearInterval(tuTimer); thesis.querySelectorAll('.tu').forEach(function (u) { u.classList.remove('lit'); }); }
+
   // ---------- Le aree come un mazzo di card ----------
   // Un giro automatico: la card davanti viene scartata e avanza la successiva. Finito il giro le card
-  // si dissolvono e restano i nomi delle aree, disposti con calma attorno all'icona di CEnTRO.
+  // diventano icone di app che fluttuano un attimo, poi collassano al centro e ne emerge il logo di CEnTRO.
   var deck = document.getElementById('deck2');
   var deckCards = deck ? Array.prototype.slice.call(deck.querySelectorAll('.dc')) : [];
   var deckTimer = null, deckEnd = null, deckOrder = deckCards.slice(), DECK_STEP = 2100;
+  var deckSteps = [];
   function deckLayout() {
-    deck.classList.remove('done');
+    deckSteps.forEach(clearTimeout); deckSteps = [];
+    deck.classList.remove('apps', 'merge', 'logo');
     deckOrder.forEach(function (c, k) { c.setAttribute('data-pos', Math.min(k, 3)); c.classList.remove('out', 'back'); });
   }
   function deckNext() {
@@ -363,18 +402,22 @@
     // finita l'uscita, la card scartata torna in fondo al mazzo senza farsi vedere
     setTimeout(function () { top.classList.add('back'); top.classList.remove('out'); top.setAttribute('data-pos', 3); void top.offsetWidth; top.classList.remove('back'); }, 650);
   }
-  function stopDeck() { clearInterval(deckTimer); clearTimeout(deckEnd); deckTimer = null; }
+  function stopDeck() { clearInterval(deckTimer); clearTimeout(deckEnd); deckSteps.forEach(clearTimeout); deckSteps = []; deckTimer = null; }
   function playDeck() {
     stopDeck();
     deckOrder = deckCards.slice(); deckLayout();
-    if (reduce) { deck.classList.add('done'); return; }
+    if (reduce) { deck.classList.add('apps', 'merge', 'logo'); return; }
     var n = 0;
     deckTimer = setInterval(function () {
       deckNext();
       // arrivati all'ultima card (Spotted) si resta un attimo, poi il finale: niente ritorno alla prima
       if (++n >= deckCards.length - 1) {
         clearInterval(deckTimer); deckTimer = null;
-        deckEnd = setTimeout(function () { deck.classList.add('done'); }, DECK_STEP);
+        deckEnd = setTimeout(function () {
+          deck.classList.add('apps');                                                     // le card diventano app
+          deckSteps.push(setTimeout(function () { deck.classList.add('merge'); }, 2200)); // dopo un attimo collassano
+          deckSteps.push(setTimeout(function () { deck.classList.add('logo'); }, 2900));  // ed emerge il logo
+        }, DECK_STEP);
       }
     }, DECK_STEP);
   }
