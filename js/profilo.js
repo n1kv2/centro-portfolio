@@ -79,16 +79,26 @@
     });
   });
 
-  // Diario: Settimana / Mese
+  // Diario: Settimana (sette giorni) / Mese (quattro settimane)
   document.querySelectorAll('[data-seg]').forEach(function (s) {
-    var sec = s.closest('.pt-content'), bars = sec.querySelectorAll('[data-bars] i'), range = sec.querySelector('[data-range]');
+    var sec = s.closest('.pt-content'), barsEl = sec.querySelector('[data-bars]'), days = sec.querySelector('[data-days]'), range = sec.querySelector('[data-range]');
     var ranges = range ? range.getAttribute('data-range').split('|') : [];
+    var COLS = ['#B1E6FF', '#9ABAFF', '#ABFECD', '#99FEA3', '#99FEA3', '#ABFECD', '#B1E6FF'];
     s.querySelectorAll('button').forEach(function (b, i) {
       b.addEventListener('click', function () {
+        if (b.getAttribute('aria-pressed') === 'true') return;
         s.setAttribute('data-on', i);
         s.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-        b.getAttribute('data-v').split(',').forEach(function (v, k) { if (bars[k]) bars[k].style.setProperty('--h', v + '%'); });
+        var v = b.getAttribute('data-v').split(','), l = b.getAttribute('data-l').split(',');
+        barsEl.style.gridTemplateColumns = days.style.gridTemplateColumns = 'repeat(' + v.length + ', 1fr)';
+        barsEl.innerHTML = v.map(function (x, k) { return '<span><i style="--h:0%;--c:' + COLS[(k * 2) % 7] + '"></i></span>'; }).join('');
+        days.innerHTML = l.map(function (x) { return '<span>' + x + '</span>'; }).join('');
+        requestAnimationFrame(function () { requestAnimationFrame(function () {
+          barsEl.querySelectorAll('i').forEach(function (el, k) { el.style.setProperty('--h', v[k] + '%'); });
+        }); });
         if (range) range.textContent = ranges[i];
+        var tip = sec.querySelector('[data-tip]');
+        if (tip) tip.textContent = tip.getAttribute('data-tip').split('|')[i];
       });
     });
   });
