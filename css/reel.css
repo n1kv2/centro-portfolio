@@ -1166,3 +1166,8 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root:not([data-theme="dark"]) .r-hero .r-h1, :root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label, :root:not([data-theme="dark"]) .r-problem .nd-label span { color: #0B1B33 !important; text-shadow: 0 0 22px rgba(255,255,255,.85), 0 0 4px rgba(255,255,255,.6); }
 :root:not([data-theme="dark"]) .r-hero .r-h1 em, :root:not([data-theme="dark"]) .r-problem .r-h2 em { color: #34435C !important; }
 :root:not([data-theme="dark"]) .r-hero .r-hint { color: rgba(11,27,51,.65); }
+/* tema chiaro: niente alone bianco attorno ai titoli sulle foto, solo la sfumatura dell'immagine */
+:root:not([data-theme="dark"]) .r-hero .r-h1, :root:not([data-theme="dark"]) .r-problem .r-h2, :root:not([data-theme="dark"]) .r-problem .r-body, :root:not([data-theme="dark"]) .r-problem .nd-label,
+:root:not([data-theme="dark"]) .r-contact .r-h2, :root:not([data-theme="dark"]) .r-contact .nd-label { text-shadow: none !important; }
+:root:not([data-theme="dark"]) .r-hero::before { background: linear-gradient(180deg, rgba(233,238,245,.2) 0%, rgba(233,238,245,0) 20%, rgba(233,238,245,0) 48%, rgba(233,238,245,.55) 66%, rgba(233,238,245,.9) 100%) !important; }
+:root:not([data-theme="dark"]) .r-problem::before { background: linear-gradient(180deg, rgba(233,238,245,.2) 0%, rgba(233,238,245,0) 22%, rgba(233,238,245,0) 50%, rgba(233,238,245,.6) 68%, rgba(233,238,245,.9) 100%) !important; }
