@@ -28,33 +28,84 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/prova.css?v=6">
 <link rel="stylesheet" href="css/reel.css?v=81">
-<link rel="stylesheet" href="css/page.css?v=10">
+<link rel="stylesheet" href="css/page.css?v=14">
 </head>
 <body class="pg proto">
-<a class="proto-back" href="prova-reel.html">← Torna ai momenti</a>
+<div class="pt-top">
+  <a class="pt-gl" href="prova-reel.html" aria-label="Torna ai momenti"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></a>
+  <span class="pt-gl-grp"><span class="pt-gl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.2 9a3 3 0 1 1 4.3 2.7c-.9.4-1.5 1.2-1.5 2.2v.6"/><circle cx="12" cy="18" r=".9" fill="currentColor" stroke="none"/></svg></span><span class="pt-gl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M6 12v6.5A1.5 1.5 0 0 0 7.5 20h9a1.5 1.5 0 0 0 1.5-1.5V12"/></svg></span></span>
+</div>
 <main class="proto-wrap">
-  <div class="pt-cover pt-wide"><img src="img/az-cover.jpg" alt="Il Caffè dei Portici sotto i portici del centro"></div>
+  <div class="pt-cover"><img src="img/az-cover.jpg" alt="Il Caffè dei Portici sotto i portici del centro"></div>
   <section class="pt-w pt-box">
-    <div class="pt-id"><img class="pt-logo" src="img/az-logo.jpg" alt=""><div><b>Caffè dei Portici</b><span>Bar e caffetteria · aperto ora</span></div><i class="pt-bell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 1.5h-14z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></i></div>
-    <p class="pt-bio">Colazioni, aperitivi e musica dal vivo sotto i portici del centro. <em class="pt-disc">Discover</em></p>
-    <div class="pt-btns"><span>Messaggio</span><span class="pri">Segui</span></div>
+    <div class="pt-id"><img class="pt-logo" src="img/az-logo.jpg" alt=""><div><b>Caffè dei Portici</b><span>Bar e caffetteria</span></div><i class="pt-bell"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 1.5h-14z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></i></div>
+    <p class="pt-bio">Colazioni, aperitivi e musica dal vivo sotto i portici del centro.</p>
+    <div class="pt-btns"><button type="button" class="pt-msg">Messaggio</button><button type="button" class="pt-follow" aria-pressed="false"><span class="t1">Segui</span><span class="t2">Segui già</span></button></div>
   </section>
-  <section class="pt-w pt-album"><img src="img/az-colazione.jpg" alt=""><img src="img/az-aperitivo.jpg" alt=""><img src="img/az-musica.jpg" alt=""></section>
+  <section class="pt-w pt-quick">
+    <p class="pt-quick-t">Info Rapide</p>
+    <div class="pt-q"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4.5l3 2"/></svg></i><span><small>Orari</small><b>Aperto ora · chiude alle 20:00</b></span></div>
+    <div class="pt-q"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/></svg></i><span><small>Dove</small><b>Via dei Portici 12, L'Aquila · 0,4 km da te</b></span></div>
+    <div class="pt-q"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4h3l1.5 4-2 1.3a10 10 0 0 0 5.7 5.7L16 13l4 1.5v3a2 2 0 0 1-2.2 2A15.5 15.5 0 0 1 4.5 6.2 2 2 0 0 1 6.5 4z"/></svg></i><span><small>Contatti</small><b>0862 123 456 · caffedeiportici.it</b></span></div>
+  </section>
+  <section class="pt-w pt-album">
+    <button type="button" class="pt-ph big" data-src="img/az-colazione.jpg" data-cap="Cornetto e cappuccino, ogni mattina dalle 7." aria-label="Apri la foto"><img src="img/az-colazione.jpg" alt=""></button><button type="button" class="pt-ph" data-src="img/az-aperitivo.jpg" data-cap="L'aperitivo sotto i portici." aria-label="Apri la foto"><img src="img/az-aperitivo.jpg" alt=""></button><button type="button" class="pt-ph" data-src="img/az-musica.jpg" data-cap="Musica dal vivo, il venerdì sera." aria-label="Apri la foto"><img src="img/az-musica.jpg" alt=""></button>
+  </section>
   <section class="pt-w pt-car">
     <p class="pt-k">In programma</p>
-    <div class="pt-slide"><img src="img/az-musica.jpg" alt=""><span class="pt-dots"><i class="on"></i><i></i><i></i></span></div>
+    <button type="button" class="pt-ph gray slide" data-cap="Jazz al tramonto: due set, ingresso libero." aria-label="Apri la foto"></button>
     <small>VEN 30 OTT · 19:30</small><b>Jazz al tramonto</b>
   </section>
-  <div class="pt-grid">
-    <div class="pt-w pt-sec"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h13A1.5 1.5 0 0 1 20 8.5V10a2 2 0 0 0 0 4v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5V14a2 2 0 0 0 0-4z"/></svg></i><b>Eventi</b><span>3 in programma</span></div>
-    <div class="pt-w pt-sec"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3"/><circle cx="16.5" cy="10" r="2.5"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6M14.5 14.8c2.6-.3 5 1 5.8 4.2"/></svg></i><b>Attività</b><span>Corso di latte art</span></div>
-    <div class="pt-w pt-sec"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.4 5 5.4.6-4 3.7 1.1 5.4L12 15.5l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/></svg></i><b>Recensioni</b><span>4,8 · 126 opinioni</span></div>
-    <div class="pt-w pt-sec"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9c2.5-2 5-2 7.5 0s5 2 7.5 0M3.5 15c2.5-2 5-2 7.5 0s5 2 7.5 0"/></svg></i><b>Atmosfera</b><span>Tranquilla, musica bassa</span></div>
-    <div class="pt-w pt-sec"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/></svg></i><b>Contatti</b><span>Orari e indicazioni</span></div>
-    <div class="pt-w pt-sec"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></i><b>Bacheca</b><span>Offerte e annunci</span></div>
-  </div>
-  <p class="proto-note">Profilo d'esempio</p>
+    <section class="pt-w pt-sec">
+      <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7h13A1.5 1.5 0 0 1 20 8.5V10a2 2 0 0 0 0 4v1.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 15.5V14a2 2 0 0 0 0-4z"/></svg></i><span><b>Eventi</b><small>3 in programma</small></span><em class="pt-chev" aria-hidden="true"></em></button>
+      <div class="pt-sec-b"><div class="pt-sec-in">
+        <div class="pt-body"><ul class="pt-list"><li><b>Ven 30</b><span>Jazz al tramonto</span></li><li><b>Sab 7</b><span>Degustazione di vini abruzzesi</span></li><li><b>Ven 13</b><span>Acustico sotto i portici</span></li></ul></div>
+        <div class="pt-info" hidden><p>Tutti gli eventi dell'attività in un posto: chi segue il profilo li vede per primo e può prenotare da qui.</p></div>
+        <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
+      </div></div>
+    </section>
+    <section class="pt-w pt-sec">
+      <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3"/><circle cx="16.5" cy="10" r="2.5"/><path d="M3.5 19c.6-3 2.8-4.6 5.5-4.6s4.9 1.6 5.5 4.6M14.5 14.8c2.6-.3 5 1 5.8 4.2"/></svg></i><span><b>Attività</b><small>Corsi e laboratori</small></span><em class="pt-chev" aria-hidden="true"></em></button>
+      <div class="pt-sec-b"><div class="pt-sec-in">
+        <div class="pt-body"><ul class="pt-list"><li><b>Sabato</b><span>Corso di latte art</span></li><li><b>Mercoledì</b><span>Caffè in lingua inglese</span></li></ul></div>
+        <div class="pt-info" hidden><p>Le attività ripetibili, come corsi e laboratori, con i giorni in cui si svolgono.</p></div>
+        <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
+      </div></div>
+    </section>
+    <section class="pt-w pt-sec">
+      <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.4 5 5.4.6-4 3.7 1.1 5.4L12 15.5l-4.9 2.7 1.1-5.4-4-3.7 5.4-.6z"/></svg></i><span><b>Recensioni</b><small>4,8 · 126 opinioni</small></span><em class="pt-chev" aria-hidden="true"></em></button>
+      <div class="pt-sec-b"><div class="pt-sec-in">
+        <div class="pt-body"><ul class="pt-list"><li><b>★★★★★</b><span>Il posto migliore per studiare la mattina.</span></li><li><b>★★★★☆</b><span>Aperitivo ottimo, musica bella il venerdì.</span></li></ul></div>
+        <div class="pt-info" hidden><p>Le recensioni arrivano da chi ha davvero partecipato e aiutano Nia a capire a chi suggerire l'attività.</p></div>
+        <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
+      </div></div>
+    </section>
+    <section class="pt-w pt-sec">
+      <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 9c2.5-2 5-2 7.5 0s5 2 7.5 0M3.5 15c2.5-2 5-2 7.5 0s5 2 7.5 0"/></svg></i><span><b>Atmosfera</b><small>Com'è stare qui</small></span><em class="pt-chev" aria-hidden="true"></em></button>
+      <div class="pt-sec-b"><div class="pt-sec-in">
+        <div class="pt-body"><div class="pt-chips"><span>Tranquilla</span><span>Studenti</span><span>Musica bassa</span><span>Tavoli all'aperto</span></div></div>
+        <div class="pt-info" hidden><p>Con l'abbonamento Discover descrivi l'ambiente e le persone che lo frequentano: Nia ti suggerisce a chi è più affine.</p></div>
+        <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
+      </div></div>
+    </section>
+    <section class="pt-w pt-sec">
+      <button type="button" class="pt-sec-h" aria-expanded="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 13h8M8 17h5"/></svg></i><span><b>Bacheca</b><small>Offerte e annunci</small></span><em class="pt-chev" aria-hidden="true"></em></button>
+      <div class="pt-sec-b"><div class="pt-sec-in">
+        <div class="pt-body"><ul class="pt-list"><li><b>Offerta</b><span>Colazione studenti a 2,50 €</span></li><li><b>Cerchiamo</b><span>Barista per il fine settimana</span></li></ul></div>
+        <div class="pt-info" hidden><p>Offerte, annunci di lavoro e novità. Chi ha attivato le notifiche intelligenti viene avvisato.</p></div>
+        <button type="button" class="pt-info-btn"><span class="t1">A cosa serve</span><span class="t2">Chiudi</span></button>
+      </div></div>
+    </section>
+  <p class="proto-note">Profilo d'esempio · le foto grigie arriveranno a breve</p>
 </main>
+<nav class="pt-nav" aria-hidden="true"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5L12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/></svg></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8.5v7M8.5 12h7"/></svg></span><span class="pt-nia"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17c2-8 4-11 6-6s4 2 6-6" stroke="url(#ng)" stroke-width="2.4" fill="none" stroke-linecap="round"/><defs><linearGradient id="ng" x1="0" x2="1"><stop offset="0" stop-color="#F06139"/><stop offset=".5" stop-color="#D43998"/><stop offset="1" stop-color="#1E42BA"/></linearGradient></defs></svg></span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4L3.5 11l6.5 2.5L12.5 20z"/><path d="M10 13.5L20 4"/></svg></span><span class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="10" r="3"/><path d="M6.8 17.8c1.2-2 3-3 5.2-3s4 1 5.2 3"/></svg></span></nav>
+<div class="pt-lb" id="ptLb" hidden>
+  <div class="pt-lb-in"><div class="pt-lb-img" id="ptLbImg"></div>
+    <div class="pt-lb-bar"><p id="ptLbCap"></p><button type="button" class="pt-save" id="ptSave" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10a1 1 0 0 1 1 1v15l-6-4-6 4V5a1 1 0 0 1 1-1z"/></svg><span>Salva</span></button></div>
+  </div>
+  <button type="button" class="pt-lb-x" aria-label="Chiudi">×</button>
+</div>
 <script src="js/page.js?v=3"></script>
+<script src="js/profilo.js?v=1"></script>
 </body>
 </html>
