@@ -1361,3 +1361,15 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-value.on .ip-card { animation: ip-pop .6s cubic-bezier(.22,1.3,.36,1) 14.3s both, ip-glow 1s ease 16.6s; }
 .r-value.on .ip-t { animation: ip-t-in .5s cubic-bezier(.22,1.3,.36,1) calc(14.8s + var(--k) * .3s) both, ip-t-merge .6s cubic-bezier(.6,0,.4,1) calc(16.1s + var(--k) * .08s) forwards; }
 .r-value.on .ip-o { animation: iv-out .8s cubic-bezier(.22,1.3,.36,1) calc(17.1s + var(--k) * .09s) both, iv-float 5s ease-in-out calc(18.2s + var(--k) * .2s) infinite; }
+/* l'animazione del valore sta al centro e più grande */
+.r-value .iv2 { margin: auto; height: min(400px, 56svh); width: min(calc(100% - 40px), 380px); }
+.r-value > .r-top { padding-bottom: 8px; }
+/* Un vero questionario: titolo grande al centro */
+.r-quest .r-in { text-align: center; }
+.r-quest .r-h2 { font-size: clamp(2.6rem, 11vw, 4rem); line-height: 1.02; }
+.r-quest .r-body { max-width: 30ch; margin-inline: auto; }
+.r-quest .nd-label { justify-content: center; text-align: center; margin-inline: auto; }
+/* Un vero questionario: al centro in verticale, allineato a sinistra */
+.r-quest .r-in { text-align: left; }
+.r-quest .nd-label { justify-content: flex-start; text-align: left; margin-inline: 0; }
+.r-quest .r-body { margin-inline: 0; max-width: 32ch; }
