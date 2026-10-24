@@ -467,3 +467,21 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .dm-list li svg.ic.ph, .dm-ghost svg.ic.ph { width: 16px; height: 16px; }
 .dm-list li svg.ic.ph.lk { width: 13px; height: 13px; fill: var(--pt-gray); margin-left: auto; }
 .pt-map-pin svg.ic.ph { fill: #fff; }
+/* Icone Solar (480 Design, CC BY 4.0): tratto sottile e arrotondato */
+.proto svg.ic.so { fill: none; stroke: none; }
+.pt-ico svg.ic.so { width: 26px; height: 26px; }
+.pt-ok svg.ic.ph { width: 14px; height: 14px; }
+.pt-chev svg.ic.so { width: 20px; height: 20px; margin: 1px; }
+.pt-info-btn i svg.ic.so { width: 22px; height: 22px; }
+.dm-list li svg.ic.so, .dm-ghost svg.ic.so { width: 16px; height: 16px; }
+.dm-list li svg.ic.so.lk { width: 14px; height: 14px; margin-left: auto; color: var(--pt-gray); }
+.pt-map-pin svg.ic.so { color: #fff; }
+.pt-addr-go svg.ic.so { width: 18px; height: 18px; }
+.pt-stars svg { fill: #FFB731; }
+/* righe senza icone: etichetta e valore, separati da una linea */
+.pt-row > span { gap: 3px; }
+.pt-act { padding: 16px; gap: 4px; }
+/* Spot: niente bordo colorato */
+.pt-spot { border: 0; background: var(--pt-soft); }
+.pt-spot .msg { background: var(--pt-card); }
+.pt-spot footer .tag { background: var(--pt-blue-soft); color: var(--pt-blue); }
