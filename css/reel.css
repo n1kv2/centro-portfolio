@@ -1015,45 +1015,6 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 @media (prefers-reduced-motion: reduce) { .dk-app, .dk-core, .deck2.apps .dc { transition: none; } .deck2.apps .dk-app i { animation: none; } }
 
 /* ================= v72: profili a widget (utente e azienda) ================= */
-.pp { position: relative; z-index: 1; flex: 1; min-height: 0; width: calc(100% - 40px); max-width: 360px; margin: 14px auto 0; display: grid; align-content: start; gap: 8px; }
-.pp-cover { position: absolute; left: -20px; right: -20px; top: 0; height: 130px; border-radius: 24px; overflow: hidden; }
-.pp-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.pp-cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0) 30%, var(--nd-bg)); }
-.wg { position: relative; background: var(--surface, #fff); border-radius: 24px; box-shadow: 0 0 10px rgba(102,173,255,.14), 0 10px 26px rgba(11,27,51,.06);
-  opacity: 0; transform: translateY(14px) scale(.98); transition: opacity .5s ease, transform .6s cubic-bezier(.2,.9,.3,1); transition-delay: calc(.35s + var(--i) * .12s); }
-.r-uprof.on .wg, .r-bprof.on .wg { opacity: 1; transform: none; }
-.pp-box { margin-top: 72px; padding: 14px; display: grid; gap: 10px; }
-.pp-id { display: flex; align-items: center; gap: 12px; }
-.pp-id > div { min-width: 0; flex: 1; display: grid; gap: 2px; }
-.pp-id b { font-size: 1rem; }
-.pp-id span { font-size: .78rem; color: var(--nd-ink2); }
-.pp-av { position: relative; flex: none; width: 52px; height: 52px; }
-.pp-av img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; display: block; }
-.pp-ok { position: absolute; right: -3px; bottom: -2px; width: 20px; height: 20px; border-radius: 50%; background: var(--app-blue) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.5 12.5l3.6 3.6 7.4-8' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat; box-shadow: 0 0 0 2px var(--surface, #fff); }
-.pp-logo { flex: none; width: 52px; height: 52px; display: grid; place-items: center; background: linear-gradient(145deg, #C4553A, #EB9B85); color: #fff; font: 700 1.05rem var(--f-body);
-  -webkit-mask: var(--squircle) center / 100% 100% no-repeat; mask: var(--squircle) center / 100% 100% no-repeat; }
-.pp-disc { flex: none; align-self: start; padding: 4px 8px; border-radius: 99px; background: rgba(72,157,254,.14); color: #2F6FDE; font: 500 .58rem/1 var(--nd-mono); letter-spacing: .1em; text-transform: uppercase; font-style: normal; }
-.pp-bio { margin: 0; font-size: .82rem; line-height: 1.4; color: var(--nd-ink2); }
-.pp-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.pp-btns span { height: 34px; display: grid; place-items: center; border-radius: 99px; font: 600 .8rem var(--f-body); background: var(--nd-bg); color: var(--nd-ink); }
-.pp-btns .pri { background: var(--app-blue); color: #fff; }
-.pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.pp-sec { padding: 12px; display: grid; gap: 3px; align-content: start; }
-.pp-sec i { width: 30px; height: 30px; margin-bottom: 4px; display: grid; place-items: center; border-radius: 10px; background: rgba(72,157,254,.12); color: var(--app-blue); }
-.pp-sec svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.pp-sec b { font-size: .84rem; }
-.pp-sec span { font-size: .72rem; line-height: 1.3; color: var(--nd-ink2); }
-.pp-album { padding: 8px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 4px; align-content: start; }
-.pp-album img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; display: block; }
-.pp-album span { grid-column: 1 / -1; padding: 4px 4px 2px; font-size: .78rem; font-weight: 700; }
-.pp-proj { overflow: hidden; }
-.pp-proj img { width: 100%; height: 100%; min-height: 96px; object-fit: cover; display: block; position: absolute; inset: 0; }
-.pp-proj::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,12,26,0) 35%, rgba(5,12,26,.7)); border-radius: inherit; }
-.pp-proj span { position: absolute; left: 10px; right: 10px; bottom: 9px; z-index: 1; display: grid; gap: 2px; color: #fff; }
-.pp-proj small { font: 500 .56rem/1 var(--nd-mono); letter-spacing: .1em; opacity: .85; }
-.pp-proj b { font-size: .82rem; }
-.pp-foot { padding-bottom: calc(34px + env(safe-area-inset-bottom, 0px)); }
-@media (prefers-reduced-motion: reduce) { .wg { opacity: 1; transform: none; transition: none; } }
 
 /* ================= v72: tema chiaro — anche i momenti scuri senza foto diventano chiari, con una tonalità appena diversa ================= */
 :root:not([data-theme="dark"]) .r-dark:not(.r-shot) { background-color: #E9EEF5; color: #0B1B33; }
@@ -1067,14 +1028,6 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root:not([data-theme="dark"]) .r-dark:not(.r-shot) .dc-card { box-shadow: 0 14px 34px rgba(11,27,51,.12); }
 :root:not([data-theme="dark"]) .r-dark:not(.r-shot) .is-res li.tip { color: #fff; }
 /* profili più compatti: il blocco segue il contenuto, così su schermi bassi scatta l'adattamento */
-.pp { flex: none; margin-top: 10px; }
-.pp-cover { height: 104px; }
-.pp-box { margin-top: 54px; padding: 12px 14px; gap: 9px; }
-.pp-album { grid-column: 1 / -1; grid-template-columns: repeat(3, 1fr) auto; align-items: center; }
-.pp-album img { aspect-ratio: auto; height: 56px; }
-.pp-album span { grid-column: auto; grid-row: 1; order: -1; padding: 0 8px 0 6px; writing-mode: horizontal-tb; }
-.pp-proj { min-height: 96px; }
-.pp-sec { padding: 11px 12px; }
 
 /* ================= v77: vetrine dei profili — il "social" si dissolve e resta ciò che conta ================= */
 .sv { position: relative; z-index: 1; flex: none; width: calc(100% - 48px); max-width: 360px; margin: 18px auto 0; }
@@ -1133,9 +1086,7 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root:not([data-theme="dark"]) .r-light .glass-btn i { background: #0B1B33; }
 :root:not([data-theme="dark"]) .r-light .glass-btn i::before { border-color: #fff; }
 /* pagine dei profili: i widget sono sempre visibili */
-.pg .wg { opacity: 1; transform: none; }
-.pg .pp { flex: none; width: 100%; max-width: 380px; margin: 28px auto 0; }
-.pg .pp-cover { left: 0; right: 0; }
+
 .sv-ad { margin: 0 0 -8px; padding: 0; background: none; box-shadow: none; color: #0B1B33; font: 700 .72rem/1.2 var(--f-body); max-height: 20px; overflow: hidden; }
 .clean .sv-ad { visibility: visible; max-height: 0; margin-bottom: -14px; transition: opacity .5s ease, max-height .6s ease .3s, margin .6s ease .3s; }
 :root[data-theme="dark"] .sv-ad { color: #F2F5FA; }
@@ -1163,3 +1114,58 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 :root[data-theme="dark"] .thesis .tu::before, .r-dark.r-shot .thesis .tu::before { background: rgba(72,157,254,.45); }
 .thesis .nw { white-space: nowrap; }
 .thesis em { display: block; margin-top: .55em; }
+
+/* Contatti: tre foto nello stesso spazio, si cambiano in dissolvenza */
+.r-contact::before { background: linear-gradient(180deg, rgba(7,16,34,.35) 0%, rgba(7,16,34,.12) 38%, rgba(7,16,34,.7) 68%, rgba(7,16,34,.92) 100%); }
+.cphotos { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: #0B1424; }
+.cph { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: var(--pos, 50% 40%); opacity: 0; transition: opacity 1s cubic-bezier(.4,0,.2,1); }
+.cph.on { opacity: 1; }
+/* Schermi verticali: la foto mantiene le sue proporzioni in alto, senza tagliare volti o telefono, e sfuma nello sfondo */
+@media (max-aspect-ratio: 4/5) {
+  .cphotos { bottom: auto; height: min(125vw, 74%); }
+  .cphotos::after { content: ""; position: absolute; inset: auto 0 0; height: 34%; background: linear-gradient(to bottom, rgba(11,20,36,0), #0B1424); }
+  .r-contact::before { background: linear-gradient(180deg, rgba(7,16,34,.3) 0%, rgba(7,16,34,0) 22%, rgba(7,16,34,0) 45%, rgba(7,16,34,.75) 72%, rgba(7,16,34,.9) 100%); }
+}
+/* Schermi larghi: foto a destra a tutta altezza, testo e modulo a sinistra */
+@media (min-aspect-ratio: 1/1) {
+  .cphotos { left: auto; width: min(50%, 80vh); }
+  .cphotos::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 30%; background: linear-gradient(to right, #0B1424, rgba(11,20,36,0)); }
+  .r-contact::before { background: linear-gradient(90deg, rgba(7,16,34,.6) 0%, rgba(7,16,34,.2) 55%, rgba(7,16,34,0) 70%); }
+  .r-contact .r-in { margin-left: max(6vw, 40px); margin-right: auto; max-width: min(560px, 46vw); }
+}
+@media (prefers-reduced-motion: reduce) { .cph { transition: none; } }
+/* Contatti: stesso velo delle altre foto, con uno strato di colore che segue il tema */
+.r-contact { --ct-bg: #0B1424; --ct-tint: rgba(11,27,51,.42); --ct-veil: linear-gradient(180deg, rgba(7,16,34,.55) 0%, rgba(7,16,34,.25) 35%, rgba(7,16,34,.85) 100%); }
+.cphotos { background: var(--ct-bg); }
+.cph { filter: saturate(.82); }
+.cphotos::before { content: ""; position: absolute; inset: 0; z-index: 1; background: var(--ct-tint); pointer-events: none; }
+.cphotos::after { z-index: 2; }
+.r-contact::before { background: var(--ct-veil) !important; }
+@media (max-aspect-ratio: 4/5) {
+  .cphotos::after { background: linear-gradient(to bottom, transparent, var(--ct-bg)); }
+}
+@media (min-aspect-ratio: 1/1) {
+  .cphotos::after { background: linear-gradient(to right, var(--ct-bg), transparent); }
+  .r-contact { --ct-veil: linear-gradient(90deg, rgba(7,16,34,.6) 0%, rgba(7,16,34,.3) 55%, rgba(7,16,34,.25) 100%); }
+}
+/* Tema chiaro */
+:root:not([data-theme="dark"]) .r-contact { --ct-bg: #E9EEF5; --ct-tint: rgba(233,238,245,.12); --ct-veil: linear-gradient(180deg, rgba(233,238,245,.22) 0%, rgba(233,238,245,0) 30%, rgba(233,238,245,0) 50%, rgba(233,238,245,.88) 100%); background: #E9EEF5 !important; color: #0B1B33 !important; }
+@media (min-aspect-ratio: 1/1) {
+  :root:not([data-theme="dark"]) .r-contact { --ct-veil: linear-gradient(90deg, rgba(233,238,245,.6) 0%, rgba(233,238,245,.1) 55%, rgba(233,238,245,0) 100%); }
+}
+:root:not([data-theme="dark"]) .r-contact .r-h2, :root:not([data-theme="dark"]) .r-contact .nd-label, :root:not([data-theme="dark"]) .r-contact .nd-label span { color: #0B1B33; }
+:root:not([data-theme="dark"]) .r-contact .r-h2 em { color: #46536A; }
+:root:not([data-theme="dark"]) .r-contact .cchip { color: #0B1B33; background: rgba(255,255,255,.62); box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 10px 30px rgba(11,27,51,.12); }
+:root:not([data-theme="dark"]) .r-contact .cchip[aria-expanded="true"] { background: #0B1B33; color: #fff; box-shadow: 0 10px 30px rgba(11,27,51,.25); }
+:root:not([data-theme="dark"]) .r-contact .cpanel-glass { color: #0B1B33; background: rgba(255,255,255,.62); box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 10px 30px rgba(11,27,51,.12); }
+:root:not([data-theme="dark"]) .r-contact .ea-row input, :root:not([data-theme="dark"]) .r-contact .rq textarea { box-shadow: inset 0 0 0 1px #D5DDE8; }
+:root:not([data-theme="dark"]) .r-contact .ea-row input:focus, :root:not([data-theme="dark"]) .r-contact .rq textarea:focus { box-shadow: inset 0 0 0 2px var(--app-blue); }
+:root:not([data-theme="dark"]) .r-contact .ea.err .ea-note, :root:not([data-theme="dark"]) .r-contact .rq.err .ea-note { color: #C2361F; }
+:root:not([data-theme="dark"]) .r-contact .ea.ok .ea-note, :root:not([data-theme="dark"]) .r-contact .rq.ok .ea-note { color: #1E7A3C; }
+/* Tema chiaro: una sfumatura chiara solo dietro titolo e moduli, così le scritte restano leggibili sulla foto */
+:root:not([data-theme="dark"]) .r-contact .r-in { position: relative; }
+:root:not([data-theme="dark"]) .r-contact .r-in::before { content: ""; position: absolute; z-index: -1; left: -50vw; right: -50vw; top: -90px; bottom: -60px; background: linear-gradient(to bottom, rgba(233,238,245,0), rgba(233,238,245,.9) 120px); pointer-events: none; }
+:root:not([data-theme="dark"]) .r-contact .r-h2 em { color: #34435C; }
+@media (min-aspect-ratio: 1/1) {
+  :root:not([data-theme="dark"]) .r-contact .r-in::before { left: -12vw; right: -20vw; top: -60px; bottom: -40px; background: radial-gradient(closest-side, rgba(233,238,245,.9), rgba(233,238,245,.75) 60%, rgba(233,238,245,0)); }
+}
