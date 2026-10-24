@@ -120,7 +120,7 @@
       <p class="nd-label">Scegli il tuo percorso</p>
       <h2 class="r-h2">Chi sei?</h2>
       <div class="paths">
-        <button type="button" class="path" data-go="utente"><b>Utente</b><span>Voglio scoprire cosa fare in città, e con chi.</span></button>
+        <button type="button" class="path" data-go="utente"><b>Utente</b><span>Voglio scoprire cosa fare in città e con chi.</span></button>
         <button type="button" class="path" data-go="azienda"><b>Azienda</b><span>Voglio raggiungere le persone giuste e capire la città.</span></button>
         <button type="button" class="path" data-go="investitore"><b>Investitore</b><span>Voglio capire il valore e il modello di CEnTRO.</span></button>
       </div>
@@ -272,7 +272,7 @@
       <div class="ap-in feat">
         <p class="nd-label">Community</p>
         <h3 class="ap-title">Attività create dalle persone.</h3>
-        <p class="ap-text">Una partita, un aperitivo in lingua, una suonata al parco. Nia aiuta a scrivere descrizione e date, e le richieste di partecipazione arrivano ordinate per affinità con il gruppo.</p>
+        <p class="ap-text">Una partita, un aperitivo in lingua, una suonata al parco. Nia aiuta a scrivere descrizione e date e le richieste di partecipazione arrivano ordinate per affinità con il gruppo.</p>
         <div class="viz viz-group" aria-hidden="true">
                 <span class="vg-core">Serata giochi</span>
                 <span class="vg-p p1"></span><span class="vg-p p2"></span><span class="vg-p p3"></span><span class="vg-p p4"></span><span class="vg-p p5"></span>
@@ -359,7 +359,7 @@
     </div>
   </section>
 
-  <section class="reel r-dark r-try r-shot" data-reel data-track="utente" data-chapter="Le aree dell'app" data-title="Provala" data-desc="Voglio provare l'app">
+  <section class="reel r-dark r-try r-shot" data-reel data-track="utente" data-cta data-chapter="Le aree dell'app" data-title="Provala" data-desc="Voglio provare l'app">
     <img class="r-photo" src="img/ct-app.jpg" alt="Quattro amici guardano CEnTRO sull'App Store." loading="lazy" style="object-position: 66% 40%">
     <div class="r-in r-bottom">
       <p class="nd-label">Il prossimo passo</p>
@@ -466,6 +466,29 @@
     </div>
   </section>
 
+  <section class="reel r-dark r-try r-biz r-shot" data-reel data-track="azienda" data-cta data-chapter="Per le aziende" data-title="Porta la tua azienda" data-desc="Voglio portare la mia azienda">
+    <img class="r-photo" src="img/az-cta.jpg" alt="In un negozio, la titolare mostra CEnTRO sull'App Store a due clienti." loading="lazy" style="object-position: 62% 40%">
+    <div class="r-in r-bottom">
+      <p class="nd-label">Il prossimo passo</p>
+      <h2 class="r-h2 small-h">La tua azienda, <em>sul loro telefono.</em></h2>
+      <div class="sbox" data-sbox>
+        <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
+          <p class="cp-t">Entra tra le prime aziende.</p>
+          <p class="cp-d">Lascia l'email: ti contatto per creare il profilo della tua azienda.</p>
+          <form class="ea" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="CEnTRO: un'azienda vuole entrare" novalidate>
+            <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <div class="ea-row">
+              <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
+              <button type="submit" class="ea-btn">Contattami</button>
+            </div>
+            <p class="ea-note" aria-live="polite">Ti scrivo personalmente, niente newsletter.</p>
+          </form>
+        </div></div></div>
+        <button type="button" class="glass-btn" data-sopen>Voglio portare la mia azienda<i aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </section>
+
   <section class="reel r-dark r-value" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Il valore" data-desc="Sapere chi sei apre ogni possibilità">
     <div class="r-in r-top">
       <p class="nd-label">Per chi investe</p>
@@ -487,7 +510,7 @@
       <span class="iv-o" style="--x:-29;--y:-29;--d:3.7s">Offerte</span>
     </div>
     <div class="r-in r-bottom">
-      <p class="r-body on-dark">Un questionario porta personalità, gusti e abitudini dentro l'algoritmo. Da lì ogni proposta calza alla perfezione, e le possibilità diventano infinite.</p>
+      <p class="r-body on-dark">Un questionario porta personalità, gusti e abitudini dentro l'algoritmo. Da lì ogni proposta calza alla perfezione e le possibilità diventano infinite.</p>
     </div>
   </section>
 
@@ -502,7 +525,7 @@
     </div>
   </section>
 
-  <section class="reel r-dark r-meet r-shot" data-reel data-track="investitore" data-chapter="Per chi investe" data-title="Parliamone" data-desc="Il resto si racconta dal vivo">
+  <section class="reel r-dark r-meet r-shot" data-reel data-track="investitore" data-cta data-chapter="Per chi investe" data-title="Parliamone" data-desc="Il resto si racconta dal vivo">
     <img class="r-photo" src="img/stretta-di-mano.jpg" alt="Due persone si stringono la mano in uno studio." loading="lazy">
     <div class="r-in r-bottom">
       <p class="nd-label">Per chi investe</p>
@@ -582,6 +605,6 @@
 
 </main>
 
-<script src="js/reel.js?v=67"></script>
+<script src="js/reel.js?v=69"></script>
 </body>
 </html>

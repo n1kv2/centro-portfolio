@@ -18,6 +18,7 @@
   var NAMES = { utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' };
   var mode = 'all';
   var menuTimer = null;
+  var firstMode = '';
   var visible = [], bits = [], chapters = [], current = -1;
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var ss = { get: function (k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } },
@@ -29,6 +30,8 @@
     all.forEach(function (r) {
       var t = r.getAttribute('data-track');
       if (t) r.hidden = mode !== 'all' && t !== mode;
+      // Le chiamate all'azione si vedono solo nel primo percorso scelto: scorrendo tutto resta solo il contatto finale
+      if (r.hasAttribute('data-cta')) r.hidden = mode === 'all' || t !== mode || t !== firstMode;
     });
     router.hidden = mode === 'all';
     if (mode !== 'all') {
@@ -76,7 +79,7 @@
   }
   var goRaf = 0;
 
-  function choose(track) { mode = track; applyMode(); go(firstOf(track)); }
+  function choose(track) { if (!firstMode) firstMode = track; mode = track; applyMode(); go(firstOf(track)); }
   function showAll(target) { mode = 'all'; applyMode(); if (target) go(target); }
 
   function buildRouter() {
@@ -593,7 +596,7 @@
       renderIndex();
       return;
     }
-    if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); return; }
+    if (e.target.closest('[data-keep]')) { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current, first: firstMode })); return; }
     var it = e.target.closest('[data-c]');
     if (!it) return;
     var ch = navChaps[parseInt(it.getAttribute('data-c'), 10)];
@@ -613,7 +616,7 @@
 
   // ---------- Pagine separate: al ritorno si riparte dallo stesso reel ----------
   document.querySelectorAll('[data-keep]').forEach(function (a) {
-    a.addEventListener('click', function () { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current })); });
+    a.addEventListener('click', function () { ss.set('reel-pos', JSON.stringify({ mode: mode, i: current, first: firstMode })); });
   });
 
   // ---------- Titoli parola per parola ----------
@@ -831,6 +834,7 @@
   ss.del('reel-pos');
   if (saved && (saved.mode === 'all' || TRACKS[saved.mode])) {
     mode = saved.mode;
+    firstMode = saved.first || (saved.mode !== 'all' ? saved.mode : '');
     applyMode(true);
     var target = visible[Math.min(saved.i, visible.length - 1)] || visible[0];
     scroller.scrollTop = target.offsetTop;
