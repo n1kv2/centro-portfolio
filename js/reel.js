@@ -67,6 +67,7 @@
     var instant = smooth === false || reduce || Math.abs(target - scroller.scrollTop) > h * 1.5;
     clearTimeout(goTimer);
     cancelAnimationFrame(goRaf);
+    stopNudge();
     scroller.style.scrollSnapType = 'none';
     scroller.scrollTo({ top: target, behavior: instant ? 'auto' : 'smooth' });
     var t0 = Date.now();
@@ -156,6 +157,8 @@
     if (r.querySelector('.sv')) playShowcase(r);
     if (thesis && r.contains(thesis)) playThesis();
     if (r.classList.contains('r-value')) playRadar();
+    nudgeCount = 0;
+    armNudge(i === 0 && !nudgedOnce ? 3000 : null);
 
     if (navOpen) renderIndex();
   }
@@ -171,6 +174,64 @@
     requestAnimationFrame(function () { check(); ticking = false; });
   }, { passive: true });
   window.addEventListener('resize', check);
+
+  // ---------- Balzino: il momento si alza un attimo e ricade, per far capire che si scorre ----------
+  // Parte all'apertura e poi ogni volta che resti fermo su un momento che ha finito le sue animazioni
+  var NUDGE_WAIT = { 'r-value': 20000, 'r-overview': 18500, 'r-niamap': 8500, 'r-ins': 4800, 'r-merge': 4000 };
+  var nudgeTimer = null, nudgeRaf = 0, nudging = false, nudgeCount = 0, nudgedOnce = false;
+  // mai prima di 10 secondi; di più se le animazioni del momento durano più a lungo
+  function waitFor(r) {
+    for (var k in NUDGE_WAIT) if (r.classList.contains(k)) return Math.max(10000, NUDGE_WAIT[k]);
+    return 10000;
+  }
+  function canNudge(r) {
+    // niente balzo sulle scelte di percorso e sui contatti
+    return !reduce && !navOpen && r && current < visible.length - 1 &&
+      !/\br-(choose|route|contact)\b/.test(r.className) &&
+      !r.querySelector('.sbox.open, .area-panel.open') &&
+      !(document.activeElement && r.contains(document.activeElement) && /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName));
+  }
+  function armNudge(delay) {
+    clearTimeout(nudgeTimer);
+    var r = visible[current];
+    nudgeTimer = setTimeout(function () {
+      if (visible[current] !== r) return;
+      if (canNudge(r)) { nudge(); nudgeCount++; }
+      armNudge(10000); // fermo ancora: si ripete ogni 10 secondi
+    }, delay == null ? waitFor(r) : delay);
+  }
+  function stopNudge() {
+    if (!nudging) return;
+    cancelAnimationFrame(nudgeRaf);
+    nudging = false;
+    scroller.style.scrollSnapType = '';
+  }
+  function nudge() {
+    var base = visible[current].offsetTop, d = Math.min(18, scroller.clientHeight * 0.027), t0 = performance.now(), T = 1100;
+    var ease = function (x) { return 0.5 - Math.cos(Math.PI * x) / 2; };
+    // come TikTok: sale, scende a metà, risale in cima e ricade
+    var curve = function (p) {
+      if (p < 0.26) return ease(p / 0.26);
+      if (p < 0.46) return 1 - 0.5 * ease((p - 0.26) / 0.2);
+      if (p < 0.64) return 0.5 + 0.5 * ease((p - 0.46) / 0.18);
+      return 1 - ease((p - 0.64) / 0.36);
+    };
+    nudging = true; nudgedOnce = true;
+    scroller.style.scrollSnapType = 'none';
+    var step = function (now) {
+      if (!nudging) return;
+      var p = Math.min(1, (now - t0) / T);
+      scroller.scrollTop = base + d * curve(p);
+      if (p < 1) nudgeRaf = requestAnimationFrame(step);
+      else { scroller.scrollTop = base; stopNudge(); }
+    };
+    nudgeRaf = requestAnimationFrame(step);
+  }
+  // Qualsiasi gesto annulla il balzino in corso e fa ripartire l'attesa
+  ['touchstart', 'wheel', 'keydown', 'pointerdown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { stopNudge(); if (current >= 0) armNudge(); }, { passive: true });
+  });
+
   new MutationObserver(function () { if (current >= 0) bar.classList.toggle('on-light', isLight(visible[current])); })
     .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
