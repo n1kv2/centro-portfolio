@@ -645,7 +645,7 @@
     navList.innerHTML = navChaps.map(function (ch, k) {
       var off = ch.reels.every(function (r) { return r.hidden; });
       return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
-    }).join('') + '<a class="rnav-item rnav-link" href="prova-chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn();
+    }).join('') + '<a class="rnav-item rnav-link" href="chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn();
   }
   // Con il menu aperto si evidenzia la linea della sezione (quella attuale, o quella che stai per scegliere)
   // Torna allo stato iniziale: nessun percorso, nessuna scelta, primo momento (come ricaricare)
