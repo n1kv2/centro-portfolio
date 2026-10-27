@@ -2,23 +2,23 @@
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<script src="js/gate.js?v=2"></script>
+<script src="js/gate.js?v=3"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Accesso · CEnTRO</title>
 <meta name="robots" content="noindex">
 <meta name="description" content="CEnTRO trasforma la conoscenza di sé in esperienze, persone e opportunità nella propria città.">
 <meta name="theme-color" content="#F3F5F9">
-<script src="js/theme.js?v=32"></script>
+<script src="js/theme.js?v=33"></script>
 <link rel="icon" href="img/logo.png">
 <link rel="apple-touch-icon" href="img/logo.png">
-<link rel="stylesheet" href="css/fonts.css?v=29">
-<link rel="stylesheet" href="css/style.css?v=41">
+<link rel="stylesheet" href="css/fonts.css?v=30">
+<link rel="stylesheet" href="css/style.css?v=42">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
-<link rel="stylesheet" href="css/prova.css?v=6">
-<link rel="stylesheet" href="css/reel.css?v=123">
-<link rel="stylesheet" href="css/page.css?v=20">
+<link rel="stylesheet" href="css/base.css?v=2">
+<link rel="stylesheet" href="css/reel.css?v=124">
+<link rel="stylesheet" href="css/page.css?v=21">
 <style>
   html, body { height: 100%; }
   .gt { min-height: 100svh; display: flex; flex-direction: column; }
@@ -74,8 +74,7 @@
   var G = window.CENTRO_GATE, form = document.getElementById('gtForm'), box = document.getElementById('gtCode');
   var cells = Array.prototype.slice.call(box.querySelectorAll('input')), msg = document.getElementById('gtMsg'), go = document.getElementById('gtGo');
   var next = new URLSearchParams(location.search).get('next') || '';
-  // si torna solo a una pagina di questo sito
-  if (!/^[a-z0-9-]+\.html(#[\w-]*)?$/i.test(next)) next = "prova-reel.html";
+  if (!/^[a-z0-9-]+\.html(#[\w-]*)?$/i.test(next)) next = "index.html";
   var busy = false;
 
   function code() { return cells.map(function (c) { return c.value; }).join(''); }
@@ -96,7 +95,7 @@
     busy = true;
     hash('centro:' + code()).then(function (h) {
       if (h === G.hash) {
-        try { localStorage.setItem(G.key, h); } catch (e) { /* senza memoria si entra lo stesso, per questa visita */ }
+        try { localStorage.setItem(G.key, h); } catch (e) { }
         box.classList.remove('err'); box.classList.add('ok'); document.activeElement.blur();
         msg.textContent = 'Benvenuto.';
         setTimeout(function () { location.replace(next); }, 650);
@@ -112,8 +111,7 @@
     });
   }
 
-  // già dentro (o accesso spento): niente codice
-  try { if (!G.on || localStorage.getItem(G.key) === G.hash) { location.replace(next); return; } } catch (e) { /* si chiede il codice */ }
+  try { if (!G.on || localStorage.getItem(G.key) === G.hash) { location.replace(next); return; } } catch (e) { }
 
   cells.forEach(function (c, i) {
     c.addEventListener('input', function () {

@@ -1,6 +1,4 @@
-// Pagine separate: comparse allo scorrimento, foto profilo con iniziale di riserva
 (function () {
-  // Fondo pagina: copyright e freccia per tornare in cima
   var main = document.querySelector('main');
   if (main && !document.querySelector('.pg-copy')) {
     var cp = document.createElement('p');
@@ -16,7 +14,6 @@
   var onScroll = function () { up.classList.toggle('on', window.scrollY > window.innerHeight * .8); };
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
-  // Chi sono: "Scrivimi" apre un riquadro con richiesta ed email, come nei contatti
   var wr = document.querySelector('[data-write]');
   if (wr) {
     var box = document.getElementById('wrBox'), form = document.getElementById('wrForm'), note = document.getElementById('wrNote');
@@ -57,7 +54,6 @@
     if (photo.complete) { photo.naturalWidth ? ok() : ko(); }
     photo.addEventListener('load', ok); photo.addEventListener('error', ko);
   }
-  // CEnTRO con la n minuscola anche nelle scritte in maiuscolo
   var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), list = [];
   while (w.nextNode()) if (w.currentNode.nodeValue.indexOf('CEnTRO') >= 0) list.push(w.currentNode);
   list.forEach(function (t) {

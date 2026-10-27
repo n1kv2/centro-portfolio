@@ -1,11 +1,8 @@
-// Tema: automatico (chiaro dall'alba al tramonto all'Aquila, scuro la sera); con il tasto nel menu si sceglie chiaro o scuro fisso.
-// Caricato nell'head per applicare il tema prima che la pagina compaia.
 (function () {
   var KEY = 'centro-theme';
-  var LAT = 42.35, LNG = 13.40; // L'Aquila
+  var LAT = 42.35, LNG = 13.40;
   var root = document.documentElement;
 
-  // Alba e tramonto (formule NOAA semplificate)
   function sunTimes(date) {
     var rad = Math.PI / 180, dayMs = 864e5, J1970 = 2440588, J2000 = 2451545, e = rad * 23.4397;
     var days = date.valueOf() / dayMs - 0.5 + J1970 - J2000;
@@ -26,7 +23,7 @@
   }
 
   function read() { try { return localStorage.getItem(KEY) || 'auto'; } catch (err) { return 'auto'; } }
-  function write(v) { try { localStorage.setItem(KEY, v); } catch (err) { /* nessun salvataggio disponibile */ } }
+  function write(v) { try { localStorage.setItem(KEY, v); } catch (err) { } }
 
   function resolve(pref) {
     if (pref === 'light' || pref === 'dark') return pref;
