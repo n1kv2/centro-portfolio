@@ -1,10 +1,4 @@
-// Profili d'esempio: si comportano come nell'app.
-// - Area Pubblica / Area Personale: due viste separate dello stesso profilo.
-// - Segui: cambia stato con un'animazione morbida. Messaggio: non fa nulla.
-// - Foto: si aprono a schermo intero con la frase di chi le ha pubblicate e il tasto Salva.
-// - Sezioni: si aprono e si chiudono; "A cosa serve" mostra la spiegazione nello stesso spazio, "Chiudi" riporta il contenuto.
 (function () {
-  // Aree
   var areas = document.querySelector('.pt-areas');
   if (areas) areas.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-area]');
@@ -17,7 +11,6 @@
     if (top < 0) window.scrollBy({ top: top - 80, behavior: 'smooth' });
   });
 
-  // Segui
   document.querySelectorAll('.pt-follow').forEach(function (b) {
     b.addEventListener('click', function (e) {
       var r = b.getBoundingClientRect();
@@ -28,7 +21,6 @@
     });
   });
 
-  // Foto a schermo intero
   var lb = document.getElementById('ptLb'), lbImg = document.getElementById('ptLbImg'), lbCap = document.getElementById('ptLbCap'), save = document.getElementById('ptSave');
   var saved = {}, currentKey = '';
   function openPhoto(btn) {
@@ -53,7 +45,6 @@
   });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lb.hidden) closePhoto(); });
 
-  // Sezioni
   document.querySelectorAll('.pt-sec').forEach(function (sec) {
     var head = sec.querySelector('.pt-sec-h'), info = sec.querySelector('.pt-info'), content = sec.querySelector('.pt-content');
     head.addEventListener('click', function () {
@@ -69,7 +60,6 @@
     });
     var stack = sec.querySelector('.pt-stack');
     function setInfo(on) {
-      // la spiegazione prende lo spazio del contenuto; la sezione cresce solo se il testo non ci sta
       stack.style.minHeight = on ? Math.max(content.offsetHeight, info.scrollHeight) + 'px' : '';
       sec.classList.toggle('info', on);
       info.setAttribute('aria-hidden', !on);
@@ -78,7 +68,6 @@
     sec.querySelector('.pt-info-btn').addEventListener('click', function () { setInfo(!sec.classList.contains('info')); });
   });
 
-  // Filtri a chip (scelta singola)
   document.querySelectorAll('[data-chips]').forEach(function (g) {
     g.addEventListener('click', function (e) {
       var b = e.target.closest('.pt-chip');
@@ -87,11 +76,9 @@
     });
   });
 
-  // Diario: Settimana (sette giorni) / Mese (quattro settimane)
   document.querySelectorAll('[data-seg]').forEach(function (s) {
     var sec = s.closest('.pt-content'), barsEl = sec.querySelector('[data-bars]'), days = sec.querySelector('[data-days]'), range = sec.querySelector('[data-range]');
     var ranges = range ? range.getAttribute('data-range').split('|') : [];
-    // colore legato al valore: basso viola-azzurro, alto verde
     var mood = function (v) { return v < 62 ? '#9ABAFF' : v < 75 ? '#B1E6FF' : v < 85 ? '#ABFECD' : '#99FEA3'; };
     s.querySelectorAll('button').forEach(function (b, i) {
       b.addEventListener('click', function () {
@@ -112,7 +99,6 @@
     });
   });
 
-  // Atmosfera: "Crea con Nia" scrive il riepilogo, poi il tasto sparisce
   document.querySelectorAll('[data-atm]').forEach(function (box) {
     var go = box.querySelector('[data-atm-go]'), sum = box.querySelector('.pt-atm-sum');
     var parts = [].slice.call(sum.querySelectorAll('[data-type]')).map(function (p) { var h = p.innerHTML; p.innerHTML = ''; return { el: p, html: h }; });
@@ -137,7 +123,6 @@
     });
   });
 
-  // Orari: stato e giorno di oggi calcolati sull'ora reale
   var hours = document.querySelector('[data-hours]');
   if (hours) {
     var DAYS = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
@@ -165,7 +150,6 @@
     }
   }
 
-  // Animazione iniziale: un dito toglie e aggiunge widget, poi il profilo qui sotto è il risultato
   document.querySelectorAll('.pt-demo').forEach(function (root) {
     var stage = root.querySelector('.dm-stage'), replay = root.querySelector('.dm-replay');
     var tpl = stage.innerHTML, moves = JSON.parse(stage.getAttribute('data-moves'));
@@ -234,7 +218,6 @@
       moves.forEach(function (m) {
         chain = chain.then(function () { return move(m); }).then(function () { return wait(450); });
       });
-      // una sola dimostrazione, poi "Rivedi"
       chain.then(function () {
         hand.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
         setTimeout(function () { replay.classList.add('on'); }, 350);

@@ -1,5 +1,3 @@
-/* Nuova linea di design (prova): editoriale, molto spazio, tipografia grande,
-   etichette "da indice" in carattere mono, un solo accento (il gradiente di Nia) usato come evidenziatore. */
 :root {
   --nd-bg: #F7F8FA;
   --nd-ink: #0B1B33;
@@ -24,13 +22,8 @@
   --nd-band: #F2F5FA; --nd-band-ink: #0B1B33; --nd-accent: #7FB8FF;
 }
 
-/* Etichette da indice */
 .nd-label { display: flex; align-items: center; gap: 12px; margin: 0; font: 500 .72rem/1 var(--nd-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--nd-muted); }
 .nd-label span { color: var(--nd-ink); }
-
-/* 01 · Il problema */
-
-/* La frase che definisce CEnTRO */
 
 .nd-kicker { margin: 0; font: 500 .8rem/1 var(--nd-mono); letter-spacing: .3em; text-transform: uppercase; opacity: .7; }
 
@@ -39,17 +32,8 @@
 .nd-mark + .nd-mark{ transition-delay: 1.05s; }
  html:not(.js) .nd-mark { background-size: 100% .11em; }
 
-/* 02 · Come funziona */
-
-/* 03 · Una settimana: un percorso che si accende scorrendo */
-
-/* Per chi */
-
-/* Comparsa allo scorrimento */
 html.js [data-nd] { opacity: 0; transform: translateY(22px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
 html.js [data-nd].in { opacity: 1; transform: none; }
-
-/* Etichetta "prova" nella barra */
 
 @media (prefers-reduced-motion: reduce) {
   html.js [data-nd], .nd-mark{ transition: none; }
