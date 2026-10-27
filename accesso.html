@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<script src="js/gate.js?v=2"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accesso · CEnTRO</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="CEnTRO trasforma la conoscenza di sé in esperienze, persone e opportunità nella propria città.">
+<meta name="theme-color" content="#F3F5F9">
+<script src="js/theme.js?v=32"></script>
+<link rel="icon" href="img/logo.png">
+<link rel="apple-touch-icon" href="img/logo.png">
+<link rel="stylesheet" href="css/fonts.css?v=29">
+<link rel="stylesheet" href="css/style.css?v=41">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
+<link rel="stylesheet" href="css/prova.css?v=6">
+<link rel="stylesheet" href="css/reel.css?v=123">
+<link rel="stylesheet" href="css/page.css?v=20">
+<style>
+  html, body { height: 100%; }
+  .gt { min-height: 100svh; display: flex; flex-direction: column; }
+  .gt .pg-box { justify-content: center; }
+  .gt-main { flex: 1; display: flex; align-items: center; }
+  .gt-in { width: 100%; padding-block: 24px 64px; }
+  .gt-in .pg-h1 { margin-top: 18px; }
+  .gt-code { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 34px; max-width: 380px; }
+  .gt-code input { width: 100%; aspect-ratio: 4 / 5; min-width: 0; padding: 0; border: 0; border-radius: 16px; text-align: center;
+    font: 400 clamp(1.7rem, 8vw, 2.1rem)/1 var(--nd-display); color: var(--nd-ink); caret-color: var(--app-blue);
+    background: var(--surface); box-shadow: inset 0 0 0 1px var(--nd-line); transition: box-shadow .2s, transform .2s, background .3s; }
+  .gt-code input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--app-blue); }
+  .gt-code.err input { box-shadow: inset 0 0 0 2px #E5484D; }
+  .gt-code.err { animation: gt-shake .42s; }
+  .gt-code.ok input { background: var(--app-blue); color: #fff; box-shadow: none; }
+  .gt-code.ok input:nth-child(n) { transition-delay: calc(var(--i) * 45ms); }
+  @keyframes gt-shake { 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(3px); } }
+  .gt-msg { min-height: 1.5em; margin: 16px 0 0; font-size: .92rem; color: var(--nd-muted); }
+  .gt-msg.err { color: #E5484D; }
+  .gt-go { margin-top: 22px; height: 46px; padding: 0 24px; border: 0; border-radius: 99px; cursor: pointer;
+    background: var(--nd-ink); color: var(--nd-bg); font: 600 .95rem/1 var(--f-body); transition: opacity .2s; }
+  .gt-go:disabled { opacity: .35; cursor: default; }
+  .gt-note { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--nd-line); font-size: .85rem; line-height: 1.5; color: var(--nd-muted); max-width: 380px; }
+  @media (prefers-reduced-motion: reduce) { .gt-code.err { animation: none; } }
+</style>
+</head>
+<body class="pg gt">
+<header class="pg-bar">
+  <div class="pg-box">
+    <span class="pg-logo"><span class="brand-mark" aria-hidden="true"></span>CEnTRO</span>
+  </div>
+</header>
+<main class="pg-wrap gt-main">
+  <form class="gt-in" id="gtForm" novalidate>
+    <p class="nd-label">Accesso riservato</p>
+    <h1 class="pg-h1">Ci siamo <em>quasi.</em></h1>
+    <p class="pg-lead">CEnTRO è ancora in anteprima privata. Per entrare inserisci il codice di accesso a 6 cifre.</p>
+    <div class="gt-code" id="gtCode" role="group" aria-label="Codice di accesso a 6 cifre">
+      <input style="--i:0" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" aria-label="Cifra 1" autofocus>
+      <input style="--i:1" inputmode="numeric" pattern="[0-9]*" aria-label="Cifra 2">
+      <input style="--i:2" inputmode="numeric" pattern="[0-9]*" aria-label="Cifra 3">
+      <input style="--i:3" inputmode="numeric" pattern="[0-9]*" aria-label="Cifra 4">
+      <input style="--i:4" inputmode="numeric" pattern="[0-9]*" aria-label="Cifra 5">
+      <input style="--i:5" inputmode="numeric" pattern="[0-9]*" aria-label="Cifra 6">
+    </div>
+    <p class="gt-msg" id="gtMsg" aria-live="polite"></p>
+    <button class="gt-go" id="gtGo" type="submit" disabled>Entra</button>
+    <p class="gt-note">Il codice te lo dà chi ti ha condiviso il link.</p>
+  </form>
+</main>
+<script>
+(function () {
+  var G = window.CENTRO_GATE, form = document.getElementById('gtForm'), box = document.getElementById('gtCode');
+  var cells = Array.prototype.slice.call(box.querySelectorAll('input')), msg = document.getElementById('gtMsg'), go = document.getElementById('gtGo');
+  var next = new URLSearchParams(location.search).get('next') || '';
+  // si torna solo a una pagina di questo sito
+  if (!/^[a-z0-9-]+\.html(#[\w-]*)?$/i.test(next)) next = "prova-reel.html";
+  var busy = false;
+
+  function code() { return cells.map(function (c) { return c.value; }).join(''); }
+  function refresh() { go.disabled = code().length < 6; box.classList.remove('err'); msg.className = 'gt-msg'; msg.textContent = ''; }
+  function fill(from, digits) {
+    for (var k = 0; k < digits.length && from + k < cells.length; k++) cells[from + k].value = digits[k];
+    cells[Math.min(from + digits.length, cells.length - 1)].focus();
+    refresh();
+    if (code().length === 6) check();
+  }
+  function hash(s) {
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function (b) {
+      return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
+    });
+  }
+  function check() {
+    if (busy || code().length < 6) return;
+    busy = true;
+    hash('centro:' + code()).then(function (h) {
+      if (h === G.hash) {
+        try { localStorage.setItem(G.key, h); } catch (e) { /* senza memoria si entra lo stesso, per questa visita */ }
+        box.classList.remove('err'); box.classList.add('ok'); document.activeElement.blur();
+        msg.textContent = 'Benvenuto.';
+        setTimeout(function () { location.replace(next); }, 650);
+        return;
+      }
+      busy = false;
+      box.classList.remove('err'); void box.offsetWidth; box.classList.add('err');
+      msg.className = 'gt-msg err';
+      msg.textContent = 'Codice non corretto. Riprova.';
+      cells.forEach(function (c) { c.value = ''; });
+      cells[0].focus();
+      go.disabled = true;
+    });
+  }
+
+  // già dentro (o accesso spento): niente codice
+  try { if (!G.on || localStorage.getItem(G.key) === G.hash) { location.replace(next); return; } } catch (e) { /* si chiede il codice */ }
+
+  cells.forEach(function (c, i) {
+    c.addEventListener('input', function () {
+      var d = c.value.replace(/\D/g, '');
+      if (d.length > 1) { c.value = ''; fill(i, d); return; }
+      c.value = d;
+      refresh();
+      if (d && i < cells.length - 1) cells[i + 1].focus();
+      if (code().length === 6) check();
+    });
+    c.addEventListener('keydown', function (e) {
+      if (e.key === 'Backspace' && !c.value && i > 0) { cells[i - 1].value = ''; cells[i - 1].focus(); refresh(); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft' && i > 0) cells[i - 1].focus();
+      else if (e.key === 'ArrowRight' && i < cells.length - 1) cells[i + 1].focus();
+    });
+    c.addEventListener('focus', function () { c.select(); });
+    c.addEventListener('paste', function (e) {
+      var d = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/\D/g, '');
+      if (!d) return;
+      e.preventDefault();
+      fill(i, d);
+    });
+  });
+  form.addEventListener('submit', function (e) { e.preventDefault(); check(); });
+})();
+</script>
+</body>
+</html>
