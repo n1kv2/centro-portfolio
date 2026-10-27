@@ -33,6 +33,7 @@
   .gt-code input:focus { outline: none; box-shadow: inset 0 0 0 2px var(--app-blue); }
   .gt-code.err input { box-shadow: inset 0 0 0 2px #E5484D; }
   .gt-code.err { animation: gt-shake .42s; }
+  .gt-code input:disabled { opacity: .45; }
   .gt-code.ok input { background: var(--app-blue); color: #fff; box-shadow: none; }
   .gt-code.ok input:nth-child(n) { transition-delay: calc(var(--i) * 45ms); }
   @keyframes gt-shake { 20% { transform: translateX(-8px); } 40% { transform: translateX(7px); } 60% { transform: translateX(-5px); } 80% { transform: translateX(3px); } }
@@ -75,7 +76,7 @@
   var cells = Array.prototype.slice.call(box.querySelectorAll('input')), msg = document.getElementById('gtMsg'), go = document.getElementById('gtGo');
   var next = new URLSearchParams(location.search).get('next') || '';
   if (!/^[a-z0-9-]+\.html(#[\w-]*)?$/i.test(next)) next = "index.html";
-  var busy = false;
+  var busy = false, timer = null, MAX = 5, LOCKS = [10, 20, 60], TKEY = 'centro-tries';
 
   function code() { return cells.map(function (c) { return c.value; }).join(''); }
   function refresh() { go.disabled = code().length < 6; box.classList.remove('err'); msg.className = 'gt-msg'; msg.textContent = ''; }
@@ -85,29 +86,50 @@
     refresh();
     if (code().length === 6) check();
   }
+  function load() { try { return JSON.parse(localStorage.getItem(TKEY)) || { f: 0, s: 0, u: 0 }; } catch (e) { return { f: 0, s: 0, u: 0 }; } }
+  function save(t) { try { localStorage.setItem(TKEY, JSON.stringify(t)); } catch (e) { } }
+  function locked() {
+    var t = load(), left = t.u - Date.now();
+    clearTimeout(timer);
+    cells.forEach(function (c) { c.disabled = left > 0; });
+    if (left <= 0) { if (t.u) { t.u = 0; save(t); msg.className = 'gt-msg'; msg.textContent = ''; cells[0].focus(); } return false; }
+    var sec = Math.ceil(left / 1000), hh = Math.floor(sec / 3600), mm = Math.floor(sec % 3600 / 60), ss = sec % 60;
+    var two = function (n) { return ('0' + n).slice(-2); };
+    msg.className = 'gt-msg err';
+    msg.textContent = 'Troppi tentativi. Riprova tra ' + (hh ? hh + ':' + two(mm) : mm) + ':' + two(ss) + '.';
+    go.disabled = true;
+    timer = setTimeout(locked, (left % 1000 || 1000) + 20);
+    return true;
+  }
   function hash(s) {
     return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s)).then(function (b) {
       return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
     });
   }
   function check() {
-    if (busy || code().length < 6) return;
+    if (busy || code().length < 6 || locked()) return;
     busy = true;
     hash('centro:' + code()).then(function (h) {
       if (h === G.hash) {
-        try { localStorage.setItem(G.key, h); } catch (e) { }
+        try { localStorage.setItem(G.key, h); localStorage.removeItem(TKEY); } catch (e) { }
         box.classList.remove('err'); box.classList.add('ok'); document.activeElement.blur();
         msg.textContent = 'Benvenuto.';
         setTimeout(function () { location.replace(next); }, 650);
         return;
       }
       busy = false;
+      var t = load();
+      t.f += 1;
+      if (t.f >= MAX) { t.u = Date.now() + LOCKS[Math.min(t.s, LOCKS.length - 1)] * 60000; t.s += 1; t.f = 0; }
+      save(t);
       box.classList.remove('err'); void box.offsetWidth; box.classList.add('err');
-      msg.className = 'gt-msg err';
-      msg.textContent = 'Codice non corretto. Riprova.';
       cells.forEach(function (c) { c.value = ''; });
-      cells[0].focus();
       go.disabled = true;
+      if (locked()) return;
+      var r = MAX - t.f;
+      msg.className = 'gt-msg err';
+      msg.textContent = 'Codice non corretto. ' + (r === 1 ? 'Ti resta 1 tentativo.' : 'Ti restano ' + r + ' tentativi.');
+      cells[0].focus();
     });
   }
 
@@ -136,6 +158,7 @@
     });
   });
   form.addEventListener('submit', function (e) { e.preventDefault(); check(); });
+  locked();
 })();
 </script>
 </body>
