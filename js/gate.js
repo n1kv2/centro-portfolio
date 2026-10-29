@@ -1,5 +1,5 @@
 (function () {
-  var ON = true;
+  var ON = false;
   var KEY = 'centro-access';
   var HASH = 'd82eec7dea315fc9738f2154eae448644683c5acdd9e650991b51177125cb4a9';
   window.CENTRO_GATE = { on: ON, key: KEY, hash: HASH };
