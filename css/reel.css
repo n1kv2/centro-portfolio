@@ -1142,3 +1142,7 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-quest .r-in { text-align: left; }
 .r-quest .nd-label { justify-content: flex-start; text-align: left; margin-inline: 0; }
 .r-quest .r-body { margin-inline: 0; max-width: 32ch; }
+
+.r-num { position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 30; pointer-events: none;
+  font: 500 .68rem/1 var(--nd-mono); letter-spacing: .06em; color: var(--nd-muted); }
+.r-dark .r-num, .r-shot .r-num, .r-hero .r-num { color: rgba(255,255,255,.85); text-shadow: 0 1px 6px rgba(0,0,0,.35); }

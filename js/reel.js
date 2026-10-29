@@ -1,6 +1,7 @@
 (function () {
   var scroller = document.getElementById('reels');
   var all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
+  all.forEach(function (r, i) { var n = document.createElement('span'); n.className = 'r-num'; n.setAttribute('aria-hidden', 'true'); n.textContent = i + 1; r.appendChild(n); });
   var seg = document.getElementById('rseg');
   var chap = document.getElementById('rchap');
   var bar = document.getElementById('rbar');
