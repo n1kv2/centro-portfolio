@@ -471,6 +471,13 @@
     }, DECK_STEP);
   }
   if (deck) deckLayout();
+  if (deck) deck.addEventListener('click', function () {
+    if (!deck.classList.contains('apps')) return;
+    deckSteps.forEach(clearTimeout); deckSteps = [];
+    if (deck.classList.contains('merge')) { deck.classList.remove('logo', 'merge'); return; }
+    deck.classList.add('merge');
+    deckSteps.push(setTimeout(function () { deck.classList.add('logo'); }, 700));
+  });
 
   var tks = document.getElementById('tks');
   var tkTimers = [];
