@@ -487,3 +487,7 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-wid-p { margin: 14px auto 22px; max-width: 34ch; text-align: center; font-size: 16px; line-height: 23px; color: var(--pt-ink2); }
 .dm-replay { display: flex; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .5s ease, transform .6s cubic-bezier(.22,1,.36,1); }
 .dm-replay.on { opacity: 1; transform: none; pointer-events: auto; }
+.pt-car { padding-top: 18px; }
+.pt-car-h { padding: 0; cursor: default; }
+.pt-car-h b { font-size: 17px; line-height: 22px; font-weight: bold; }
+.pt-car-h small { color: var(--pt-gray); }

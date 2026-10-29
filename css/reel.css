@@ -1216,3 +1216,4 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .ed-clone { position: absolute !important; top: 0; left: 0; min-height: 0 !important; transform-origin: 0 0; pointer-events: none; scroll-snap-align: none; }
 .ed-clone, .ed-clone * { animation-duration: 0s !important; animation-delay: 0s !important; transition: none !important; }
 @media (prefers-reduced-motion: reduce) { .ed-gate, .ed-sheet, .ed-toast, .ed-panel, .ed-veil { transition: none; } .ed-gate.err { animation: none; } }
+.deck2.apps { cursor: pointer; -webkit-tap-highlight-color: transparent; }
