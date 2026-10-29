@@ -1144,5 +1144,10 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .r-quest .r-body { margin-inline: 0; max-width: 32ch; }
 
 .r-num { position: absolute; right: max(14px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 30; pointer-events: none;
-  font: 400 .6rem/1 var(--nd-mono); letter-spacing: .06em; color: var(--nd-muted); opacity: .35; }
-.r-dark .r-num, .r-shot .r-num, .r-hero .r-num { color: #fff; opacity: .3; }
+  font: 400 .6rem/1 var(--nd-mono); letter-spacing: .06em; color: #fff; opacity: .4; }
+.r-num.on-light { color: #0B1B33; opacity: .35; }
+.r-dark .revs li { border-color: color-mix(in srgb, currentColor 18%, transparent); }
+.r-dark .revs li:first-child { border-top: 0; }
+.r-dark .revs li:last-child { border-bottom: 0; }
+.r-dark .revs span { color: inherit; -webkit-text-fill-color: transparent; -webkit-text-stroke-color: currentColor; }
+.r-dark .revs p { color: inherit; opacity: .72; }
