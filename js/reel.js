@@ -1,7 +1,7 @@
 (function () {
   var scroller = document.getElementById('reels');
   var all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
-  all.forEach(function (r, i) { var n = document.createElement('span'); n.className = 'r-num'; n.setAttribute('aria-hidden', 'true'); n.textContent = i + 1; r.appendChild(n); });
+  all.forEach(function (r) { var n = document.createElement('span'); n.className = 'r-num'; n.setAttribute('aria-hidden', 'true'); r.appendChild(n); });
   var seg = document.getElementById('rseg');
   var chap = document.getElementById('rchap');
   var bar = document.getElementById('rbar');
@@ -32,6 +32,7 @@
     }
     all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
     visible = all.filter(function (r) { return !r.hidden; });
+    visible.forEach(function (r, i) { r.querySelector('.r-num').textContent = i + 1; });
     var names = [];
     all.forEach(function (r) { var c = r.getAttribute('data-chapter'); if (c !== 'Prossimo passo' && names.indexOf(c) < 0) names.push(c); });
     chapters = names.map(function (n) { return { name: n, reels: visible.filter(function (r) { return r.getAttribute('data-chapter') === n; }) }; });
