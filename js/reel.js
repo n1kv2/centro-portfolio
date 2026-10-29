@@ -35,6 +35,7 @@
     all = Array.prototype.slice.call(document.querySelectorAll('[data-reel]'));
     visible = all.filter(function (r) { return !r.hidden; });
     paintNums();
+    if (window.centroEditor) window.centroEditor.refresh();
     var names = [];
     all.forEach(function (r) { var c = r.getAttribute('data-chapter'); if (c !== 'Prossimo passo' && names.indexOf(c) < 0) names.push(c); });
     chapters = names.map(function (n) { return { name: n, reels: visible.filter(function (r) { return r.getAttribute('data-chapter') === n; }) }; });
@@ -593,7 +594,7 @@
     navList.innerHTML = navChaps.map(function (ch, k) {
       var off = ch.reels.every(function (r) { return r.hidden; });
       return '<button type="button" class="rnav-item' + (ch.name === curChap ? ' here' : '') + (off ? ' off' : '') + '" data-c="' + k + '">' + icon(ch.name) + '<span>' + ch.name + '</span></button>';
-    }).join('') + '<a class="rnav-item rnav-link" href="chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn();
+    }).join('') + '<a class="rnav-item rnav-link" href="chi-sono.html" data-keep>' + icon('Chi sono') + '<span>Chi sono</span></a>' + themeBtn() + (window.centroEditor ? window.centroEditor.menu() : '');
   }
   function restart() {
     ss.del('reel-pos');
@@ -619,6 +620,8 @@
   ['pointerover', 'focusin'].forEach(function (t) { document.getElementById('rnav').addEventListener(t, hoverLine); });
   document.getElementById('rnav').addEventListener('pointerleave', hoverLine);
   document.getElementById('rnav').addEventListener('click', function (e) {
+    var ed = e.target.closest('[data-ed]');
+    if (ed) { setNav(false); window.centroEditor.act(ed.getAttribute('data-ed')); return; }
     if (e.target.closest('[data-theme-toggle]')) {
       if (window.centroTheme) window.centroTheme.set(isDark() ? 'light' : 'dark');
       renderIndex();
@@ -845,4 +848,14 @@
     applyMode();
   }
   fitAll();
+  window.centroReels = {
+    visible: function () { return visible; },
+    current: function () { return visible[current]; },
+    mode: function () { return mode; },
+    go: go,
+    isLight: isLight,
+    send: sendForm,
+    menu: function () { if (navOpen) renderIndex(); }
+  };
+  if (window.centroEditor) window.centroEditor.ready();
 })();
