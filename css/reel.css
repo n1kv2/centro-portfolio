@@ -1217,3 +1217,4 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .ed-clone, .ed-clone * { animation-duration: 0s !important; animation-delay: 0s !important; transition: none !important; }
 @media (prefers-reduced-motion: reduce) { .ed-gate, .ed-sheet, .ed-toast, .ed-panel, .ed-veil { transition: none; } .ed-gate.err { animation: none; } }
 .deck2.apps { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.ed-mail { color: #8EC2FF; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }

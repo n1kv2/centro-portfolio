@@ -1,7 +1,7 @@
 (function () {
   var KEY = 'centro-editor';
   var HASH = '55a244c36d5a56761d61c6f9b80b115e225bcaf2c2d00bbd5761a3605500e5e9';
-  var ENDPOINT = 'https://formsubmit.co/ajax/hello.centro26@gmail.com';
+  var MAIL = 'hello.centro26@gmail.com';
   var root = document.documentElement;
   var R = null, on = false, nums = true;
   var IC = {
@@ -100,25 +100,19 @@
     var t = ta.value.trim();
     if (t.length < 2) { msg.textContent = 'Scrivi la nota.'; ta.focus(); return; }
     var num = sheet.dataset.num, title = sheet.dataset.title;
+    var path = { all: 'Tutti i momenti', utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' }[R.mode()] || R.mode();
+    var subject = 'Nota editor CEnTRO · momento ' + (num || '–') + ' · ' + title;
+    var fail = function () {
+      var href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent('Momento: ' + (num ? num + ' · ' : '') + title + '\nPercorso: ' + path + '\n\n' + t);
+      msg.innerHTML = 'Servizio email non raggiungibile. <a class="ed-mail" href="' + href + '">Invia con Mail</a>';
+    };
     msg.textContent = 'Invio in corso…';
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        momento: num ? num + ' · ' + title : title,
-        percorso: { all: 'Tutti i momenti', utente: 'Utente', azienda: 'Azienda', investitore: 'Investitore' }[R.mode()] || R.mode(),
-        nota: t,
-        _subject: 'Nota editor CEnTRO · momento ' + (num || '–') + ' · ' + title,
-        _captcha: 'false',
-        _template: 'table'
-      })
-    }).then(function (r) { return r.json().catch(function () { return {}; }); }).then(function (j) {
-      if (String(j.success) !== 'true') { msg.textContent = j.message || 'Invio non riuscito. Riprova tra poco.'; return; }
+    window.centroSend(subject, { momento: num ? num + ' · ' + title : title, percorso: path, nota: t }).then(function () {
       ta.value = '';
       msg.textContent = 'Nota inviata.';
       sheet.classList.add('ok');
       setTimeout(closeSheet, 1100);
-    }).catch(function () { msg.textContent = 'Invio non riuscito. Riprova tra poco.'; });
+    }).catch(fail);
   }
 
   function buildSide() {
@@ -182,7 +176,7 @@
     noteBtn = el('<button type="button" class="ed-note">' + svg('note') + '<span>Nota</span></button>');
     noteBtn.addEventListener('click', openSheet);
 
-    sheet = el('<div class="ed-sheet" role="dialog" aria-label="Nota sulla slide"><form novalidate data-endpoint="' + ENDPOINT + '">' +
+    sheet = el('<div class="ed-sheet" role="dialog" aria-label="Nota sulla slide"><form novalidate>' +
       '<div class="ed-head"><div><span class="ed-kick" data-ed-title></span><b data-ed-sub></b></div><button type="button" class="ed-x" aria-label="Chiudi">' + svg('close') + '</button></div>' +
       '<textarea rows="4" placeholder="Cosa vuoi cambiare in questa slide?"></textarea>' +
       '<div class="ed-foot"><p class="ed-msg" aria-live="polite"></p><button type="submit" class="ed-send">Invia nota</button></div></form></div>');

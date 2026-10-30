@@ -766,23 +766,9 @@
   function sendForm(form, data) {
     var hp = form.querySelector('.hp');
     if (hp && hp.value) return Promise.resolve();
-    data._captcha = 'false'; data._template = 'table';
-    var url = form.getAttribute('data-endpoint');
-    if (navigator.sendBeacon) {
-      var fd = new FormData();
-      Object.keys(data).forEach(function (k) { fd.append(k, data[k]); });
-      if (navigator.sendBeacon(url.replace('/ajax/', '/'), fd)) return Promise.resolve();
-    }
-    var ctrl = 'AbortController' in window ? new AbortController() : null;
-    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 30000);
-    return fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data),
-      signal: ctrl ? ctrl.signal : undefined
-    }).then(function (r) { clearTimeout(timer); if (!r.ok) throw new Error('invio'); return r.json().catch(function () { return {}; }); })
-      .then(function (j) { if (j && String(j.success) === 'false') throw new Error('invio'); })
-      .catch(function (e) { clearTimeout(timer); throw e; });
+    var subject = data._subject, reply = data._replyto;
+    delete data._subject; delete data._replyto;
+    return window.centroSend(subject, data, reply);
   }
   function noteFor(form, note) {
     var base = note.innerHTML;
@@ -793,7 +779,7 @@
   }
   var FAIL = 'Il servizio non ha risposto. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
 
-  document.querySelectorAll('form.ea[data-endpoint]').forEach(function (f) {
+  document.querySelectorAll('form.ea[data-send]').forEach(function (f) {
     var inp = f.querySelector('input[type=email]'), say = noteFor(f, f.querySelector('.ea-note'));
     inp.addEventListener('input', function () { if (/\berr\b/.test(f.className)) say(null, ''); });
     f.addEventListener('submit', function (e) {
@@ -806,7 +792,7 @@
         .catch(function () { say(FAIL, 'err'); });
     });
   });
-  document.querySelectorAll('form.rq[data-endpoint]').forEach(function (f) {
+  document.querySelectorAll('form.rq[data-send]').forEach(function (f) {
     var txt = f.querySelector('textarea'), mail = f.querySelector('input[type=email]'), say = noteFor(f, f.querySelector('.ea-note'));
     [txt, mail].forEach(function (el) { el.addEventListener('input', function () { if (/\berr\b/.test(f.className)) say(null, ''); }); });
     f.addEventListener('submit', function (e) {
