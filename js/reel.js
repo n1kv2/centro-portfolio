@@ -550,6 +550,15 @@
   }
   document.querySelectorAll('[data-area-open]').forEach(function (b) { b.addEventListener('click', function () { openArea(b.closest('.reel')); }); });
   document.querySelectorAll('[data-area-close]').forEach(function (p) { p.addEventListener('click', function () { closeArea(p.closest('.reel')); }); });
+  document.querySelectorAll('[data-more]').forEach(function (b) {
+    var flip = function (e) {
+      e.stopPropagation();
+      var box = b.closest('[data-more-box]'), open = box.classList.toggle('open');
+      b.setAttribute('aria-expanded', open);
+    };
+    b.addEventListener('click', flip);
+    b.addEventListener('keydown', function (e) { if (b.tagName !== 'BUTTON' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); flip(e); } });
+  });
 
   var isQ = document.getElementById('isQ');
   var insReel = document.querySelector('.r-ins');
