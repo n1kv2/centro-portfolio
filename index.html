@@ -28,7 +28,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&display=swap">
 <link rel="stylesheet" href="css/base.css?v=2">
-<link rel="stylesheet" href="css/reel.css?v=139">
+<link rel="stylesheet" href="css/reel.css?v=140">
 </head>
 <body class="reel-page">
 
@@ -366,7 +366,7 @@
         <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
           <p class="cp-t">Provala per primo.</p>
           <p class="cp-d">Lascia l'email: ti avvisiamo appena l'app è disponibile.</p>
-          <form class="ea" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="Accesso anticipato CEnTRO: nuova iscrizione" novalidate>
+          <form class="ea" data-send data-subject="Accesso anticipato CEnTRO: nuova iscrizione" novalidate>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="ea-row">
               <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
@@ -473,7 +473,7 @@
         <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
           <p class="cp-t">Entra tra le prime aziende.</p>
           <p class="cp-d">Lascia l'email: ti contatto per creare il profilo della tua azienda.</p>
-          <form class="ea" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="CEnTRO: un'azienda vuole entrare" novalidate>
+          <form class="ea" data-send data-subject="CEnTRO: un'azienda vuole entrare" novalidate>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="ea-row">
               <input name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
@@ -540,7 +540,7 @@
       <p class="r-body">Numeri, piano e prossimi passi: ne parliamo di persona.</p>
       <div class="sbox" data-sbox>
         <div class="sbox-p"><div class="sbox-in"><div class="cpanel-glass">
-          <form class="rq" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" data-subject="Richiesta di incontro da CEnTRO (investitore)" novalidate>
+          <form class="rq" data-send data-subject="Richiesta di incontro da CEnTRO (investitore)" novalidate>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <textarea name="richiesta" rows="3" placeholder="Chi sei e quando ti farebbe comodo sentirci" aria-label="La tua richiesta"></textarea>
             <div class="ea-row">
@@ -577,7 +577,7 @@
         <div class="cpane" id="paneApp" role="region" aria-labelledby="chipApp" hidden>
           <p class="cp-t">Provala per primo.</p>
           <p class="cp-d">Lascia l'email: ti avvisiamo appena l'app è disponibile.</p>
-          <form class="ea" id="eaForm" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" novalidate>
+          <form class="ea" id="eaForm" data-send novalidate>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <div class="ea-row">
               <input id="eaInput" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="La tua email" aria-label="La tua email">
@@ -588,7 +588,7 @@
         </div>
         <div class="cpane" id="paneInfo" role="region" aria-labelledby="chipInfo" hidden>
           <p class="cp-t">Demo, collaborazioni, investimenti.</p>
-          <form class="rq" id="rqForm" data-endpoint="https://formsubmit.co/ajax/hello.centro26@gmail.com" novalidate>
+          <form class="rq" id="rqForm" data-send novalidate>
             <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
             <textarea id="rqText" name="richiesta" rows="3" placeholder="Scrivi la tua richiesta" aria-label="La tua richiesta"></textarea>
             <div class="ea-row">
@@ -612,7 +612,8 @@
 
 </main>
 
-<script src="js/editor.js?v=4"></script>
-<script src="js/reel.js?v=87"></script>
+<script src="js/forms.js?v=1"></script>
+<script src="js/editor.js?v=6"></script>
+<script src="js/reel.js?v=88"></script>
 </body>
 </html>

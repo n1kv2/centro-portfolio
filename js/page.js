@@ -29,15 +29,14 @@
       form.classList.remove('err', 'ok');
       if (!text) { form.classList.add('err'); note.textContent = 'Scrivi due righe sulla tua richiesta.'; return; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) { form.classList.add('err'); note.textContent = 'Serve un’email valida per risponderti.'; return; }
-      if (!form.querySelector('.hp').value) {
-        var fd = new FormData();
-        fd.append('richiesta', text); fd.append('email', mail); fd.append('_subject', 'CEnTRO · richiesta da Chi sono');
-        fd.append('_captcha', 'false'); fd.append('_template', 'table');
-        var url = form.getAttribute('data-endpoint').replace('/ajax/', '/');
-        if (!(navigator.sendBeacon && navigator.sendBeacon(url, fd))) fetch(url, { method: 'POST', body: fd, mode: 'no-cors' }).catch(function () {});
-      }
-      form.classList.add('ok'); note.textContent = 'Grazie! Ti ricontatto io a breve.';
-      form.reset();
+      if (form.querySelector('.hp').value) { form.classList.add('ok'); note.textContent = 'Grazie! Ti ricontatto io a breve.'; form.reset(); return; }
+      note.textContent = 'Invio in corso…';
+      window.centroSend('CEnTRO · richiesta da Chi sono', { richiesta: text, email: mail }, mail).then(function () {
+        form.classList.add('ok'); note.textContent = 'Grazie! Ti ricontatto io a breve.';
+        form.reset();
+      }).catch(function () {
+        form.classList.add('err'); note.textContent = 'Invio non riuscito. Riprova tra poco o scrivi a hello.centro26@gmail.com.';
+      });
     });
   }
   var items = Array.prototype.slice.call(document.querySelectorAll('[data-pg]'));
