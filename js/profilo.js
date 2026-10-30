@@ -1,4 +1,10 @@
 (function () {
+  document.querySelectorAll('[data-more]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var box = b.closest('[data-more-box]'), open = box.classList.toggle('open');
+      b.setAttribute('aria-expanded', open);
+    });
+  });
   var areas = document.querySelector('.pt-areas');
   if (areas) areas.addEventListener('click', function (e) {
     var b = e.target.closest('button[data-area]');
