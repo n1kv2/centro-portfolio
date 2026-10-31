@@ -539,6 +539,8 @@
     bar.classList.toggle('on-light', isLight(p));
     var f = p.querySelector('.feat'); f.classList.remove('in'); void f.offsetWidth;
     setTimeout(function () { f.classList.add('in'); }, 250);
+    p.querySelectorAll('[data-more-box].open').forEach(function (x) { x.classList.remove('open'); var mb = x.querySelector('[data-more]'); if (mb) mb.setAttribute('aria-expanded', 'false'); });
+    if (window.centroType) window.centroType(p.querySelector('.ap-sum > .ap-text'));
     if (p.contains(vizSpot)) playSpot();
   }
   function closeArea(reel) {
@@ -555,6 +557,7 @@
       e.stopPropagation();
       var box = b.closest('[data-more-box]'), open = box.classList.toggle('open');
       b.setAttribute('aria-expanded', open);
+      if (open && window.centroType) window.centroType(box.querySelector(':scope > .x-more > div'));
     };
     b.addEventListener('click', flip);
     b.addEventListener('keydown', function (e) { if (b.tagName !== 'BUTTON' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); flip(e); } });

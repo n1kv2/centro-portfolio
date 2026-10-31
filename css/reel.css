@@ -1247,3 +1247,7 @@ html.js .reel .r-in > .cbox { opacity: 1; transform: none; transition: none; }
 .ap-sum.open > .ap-text:first-child { display: none; }
 .ap-sum.open > .x-more { grid-column: 1; grid-row: 1; }
 .ap-sum.open .x-more .ap-text:first-child { margin-top: 0; }
+.tw { opacity: 0; transition: opacity .35s ease; }
+.tw.on { opacity: 1; }
+.ap-text strong { color: var(--nd-ink); font-weight: 600; }
+.modes strong { font-weight: 600; color: #fff; }

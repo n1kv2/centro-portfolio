@@ -502,3 +502,4 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-sum.open > p { display: none; }
 .pt-sum.open > .x-more { grid-column: 1; grid-row: 1; }
 .pt-sum.open .x-more p:first-child { margin-top: 0; }
+.pt-intro strong { color: var(--pt-ink); font-weight: 600; }
