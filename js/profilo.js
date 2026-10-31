@@ -3,6 +3,7 @@
     b.addEventListener('click', function () {
       var box = b.closest('[data-more-box]'), open = box.classList.toggle('open');
       b.setAttribute('aria-expanded', open);
+      if (open && window.centroType) window.centroType(box.querySelector(':scope > .x-more > div'));
     });
   });
   var areas = document.querySelector('.pt-areas');
@@ -68,6 +69,7 @@
     function setInfo(on) {
       stack.style.minHeight = on ? Math.max(content.offsetHeight, info.scrollHeight) + 'px' : '';
       sec.classList.toggle('info', on);
+      if (on && window.centroType) window.centroType(info.querySelector('p'));
       info.setAttribute('aria-hidden', !on);
       content.setAttribute('aria-hidden', on);
     }
