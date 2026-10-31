@@ -502,4 +502,7 @@ button.pt-chip[aria-pressed="false"] { background: var(--pt-soft); color: var(--
 .pt-sum { display: flex; flex-direction: column; align-items: center; gap: 0; margin: 16px auto 0; max-width: 360px; text-align: center; }
 .pt-sum > .x-more { order: 1; width: 100%; }
 .pt-sum > .more-btn { order: 2; margin-top: 14px; }
-.pt-sum.open > .more-btn { align-self: flex-start; }
+.pt-sum > .more-btn { display: inline-flex; align-items: center; border-radius: 99px; }
+.pt-sum .more-lbl { display: none; }
+.pt-sum.open > .more-btn { align-self: flex-end; gap: 4px; padding: 0 2px 0 14px; }
+.pt-sum.open .more-lbl { display: inline; font: 600 .88rem/1 var(--f-body); }
